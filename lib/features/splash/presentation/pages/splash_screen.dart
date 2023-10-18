@@ -1,4 +1,5 @@
 
+import 'package:exo_post/common/constants.dart';
 import 'package:exo_post/common/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -10,19 +11,20 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
+
 class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
-   return Material(
+    return Material(
       child: Stack(
         children: [
-          // This is to fill the entire stack
           Positioned.fill(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 130),
-              child: const CircleAvatar(
-                backgroundColor: AppColors.primaryColor,
-              )
+              child: CircleAvatar(
+                      backgroundColor: AppConstants.isDarkMode(context)
+                          ? AppColors.scaffoldBackgroundColorDark
+                          : AppColors.primaryColor)
                   .animate()
                   .slideY(begin: -0.5, end: 0.2, duration: 0.5.seconds)
                   .then(delay: 600.milliseconds)
