@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:exo_post/common/constants.dart';
+import 'package:exo_post/common/router.dart';
 import 'package:exo_post/common/styles/theme.dart';
 import 'package:exo_post/core/init/injection.dart';
 import 'package:exo_post/features/splash/presentation/pages/splash_screen.dart';
@@ -26,11 +27,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: AppConstants.isDarkMode(context)
-          ? AppTheme.darkTheme
-          : AppTheme.lightTheme,
-      home: const SplashScreen(),
-    );
+        title: 'Flutter Demo',
+        theme: AppConstants.isDarkMode(context)
+            ? AppTheme.darkTheme
+            : AppTheme.lightTheme,
+        home: MaterialApp.router(
+          routerConfig: appRouter,
+        ));
   }
 }

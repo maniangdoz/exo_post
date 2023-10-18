@@ -16,11 +16,11 @@ class ScreenPaths {
 
   static String splash = '/';
   static String postPage = '/post';
-  static String DetailPostPage = '/post-detail/:id';
+  static String detailPostPage = 'post-detail/:id';
   static String authPage = '/login';
   static String registerPage = '/register';
   static String profilPage = '/me';
-  static String userPostPage = '/post-user/:id';
+  static String userPostPage = 'post-user/:id';
 }
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -40,7 +40,7 @@ final appRouter = GoRouter(
         builder: (context, state) => const PostScreen(),
         routes: [
           GoRoute(
-            path: ScreenPaths.DetailPostPage,
+            path: ScreenPaths.detailPostPage,
             builder: (context, state) => const DetailPostScreen(),
           ),
           GoRoute(
