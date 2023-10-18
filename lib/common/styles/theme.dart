@@ -12,7 +12,7 @@ class AppTheme {
     ),
     colorScheme: const ColorScheme.light(
       primary: AppColors.primaryColor,
-      onPrimary: Colors.white,
+      onPrimary: AppColors.onPrimaryColor,
     ),
   );
 
@@ -26,7 +26,7 @@ class AppTheme {
     ),
     colorScheme: const ColorScheme.dark(
       primary: AppColors.primaryColor,
-      onPrimary: Colors.white,
+      onPrimary: AppColors.onPrimaryColor,
     ),
   );
 }
