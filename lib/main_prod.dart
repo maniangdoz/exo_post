@@ -4,7 +4,6 @@ import 'package:exo_post/common/constants.dart';
 import 'package:exo_post/common/router.dart';
 import 'package:exo_post/common/styles/theme.dart';
 import 'package:exo_post/core/init/injection.dart';
-import 'package:exo_post/features/splash/presentation/pages/splash_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'core/logic/app_logic.dart';
