@@ -24,13 +24,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Flutter Demo Dev',
-        theme: AppConstants.isDarkMode(context)
-            ? AppTheme.darkTheme
-            : AppTheme.lightTheme,
-        home: MaterialApp.router(
-          routerConfig: appRouter,
-        ));
+    return MaterialApp.router(
+      title: 'Flutter Demo Dev',
+      theme: AppConstants.isDarkMode(context)
+          ? AppTheme.darkTheme
+          : AppTheme.lightTheme,
+      routerConfig: appRouter,
+    );
   }
 }
