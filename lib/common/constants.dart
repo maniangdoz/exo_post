@@ -7,4 +7,8 @@ class AppConstants {
     Brightness brightness = MediaQuery.of(context).platformBrightness;
     return brightness == Brightness.dark;
   }
+  static double getSmallDiameter(BuildContext context) =>
+      MediaQuery.of(context).size.width * 2 / 3;
+  static double getBiglDiameter(BuildContext context) =>
+      MediaQuery.of(context).size.width * 7 / 8;
 }
