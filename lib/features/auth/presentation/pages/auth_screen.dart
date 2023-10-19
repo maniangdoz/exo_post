@@ -109,7 +109,7 @@ class AuthScreen extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.fromLTRB(20, 0, 20, 15),
+                  margin: const EdgeInsets.fromLTRB(20, 40, 20, 15),
                   child: Column(
                     children: <Widget>[
                       SizedBox(
