@@ -26,7 +26,7 @@ class ScreenPaths {
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
 final appRouter = GoRouter(
-  initialLocation: ScreenPaths.splash,
+  initialLocation: ScreenPaths.postPage,
   navigatorKey: _rootNavigatorKey,
   errorBuilder: (context, state) => const ErrorScreen(),
   redirect: _redirect,
