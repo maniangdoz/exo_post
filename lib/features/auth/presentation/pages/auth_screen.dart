@@ -5,7 +5,6 @@ import 'package:exo_post/common/shared/text_field_shared.dart';
 import 'package:exo_post/common/shared/text_label_shared.dart';
 import 'package:exo_post/common/styles/colors.dart';
 import 'package:exo_post/common/styles/sizes.dart';
-import 'package:exo_post/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
