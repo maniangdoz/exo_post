@@ -3,6 +3,7 @@ import 'package:exo_post/common/router.dart';
 import 'package:exo_post/common/styles/colors.dart';
 import 'package:exo_post/common/styles/sizes.dart';
 import 'package:exo_post/common/utils/app_utils.dart';
+import 'package:exo_post/common/utils/app_validator.dart';
 import 'package:exo_post/features/shared/presentation/button_shared.dart';
 import 'package:exo_post/features/shared/presentation/text_field_shared.dart';
 import 'package:exo_post/features/shared/presentation/text_label_shared.dart';
@@ -53,28 +54,14 @@ class _AuthScreenState extends State<AuthScreen> {
                             labelText: "Email",
                             typeText: "Email",
                             maxLines: 1,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return "Email must not be empty";
-                              } else if (!RegExp(
-                                      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$")
-                                  .hasMatch(value)) {
-                                return "Please enter a valid email";
-                              }
-                              return null;
-                            }),
+                            validator: AppValidors.emailValidtor),
                         TextFieldShared(
                             controller: _passwordTextFieldController,
                             icon: Icons.vpn_key,
                             labelText: "Password",
                             typeText: "Password",
                             maxLines: 1,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return "Password must not be empty";
-                              }
-                              return null;
-                            }),
+                            validator: AppValidors.passwordValidtor),
                       ],
                     ),
                   ),
@@ -142,5 +129,4 @@ class _AuthScreenState extends State<AuthScreen> {
   void _goToRegisterPage() {
     context.go(ScreenPaths.registerPage);
   }
-
 }
