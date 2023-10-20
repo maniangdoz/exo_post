@@ -1,10 +1,11 @@
 import 'package:exo_post/common/constants.dart';
 import 'package:exo_post/common/router.dart';
-import 'package:exo_post/common/shared/button_shared.dart';
-import 'package:exo_post/common/shared/text_field_shared.dart';
-import 'package:exo_post/common/shared/text_label_shared.dart';
 import 'package:exo_post/common/styles/colors.dart';
 import 'package:exo_post/common/styles/sizes.dart';
+import 'package:exo_post/common/utils/app_utils.dart';
+import 'package:exo_post/features/shared/presentation/button_shared.dart';
+import 'package:exo_post/features/shared/presentation/text_field_shared.dart';
+import 'package:exo_post/features/shared/presentation/text_label_shared.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -12,7 +13,7 @@ class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
 
   @override
-  _RegisterScreenState createState() => _RegisterScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
@@ -20,7 +21,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _nameTextFieldController = TextEditingController();
   final _emailTextFieldController = TextEditingController();
   final _passwordTextFieldController = TextEditingController();
-  bool _isLoading = false;
   bool _isShowPassword = false;
 
   @override
@@ -31,9 +31,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
           : AppColors.scaffoldBackgroundColorLight,
       body: Stack(
         children: <Widget>[
-          AppConstants.firstPosition(context),
-          AppConstants.secondPosition(context, "Register"),
-          AppConstants.thirdPosition(context),
+          AppUtils.firstPosition(context),
+          AppUtils.secondPosition(context, "Register"),
+          AppUtils.thirdPosition(context),
           Align(
             alignment: Alignment.bottomCenter,
             child: Form(
@@ -142,7 +142,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       String message = "name: ${name}email: ${email} password: $password";
       // widget.registerBloc.add(RegisterEventDoRegister(
       //     registerRequest: RegisterRequest(email: email, password: password)));
-      AppConstants.showAlert(
+      AppUtils.showAlert(
           context,
           "Register: $message",
           AppConstants.isDarkMode(context)

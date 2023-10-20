@@ -1,11 +1,11 @@
 import 'package:exo_post/common/constants.dart';
 import 'package:exo_post/common/router.dart';
-import 'package:exo_post/common/shared/button_shared.dart';
-import 'package:exo_post/common/shared/text_field_shared.dart';
-import 'package:exo_post/common/shared/text_label_shared.dart';
 import 'package:exo_post/common/styles/colors.dart';
 import 'package:exo_post/common/styles/sizes.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:exo_post/common/utils/app_utils.dart';
+import 'package:exo_post/features/shared/presentation/button_shared.dart';
+import 'package:exo_post/features/shared/presentation/text_field_shared.dart';
+import 'package:exo_post/features/shared/presentation/text_label_shared.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -13,14 +13,13 @@ class AuthScreen extends StatefulWidget {
   const AuthScreen({Key? key}) : super(key: key);
 
   @override
-  _AuthScreenState createState() => _AuthScreenState();
+  State<AuthScreen> createState() => _AuthScreenState();
 }
 
 class _AuthScreenState extends State<AuthScreen> {
   final _formKey = GlobalKey<FormState>();
   final _emailTextFieldController = TextEditingController();
   final _passwordTextFieldController = TextEditingController();
-  bool _isLoading = false;
   bool _isShowPassword = false;
 
   @override
@@ -31,9 +30,9 @@ class _AuthScreenState extends State<AuthScreen> {
           : AppColors.scaffoldBackgroundColorLight,
       body: Stack(
         children: <Widget>[
-          AppConstants.firstPosition(context),
-          AppConstants.secondPosition(context, "Login"),
-          AppConstants.thirdPosition(context),
+          AppUtils.firstPosition(context),
+          AppUtils.secondPosition(context, "Login"),
+          AppUtils.thirdPosition(context),
           Align(
             alignment: Alignment.bottomCenter,
             child: Form(
@@ -131,7 +130,7 @@ class _AuthScreenState extends State<AuthScreen> {
       //     loginRequest: LoginRequest(email: email, password: password)));
       String message = "email: ${email} password: $password";
 
-      AppConstants.showAlert(
+      AppUtils.showAlert(
           context,
           "Login: $message",
           AppConstants.isDarkMode(context)
@@ -144,17 +143,4 @@ class _AuthScreenState extends State<AuthScreen> {
     context.go(ScreenPaths.registerPage);
   }
 
-  void _showAlert(String message) {
-    showCupertinoDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            content: Text(message),
-            actions: [
-              TextButton(
-                  onPressed: () => Navigator.pop(context), child: Text("OK"))
-            ],
-          );
-        });
-  }
 }
