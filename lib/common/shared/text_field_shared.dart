@@ -4,14 +4,30 @@ import 'package:flutter/material.dart';
 class TextFieldShared extends StatelessWidget {
   final IconData icon;
   final String labelText;
-  const TextFieldShared({Key? key, required this.icon, required this.labelText})
-      : super(key: key);
+  final String typeText;
+  final int? maxLines;
+  final TextEditingController? controller;
+  final FormFieldValidator<String>? validator;
+
+  const TextFieldShared({
+    Key? key,
+    required this.controller,
+    required this.icon,
+    required this.labelText,
+    required this.typeText,
+    required this.maxLines,
+    this.validator,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
+      obscureText: typeText == "Password" ? true : false,
+      controller: controller,
+      maxLines: maxLines,
       decoration: InputDecoration(
-        icon: Icon(
+        border: InputBorder.none,
+        prefixIcon: Icon(
           icon,
           color: AppColors.primaryColor,
         ),
@@ -21,9 +37,15 @@ class TextFieldShared extends StatelessWidget {
           ),
         ),
         labelText: labelText,
-        enabledBorder: InputBorder.none,
         labelStyle: const TextStyle(color: AppColors.greyColor),
+        errorStyle: const TextStyle(color: AppColors.errorColor),
+        errorBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: AppColors.errorColor) // Customize the error color
+        ),
       ),
+      validator: validator,
+      keyboardType:
+          typeText == "Email" ? TextInputType.emailAddress : TextInputType.text,
     );
   }
 }

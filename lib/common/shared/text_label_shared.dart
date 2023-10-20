@@ -5,22 +5,28 @@ class TextLabelShared extends StatelessWidget {
   final String labelText;
   final double sizeLabelText;
   final FontWeight fontLabelText;
+  final VoidCallback? onClick;
   const TextLabelShared(
       {Key? key,
       required this.colorTextLabel,
       required this.labelText,
       required this.sizeLabelText,
-      required this.fontLabelText})
+      required this.fontLabelText,
+      required this.onClick})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      labelText,
-      style: TextStyle(
+    return GestureDetector(
+      onTap: onClick,
+      child: Text(
+        labelText,
+        style: TextStyle(
           fontSize: sizeLabelText,
           color: colorTextLabel,
-          fontWeight: fontLabelText),
+          fontWeight: fontLabelText,
+        ),
+      ),
     );
   }
 }
