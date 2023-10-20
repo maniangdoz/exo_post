@@ -7,6 +7,7 @@ import 'package:exo_post/common/styles/colors.dart';
 import 'package:exo_post/common/styles/sizes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({Key? key}) : super(key: key);
@@ -125,15 +126,22 @@ class _AuthScreenState extends State<AuthScreen> {
     if (_formKey.currentState!.validate()) {
       String email = _emailTextFieldController.text.toString().trim();
       String password = _passwordTextFieldController.text.toString().trim();
-      print("password " + password);
-      print("email " + email);
+
       // widget.loginBloc.add(LoginEventDoLogin(
       //     loginRequest: LoginRequest(email: email, password: password)));
+      String message = "email: ${email} password: $password";
+
+      AppConstants.showAlert(
+          context,
+          "Login: $message",
+          AppConstants.isDarkMode(context)
+              ? AppColors.accentColor
+              : AppColors.primaryColor);
     }
   }
 
   void _goToRegisterPage() {
-    Navigator.pushReplacementNamed(context, ScreenPaths.registerPage);
+    context.go(ScreenPaths.registerPage);
   }
 
   void _showAlert(String message) {

@@ -67,4 +67,12 @@ class AppConstants {
               shape: BoxShape.circle, color: AppColors.onPrimaryColor),
         ),
       );
+
+  static void showAlert(BuildContext context, String message, Color color) {
+    var snackBar = SnackBar(
+      content: Text(message),
+      backgroundColor: color,
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
 }

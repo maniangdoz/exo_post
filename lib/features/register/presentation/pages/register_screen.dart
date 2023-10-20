@@ -5,8 +5,8 @@ import 'package:exo_post/common/shared/text_field_shared.dart';
 import 'package:exo_post/common/shared/text_label_shared.dart';
 import 'package:exo_post/common/styles/colors.dart';
 import 'package:exo_post/common/styles/sizes.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -139,29 +139,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
       String email = _emailTextFieldController.text.toString().trim();
       String name = _nameTextFieldController.text.toString().trim();
       String password = _passwordTextFieldController.text.toString().trim();
-      print("password " + password);
-      print("email " + email);
-      print("name " + name);
+      String message = "name: ${name}email: ${email} password: $password";
       // widget.registerBloc.add(RegisterEventDoRegister(
       //     registerRequest: RegisterRequest(email: email, password: password)));
+      AppConstants.showAlert(
+          context,
+          "Register: $message",
+          AppConstants.isDarkMode(context)
+              ? AppColors.accentColor
+              : AppColors.primaryColor);
     }
   }
 
   void _goToLoginPage() {
-    Navigator.pushReplacementNamed(context, ScreenPaths.authPage);
-  }
-
-  void _showAlert(String message) {
-    showCupertinoDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            content: Text(message),
-            actions: [
-              TextButton(
-                  onPressed: () => Navigator.pop(context), child: Text("OK"))
-            ],
-          );
-        });
+    context.go(ScreenPaths.authPage);
   }
 }

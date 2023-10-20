@@ -25,6 +25,7 @@ class TextFieldShared extends StatelessWidget {
       obscureText: typeText == "Password" ? true : false,
       controller: controller,
       maxLines: maxLines,
+      style: const TextStyle(color: AppColors.greyColor),
       decoration: InputDecoration(
         border: InputBorder.none,
         prefixIcon: Icon(
@@ -39,9 +40,8 @@ class TextFieldShared extends StatelessWidget {
         labelText: labelText,
         labelStyle: const TextStyle(color: AppColors.greyColor),
         errorStyle: const TextStyle(color: AppColors.errorColor),
-        errorBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: AppColors.errorColor) // Customize the error color
-        ),
+        errorBorder: const UnderlineInputBorder(
+            borderSide: BorderSide(color: AppColors.errorColor)),
       ),
       validator: validator,
       keyboardType:
