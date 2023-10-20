@@ -1,5 +1,5 @@
-import 'package:exo_post/common/constants.dart';
 import 'package:exo_post/common/styles/colors.dart';
+import 'package:exo_post/common/utils/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
@@ -20,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 130),
               child: CircleAvatar(
-                      backgroundColor: AppConstants.isDarkMode(context)
+                      backgroundColor: AppUtils.isDarkMode(context)
                           ? AppColors.accentColor
                           : AppColors.primaryColor)
                   .animate()

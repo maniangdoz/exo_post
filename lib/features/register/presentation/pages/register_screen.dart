@@ -1,4 +1,3 @@
-import 'package:exo_post/common/constants.dart';
 import 'package:exo_post/common/router.dart';
 import 'package:exo_post/common/styles/colors.dart';
 import 'package:exo_post/common/styles/sizes.dart';
@@ -27,7 +26,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppConstants.isDarkMode(context)
+      backgroundColor: AppUtils.isDarkMode(context)
           ? AppColors.scaffoldBackgroundColorDark
           : AppColors.scaffoldBackgroundColorLight,
       body: Stack(
@@ -79,7 +78,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       children: <Widget>[
                         ButtonShared(
                             text: "SIGNUP",
-                            colorButton: AppConstants.isDarkMode(context)
+                            colorButton: AppUtils.isDarkMode(context)
                                 ? AppColors.primaryColor
                                 : AppColors.accentColor,
                             onClick: _doRegister)
@@ -90,7 +89,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       TextLabelShared(
-                          colorTextLabel: AppConstants.isDarkMode(context)
+                          colorTextLabel: AppUtils.isDarkMode(context)
                               ? AppColors.onPrimaryColor
                               : AppColors.greyColor,
                           labelText: "ALREADY HAVE ON ACCOUNT ? ",
@@ -98,7 +97,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           fontLabelText: FontWeight.w500,
                           onClick: () {}),
                       TextLabelShared(
-                          colorTextLabel: AppConstants.isDarkMode(context)
+                          colorTextLabel: AppUtils.isDarkMode(context)
                               ? AppColors.accentColor
                               : AppColors.primaryColor,
                           labelText: " LOGIN",
@@ -127,7 +126,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       AppUtils.showAlert(
           context,
           "Register: $message",
-          AppConstants.isDarkMode(context)
+          AppUtils.isDarkMode(context)
               ? AppColors.accentColor
               : AppColors.primaryColor);
     }

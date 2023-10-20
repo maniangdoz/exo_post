@@ -1,4 +1,3 @@
-import 'package:exo_post/common/constants.dart';
 import 'package:exo_post/common/router.dart';
 import 'package:exo_post/common/styles/colors.dart';
 import 'package:exo_post/common/styles/sizes.dart';
@@ -26,7 +25,7 @@ class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppConstants.isDarkMode(context)
+      backgroundColor: AppUtils.isDarkMode(context)
           ? AppColors.scaffoldBackgroundColorDark
           : AppColors.scaffoldBackgroundColorLight,
       body: Stack(
@@ -71,7 +70,7 @@ class _AuthScreenState extends State<AuthScreen> {
                       children: <Widget>[
                         ButtonShared(
                             text: "SIGN IN",
-                            colorButton: AppConstants.isDarkMode(context)
+                            colorButton: AppUtils.isDarkMode(context)
                                 ? AppColors.primaryColor
                                 : AppColors.accentColor,
                             onClick: _doLogin)
@@ -82,7 +81,7 @@ class _AuthScreenState extends State<AuthScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       TextLabelShared(
-                          colorTextLabel: AppConstants.isDarkMode(context)
+                          colorTextLabel: AppUtils.isDarkMode(context)
                               ? AppColors.onPrimaryColor
                               : AppColors.greyColor,
                           labelText: "DON'T HAVE AN ACCOUNT ? ",
@@ -90,7 +89,7 @@ class _AuthScreenState extends State<AuthScreen> {
                           fontLabelText: FontWeight.w500,
                           onClick: () {}),
                       TextLabelShared(
-                          colorTextLabel: AppConstants.isDarkMode(context)
+                          colorTextLabel: AppUtils.isDarkMode(context)
                               ? AppColors.accentColor
                               : AppColors.primaryColor,
                           labelText: " SIGN UP",
@@ -120,7 +119,7 @@ class _AuthScreenState extends State<AuthScreen> {
       AppUtils.showAlert(
           context,
           "Login: $message",
-          AppConstants.isDarkMode(context)
+          AppUtils.isDarkMode(context)
               ? AppColors.accentColor
               : AppColors.primaryColor);
     }
