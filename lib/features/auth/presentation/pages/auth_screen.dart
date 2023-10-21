@@ -26,9 +26,6 @@ class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppUtils.isDarkMode(context)
-          ? AppColors.scaffoldBackgroundColorDark
-          : AppColors.scaffoldBackgroundColorLight,
       body: Stack(
         children: <Widget>[
           AppUtils.firstPosition(context),
@@ -104,6 +101,7 @@ class _AuthScreenState extends State<AuthScreen> {
           AppUtils.isDarkMode(context)
               ? AppColors.accentColor
               : AppColors.primaryColor);
+      context.go(ScreenPaths.postPage);
     }
   }
 

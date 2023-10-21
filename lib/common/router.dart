@@ -77,10 +77,6 @@ final appRouter = GoRouter(
         )
       ],
     ),
-    GoRoute(
-      path: ScreenPaths.registerPage,
-      builder: (context, state) => const RegisterScreen(),
-    ),
   ],
 );
 

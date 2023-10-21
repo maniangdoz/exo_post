@@ -78,4 +78,18 @@ class AppUtils {
 
   static double getBiglDiameter(BuildContext context) =>
       MediaQuery.of(context).size.width * 7 / 8;
+
+  static String generateAcronym(String fullName) {
+    var nameParts = fullName.split(' ');
+    var acronym = '';
+    for (var part in nameParts) {
+      if (part.isNotEmpty) {
+        acronym += part[0];
+      }
+      if (acronym.length >= 2) {
+        break;
+      }
+    }
+    return acronym.toUpperCase();
+  }
 }

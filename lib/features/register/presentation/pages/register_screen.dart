@@ -28,9 +28,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppUtils.isDarkMode(context)
-          ? AppColors.scaffoldBackgroundColorDark
-          : AppColors.scaffoldBackgroundColorLight,
       body: Stack(
         children: <Widget>[
           AppUtils.firstPosition(context),
@@ -109,6 +106,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           AppUtils.isDarkMode(context)
               ? AppColors.accentColor
               : AppColors.primaryColor);
+      context.go(ScreenPaths.postPage);
     }
   }
 

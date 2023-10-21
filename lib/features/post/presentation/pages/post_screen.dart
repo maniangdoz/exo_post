@@ -1,4 +1,7 @@
+import 'package:exo_post/common/router.dart';
+import 'package:exo_post/common/utils/app_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../shared/presentation/widgets/action_button.dart';
 import '../../../shared/presentation/widgets/expandable_fa.dart';
@@ -47,5 +50,11 @@ class _PostScreenState extends State<PostScreen> {
     );
   }
 
-  _showAction(BuildContext context, int i) {}
+  _showAction(BuildContext context, int i) {
+    if (i == 1) {
+      context.go(ScreenPaths.authPage);
+    } else {
+      context.go('${ScreenPaths.authPage}g');
+    }
+  }
 }

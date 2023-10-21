@@ -1,3 +1,5 @@
+import 'package:exo_post/common/styles/colors.dart';
+import 'package:exo_post/common/utils/app_utils.dart';
 import 'package:flutter/material.dart';
 
 @immutable
@@ -13,16 +15,19 @@ class ActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return Material(
       shape: const CircleBorder(),
       clipBehavior: Clip.antiAlias,
-      color: theme.colorScheme.secondary,
+      color: AppUtils.isDarkMode(context)
+          ? AppColors.primaryColor
+          : AppColors.accentColor,
       elevation: 4,
       child: IconButton(
         onPressed: onPressed,
         icon: icon,
-        color: theme.colorScheme.onSecondary,
+        color: AppUtils.isDarkMode(context)
+            ? AppColors.accentColor
+            : AppColors.primaryColor,
       ),
     );
   }
