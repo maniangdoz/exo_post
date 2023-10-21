@@ -1,6 +1,5 @@
-
-import 'package:exo_post/common/constants.dart';
 import 'package:exo_post/common/styles/colors.dart';
+import 'package:exo_post/common/utils/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
@@ -10,7 +9,6 @@ class SplashScreen extends StatefulWidget {
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
-
 
 class _SplashScreenState extends State<SplashScreen> {
   @override
@@ -22,8 +20,8 @@ class _SplashScreenState extends State<SplashScreen> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 130),
               child: CircleAvatar(
-                      backgroundColor: AppConstants.isDarkMode(context)
-                          ? AppColors.scaffoldBackgroundColorDark
+                      backgroundColor: AppUtils.isDarkMode(context)
+                          ? AppColors.accentColor
                           : AppColors.primaryColor)
                   .animate()
                   .slideY(begin: -0.5, end: 0.2, duration: 0.5.seconds)
