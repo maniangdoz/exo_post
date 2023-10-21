@@ -9,7 +9,7 @@ class AppColors {
   static const Color accentColor = Color(0XFF4DE2EF);
   static Color scaffoldBackgroundColorLight = Colors.grey.shade100;
   static const Color scaffoldBackgroundColorDark = Color(0xFF181818);
-  static const Color appBarBackgroundColorLight = primaryColor;
+  static const Color appBarBackgroundColorLight = accentColor;
   static const Color appBarBackgroundColorDark = scaffoldBackgroundColorDark;
   static const Color appBarForegroundColor = onPrimaryColor;
 }

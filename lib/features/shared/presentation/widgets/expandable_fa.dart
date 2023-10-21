@@ -1,3 +1,5 @@
+import 'package:exo_post/common/styles/colors.dart';
+import 'package:exo_post/common/utils/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
@@ -87,7 +89,9 @@ class _ExpandableFabState extends State<ExpandableFab>
               padding: const EdgeInsets.all(8),
               child: Icon(
                 Icons.close,
-                color: Theme.of(context).primaryColor,
+                color: AppUtils.isDarkMode(context)
+                    ? AppColors.accentColor
+                    : AppColors.primaryColor,
               ),
             ),
           ),
@@ -117,6 +121,9 @@ class _ExpandableFabState extends State<ExpandableFab>
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
+            backgroundColor: AppUtils.isDarkMode(context)
+                ? AppColors.primaryColor
+                : AppColors.accentColor,
             child: const Icon(Icons.add_rounded),
           ),
         ),
