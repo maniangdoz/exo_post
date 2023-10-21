@@ -8,6 +8,7 @@ class TextFieldShared extends StatelessWidget {
   final int? maxLines;
   final TextEditingController? controller;
   final FormFieldValidator<String>? validator;
+  final Widget? suffixIcon;
 
   const TextFieldShared({
     Key? key,
@@ -16,7 +17,7 @@ class TextFieldShared extends StatelessWidget {
     required this.labelText,
     required this.typeText,
     required this.maxLines,
-    this.validator,
+    this.validator, this.suffixIcon,
   }) : super(key: key);
 
   @override
@@ -32,6 +33,7 @@ class TextFieldShared extends StatelessWidget {
           icon,
           color: AppColors.primaryColor,
         ),
+        suffixIcon: suffixIcon,
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(
             color: AppColors.scaffoldBackgroundColorLight,

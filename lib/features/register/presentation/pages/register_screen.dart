@@ -2,12 +2,15 @@ import 'package:exo_post/common/router.dart';
 import 'package:exo_post/common/styles/colors.dart';
 import 'package:exo_post/common/styles/sizes.dart';
 import 'package:exo_post/common/utils/app_utils.dart';
-import 'package:exo_post/common/utils/app_validator.dart';
-import 'package:exo_post/features/shared/presentation/button_shared.dart';
-import 'package:exo_post/features/shared/presentation/text_field_shared.dart';
-import 'package:exo_post/features/shared/presentation/text_label_shared.dart';
+import 'package:exo_post/features/shared/presentation/widgets/button_shared.dart';
+import 'package:exo_post/features/shared/presentation/widgets/text_label_shared.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../../shared/presentation/widgets/auth_register_container.dart';
+import '../../../shared/presentation/widgets/email_input.dart';
+import '../../../shared/presentation/widgets/name_input.dart';
+import '../../../shared/presentation/widgets/password_input.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -21,7 +24,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _nameTextFieldController = TextEditingController();
   final _emailTextFieldController = TextEditingController();
   final _passwordTextFieldController = TextEditingController();
-  bool _isShowPassword = false;
 
   @override
   Widget build(BuildContext context) {
@@ -40,49 +42,27 @@ class _RegisterScreenState extends State<RegisterScreen> {
               key: _formKey,
               child: ListView(
                 children: <Widget>[
-                  Container(
-                    decoration: BoxDecoration(
-                        color: AppColors.onPrimaryColor,
-                        borderRadius: BorderRadius.circular(10)),
-                    margin: const EdgeInsets.fromLTRB(20, 300, 20, 15),
-                    padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
-                    child: Column(
-                      children: <Widget>[
-                        TextFieldShared(
-                            controller: _nameTextFieldController,
-                            icon: Icons.person,
-                            labelText: "Name",
-                            typeText: "Text",
-                            maxLines: 1,
-                            validator: AppValidors.nameValidtor),
-                        TextFieldShared(
-                            controller: _emailTextFieldController,
-                            icon: Icons.email,
-                            labelText: "Email",
-                            typeText: "Email",
-                            maxLines: 1,
-                            validator: AppValidors.emailValidtor),
-                        TextFieldShared(
-                            controller: _passwordTextFieldController,
-                            icon: Icons.vpn_key,
-                            labelText: "Password",
-                            typeText: "Password",
-                            maxLines: 1,
-                            validator: AppValidors.passwordValidtor),
-                      ],
-                    ),
+                  AuthRegisterContainer(
+                    children: [
+                      NameInput(
+                          nameTextFieldController: _nameTextFieldController),
+                      EmailInput(
+                        emailTextFieldController: _emailTextFieldController,
+                      ),
+                      PasswordInput(
+                        passwordTextFieldController:
+                            _passwordTextFieldController,
+                      ),
+                    ],
                   ),
                   Container(
-                    margin: const EdgeInsets.fromLTRB(20, 40, 20, 15),
-                    child: Column(
-                      children: <Widget>[
-                        ButtonShared(
-                            text: "SIGNUP",
-                            colorButton: AppUtils.isDarkMode(context)
-                                ? AppColors.primaryColor
-                                : AppColors.accentColor,
-                            onClick: _doRegister)
-                      ],
+                    margin: const EdgeInsets.fromLTRB(20, 10, 20, 15),
+                    child: ButtonShared(
+                      text: "SIGNUP",
+                      colorButton: AppUtils.isDarkMode(context)
+                          ? AppColors.primaryColor
+                          : AppColors.accentColor,
+                      onClick: _doRegister,
                     ),
                   ),
                   Row(
@@ -120,7 +100,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       String email = _emailTextFieldController.text.toString().trim();
       String name = _nameTextFieldController.text.toString().trim();
       String password = _passwordTextFieldController.text.toString().trim();
-      String message = "name: ${name}email: ${email} password: $password";
+      String message = "name: $name email: $email password: $password";
       // widget.registerBloc.add(RegisterEventDoRegister(
       //     registerRequest: RegisterRequest(email: email, password: password)));
       AppUtils.showAlert(

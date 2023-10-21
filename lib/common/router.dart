@@ -18,6 +18,7 @@ class ScreenPaths {
   static String postPage = '/post';
   static String detailPostPage = 'post-detail/:id';
   static String authPage = '/login';
+  static String authPage_register = 'register';
   static String registerPage = '/register';
   static String profilPage = '/me';
   static String userPostPage = 'post-user/:id';
@@ -26,7 +27,7 @@ class ScreenPaths {
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
 final appRouter = GoRouter(
-  initialLocation: ScreenPaths.postPage,
+  initialLocation: ScreenPaths.authPage,
   navigatorKey: _rootNavigatorKey,
   errorBuilder: (context, state) => const ErrorScreen(),
   redirect: _redirect,
@@ -51,6 +52,12 @@ final appRouter = GoRouter(
     GoRoute(
       path: ScreenPaths.authPage,
       builder: (context, state) => const AuthScreen(),
+      routes: [
+        GoRoute(
+          path: ScreenPaths.authPage_register,
+          builder: (context, state) => const RegisterScreen(),
+        )
+      ],
     ),
     GoRoute(
       path: ScreenPaths.registerPage,
