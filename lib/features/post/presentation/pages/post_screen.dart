@@ -1,4 +1,5 @@
 import 'package:exo_post/common/router.dart';
+import 'package:exo_post/common/utils/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -16,16 +17,21 @@ class PostScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Posts App'),
       ),
-      body: ListView(
-        padding: const EdgeInsets.all(12),
-        children: const [
-          PostButton(),
-          SizedBox(
-            height: 10,
-          ),
-          PostCard(),
-        ],
-      ),
+      body: Stack(children: <Widget>[
+        AppUtils.firstPosition(context),
+        AppUtils.secondPosition(context, ""),
+        AppUtils.thirdPosition(context),
+        ListView(
+          padding: const EdgeInsets.all(12),
+          children: const [
+            PostButton(),
+            SizedBox(
+              height: 10,
+            ),
+            PostCard(),
+          ],
+        ),
+      ]),
       floatingActionButton: ExpandableFab(
         distance: 80,
         children: [
