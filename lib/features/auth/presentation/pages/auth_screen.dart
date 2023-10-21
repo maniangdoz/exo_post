@@ -108,6 +108,6 @@ class _AuthScreenState extends State<AuthScreen> {
   }
 
   void _goToRegisterPage() {
-    context.go('${ScreenPaths.authPage}/${ScreenPaths.authPage_register}');
+    context.go('${ScreenPaths.authPage}/${ScreenPaths.authPageRegister}');
   }
 }

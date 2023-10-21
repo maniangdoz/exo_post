@@ -5,15 +5,22 @@ import '../../../shared/presentation/widgets/expandable_fa.dart';
 import '../widgets/post_button.dart';
 import '../widgets/post_card.dart';
 
-class PostScreen extends StatelessWidget {
+class PostScreen extends StatefulWidget {
   const PostScreen({super.key});
+
+  @override
+  State<PostScreen> createState() => _PostScreenState();
+}
+
+class _PostScreenState extends State<PostScreen> {
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Posts App'),
-      ),
       body: ListView(
         padding: const EdgeInsets.all(12),
         children: const [

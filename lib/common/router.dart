@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:exo_post/features/auth/presentation/pages/auth_screen.dart';
 import 'package:exo_post/features/detail_post/presentation/pages/detail_post_screen.dart';
@@ -11,14 +12,17 @@ import 'package:exo_post/features/user/presentation/pages/user_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../features/home/presentation/pages/home_screen.dart';
+
 class ScreenPaths {
   ScreenPaths._();
 
   static String splash = '/';
+  static String homeScreen = '/home/:index';
   static String postPage = '/post';
   static String detailPostPage = 'post-detail/:id';
   static String authPage = '/login';
-  static String authPage_register = 'register';
+  static String authPageRegister = 'register';
   static String registerPage = '/register';
   static String profilPage = '/me';
   static String userPostPage = 'post-user/:id';
@@ -27,14 +31,24 @@ class ScreenPaths {
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
 final appRouter = GoRouter(
-  initialLocation: ScreenPaths.authPage,
+  initialLocation: '/home/0',
   navigatorKey: _rootNavigatorKey,
-  errorBuilder: (context, state) => const ErrorScreen(),
+  errorBuilder: (context, state) {
+    log(state.error!.message);
+    return const ErrorScreen();
+  },
   redirect: _redirect,
   routes: [
     GoRoute(
       path: ScreenPaths.splash,
       builder: (context, state) => const SplashScreen(),
+    ),
+    GoRoute(
+      path: ScreenPaths.homeScreen,
+      builder: (context, state) {
+        final index = state.pathParameters['index'];
+        return HomeScreen(index: int.parse(index ?? '0'));
+      },
     ),
     GoRoute(
         path: ScreenPaths.postPage,
@@ -50,11 +64,15 @@ final appRouter = GoRouter(
           ),
         ]),
     GoRoute(
+      path: ScreenPaths.profilPage,
+      builder: (context, state) => const ProfilScreen(),
+    ),
+    GoRoute(
       path: ScreenPaths.authPage,
       builder: (context, state) => const AuthScreen(),
       routes: [
         GoRoute(
-          path: ScreenPaths.authPage_register,
+          path: ScreenPaths.authPageRegister,
           builder: (context, state) => const RegisterScreen(),
         )
       ],
@@ -62,10 +80,6 @@ final appRouter = GoRouter(
     GoRoute(
       path: ScreenPaths.registerPage,
       builder: (context, state) => const RegisterScreen(),
-    ),
-    GoRoute(
-      path: ScreenPaths.profilPage,
-      builder: (context, state) => const ProfilScreen(),
     ),
   ],
 );
