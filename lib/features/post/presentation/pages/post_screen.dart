@@ -49,6 +49,10 @@ class PostScreen extends StatelessWidget {
   }
 
   _showAction(BuildContext context, int i) {
-    if (i == 1) context.go(ScreenPaths.authPage);
+    if (i == 1) {
+      context.go(ScreenPaths.authPage);
+    } else {
+      context.go('${ScreenPaths.authPage}g');
+    }
   }
 }
