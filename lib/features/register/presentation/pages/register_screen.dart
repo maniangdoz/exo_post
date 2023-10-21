@@ -109,6 +109,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           AppUtils.isDarkMode(context)
               ? AppColors.accentColor
               : AppColors.primaryColor);
+      context.go(ScreenPaths.postPage);
     }
   }
 

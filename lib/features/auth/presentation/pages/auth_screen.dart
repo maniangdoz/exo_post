@@ -104,10 +104,11 @@ class _AuthScreenState extends State<AuthScreen> {
           AppUtils.isDarkMode(context)
               ? AppColors.accentColor
               : AppColors.primaryColor);
+      context.go(ScreenPaths.postPage);
     }
   }
 
   void _goToRegisterPage() {
-    context.go('${ScreenPaths.authPage}/${ScreenPaths.registerPage}');
+    context.go(ScreenPaths.registerPage);
   }
 }
