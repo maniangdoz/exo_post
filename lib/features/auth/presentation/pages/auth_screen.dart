@@ -26,9 +26,6 @@ class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppUtils.isDarkMode(context)
-          ? AppColors.scaffoldBackgroundColorDark
-          : AppColors.scaffoldBackgroundColorLight,
       body: Stack(
         children: <Widget>[
           AppUtils.firstPosition(context),
@@ -109,6 +106,6 @@ class _AuthScreenState extends State<AuthScreen> {
   }
 
   void _goToRegisterPage() {
-    context.go(ScreenPaths.registerPage);
+    context.go('${ScreenPaths.authPage}/${ScreenPaths.authPageRegister}');
   }
 }

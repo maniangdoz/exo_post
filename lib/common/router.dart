@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:exo_post/features/auth/presentation/pages/auth_screen.dart';
 import 'package:exo_post/features/detail_post/presentation/pages/detail_post_screen.dart';
 import 'package:exo_post/features/error/presentation/pages/error_screen.dart';
 import 'package:exo_post/features/post/presentation/pages/post_screen.dart';
@@ -17,7 +18,7 @@ class ScreenPaths {
   static String postPage = '/post';
   static String detailPostPage = 'post-detail/:id';
   static String authPage = '/login';
-  static String registerPage = '/register';
+  static String authPageRegister = 'register';
   static String profilPage = '/me';
   static String userPostPage = 'post-user/:id';
 }
@@ -25,7 +26,7 @@ class ScreenPaths {
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
 final appRouter = GoRouter(
-  initialLocation: ScreenPaths.postPage,
+  initialLocation: ScreenPaths.authPage,
   navigatorKey: _rootNavigatorKey,
   errorBuilder: (context, state) => const ErrorScreen(),
   redirect: _redirect,
@@ -48,8 +49,14 @@ final appRouter = GoRouter(
           ),
         ]),
     GoRoute(
-      path: ScreenPaths.registerPage,
-      builder: (context, state) => const RegisterScreen(),
+      path: ScreenPaths.authPage,
+      builder: (context, state) => const AuthScreen(),
+      routes: [
+        GoRoute(
+          path: ScreenPaths.authPageRegister,
+          builder: (context, state) => const RegisterScreen(),
+        )
+      ],
     ),
     GoRoute(
       path: ScreenPaths.profilPage,
