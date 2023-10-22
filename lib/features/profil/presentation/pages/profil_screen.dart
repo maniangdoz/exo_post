@@ -1,3 +1,4 @@
+import 'package:exo_post/common/utils/app_utils.dart';
 import 'package:flutter/material.dart';
 
 class ProfilScreen extends StatelessWidget {
@@ -5,13 +6,19 @@ class ProfilScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text(
-          'ProfilScreen is working',
-          style: TextStyle(fontSize: 20),
+    return Scaffold(
+        body: Stack(
+      children: <Widget>[
+        AppUtils.firstPosition(context),
+        AppUtils.secondPosition(context, ""),
+        AppUtils.thirdPosition(context),
+        const Center(
+          child: Text(
+            'ProfilScreen is working',
+            style: TextStyle(fontSize: 20),
+          ),
         ),
-      ),
-    );
+      ],
+    ));
   }
 }

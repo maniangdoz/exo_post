@@ -1,6 +1,5 @@
 import 'package:exo_post/common/router.dart';
 import 'package:exo_post/common/styles/colors.dart';
-import 'package:exo_post/common/utils/app_utils.dart';
 import 'package:exo_post/features/shared/presentation/widgets/button_shared.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';

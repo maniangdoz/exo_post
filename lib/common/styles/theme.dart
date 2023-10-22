@@ -15,6 +15,9 @@ class AppTheme {
       primary: AppColors.primaryColor,
       onPrimary: AppColors.onPrimaryColor,
     ),
+    tabBarTheme: const TabBarTheme(
+      labelColor: Colors.white,
+    ),
   );
 
   static ThemeData darkTheme = ThemeData(
@@ -29,6 +32,9 @@ class AppTheme {
     colorScheme: const ColorScheme.dark(
       primary: AppColors.primaryColor,
       onPrimary: AppColors.onPrimaryColor,
+    ),
+    tabBarTheme: const TabBarTheme(
+      labelColor: AppColors.primaryColor,
     ),
   );
 }

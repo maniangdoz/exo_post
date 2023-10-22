@@ -69,15 +69,15 @@ class _PostCardState extends State<PostCard>
                 onTap: _onContainerTap,
                 child: Center(
                   child: ScaleTransition(
-                    scale: _animation,
-                    child: Container(
-                      width: double.infinity,
-                      height: 150,
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
+                      scale: _animation,
+                      child: Image.asset(
+                        'assets/images/something_wrong.png',
+                        fit: BoxFit.cover,
+                        height: _isZoomed
+                            ? MediaQuery.of(context).size.height * 0.6
+                            : 150,
+                        width: double.infinity,
+                      )),
                 ),
               ),
               const Padding(
