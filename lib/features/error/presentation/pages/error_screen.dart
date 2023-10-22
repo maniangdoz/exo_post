@@ -24,15 +24,13 @@ class _ErrorScreenState extends State<ErrorScreen> {
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
           ),
-          Positioned(
+          const Positioned(
             bottom: 230,
             left: 30,
             child: Text(
               'Dead End',
               style: TextStyle(
-                color: AppUtils.isDarkMode(context)
-                    ? AppColors.accentColor
-                    : AppColors.primaryColor,
+                color: AppColors.primaryColor,
                 fontSize: 25,
                 letterSpacing: 1,
                 fontWeight: FontWeight.w500,
@@ -59,9 +57,7 @@ class _ErrorScreenState extends State<ErrorScreen> {
             right: 30,
             child: ButtonShared(
               text: "HOME",
-              colorButton: AppUtils.isDarkMode(context)
-                  ? AppColors.primaryColor
-                  : AppColors.accentColor,
+              colorButton: AppColors.primaryColor,
               onClick: _goBack,
             ),
           )

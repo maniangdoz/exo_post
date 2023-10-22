@@ -40,8 +40,8 @@ class _PostCardState extends State<PostCard>
       onTap: _onBackgroundTap,
       child: Card(
         color: AppUtils.isDarkMode(context)
-            ? AppColors.primaryColor
-            : AppColors.accentColor,
+            ? Colors.black
+            : AppColors.primaryColor,
         child: SizedBox(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,12 +53,14 @@ class _PostCardState extends State<PostCard>
                 subtitle: const Text('time'),
                 leading: CircleAvatar(
                   backgroundColor: AppUtils.isDarkMode(context)
-                      ? AppColors.accentColor
-                      : AppColors.primaryColor,
+                      ? AppColors.primaryColor
+                      : AppColors.accentColor,
                   child: Text(
-                    AppUtils.generateAcronym("Winnie Parton"),
-                    style: const TextStyle(
-                      color: Colors.white,
+                    AppUtils.generateAcronym("Sender name"),
+                    style: TextStyle(
+                      color: AppUtils.isDarkMode(context)
+                          ? AppColors.accentColor
+                          : AppColors.scaffoldBackgroundColorDark,
                     ),
                   ),
                 ),

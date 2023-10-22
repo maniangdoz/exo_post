@@ -56,9 +56,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     margin: const EdgeInsets.fromLTRB(20, 10, 20, 15),
                     child: ButtonShared(
                       text: "SIGNUP",
-                      colorButton: AppUtils.isDarkMode(context)
-                          ? AppColors.primaryColor
-                          : AppColors.accentColor,
+                      colorButton: AppColors.primaryColor,
                       onClick: _doRegister,
                     ),
                   ),
