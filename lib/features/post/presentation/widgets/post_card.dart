@@ -23,7 +23,7 @@ class _PostCardState extends State<PostCard>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 50),
     );
     _animation = Tween<double>(begin: 1.0, end: 1.5).animate(_controller);
   }
