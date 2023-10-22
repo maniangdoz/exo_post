@@ -1,4 +1,5 @@
 import 'package:exo_post/common/router.dart';
+import 'package:exo_post/common/styles/colors.dart';
 import 'package:exo_post/common/utils/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -24,14 +25,27 @@ class _PostScreenState extends State<PostScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
-        padding: const EdgeInsets.all(12),
-        children: const [
-          PostButton(),
-          SizedBox(
-            height: 10,
-          ),
-          PostCard(),
+      appBar: AppBar(
+        title: const Text("X Like"),
+        backgroundColor: AppUtils.isDarkMode(context)
+            ? Colors.black
+            : AppColors.primaryColor,
+      ),
+      body: Stack(
+        children: <Widget>[
+          AppUtils.firstPosition(context),
+          AppUtils.secondPosition(context, "Login"),
+          AppUtils.thirdPosition(context),
+          ListView(
+            padding: const EdgeInsets.all(12),
+            children: const [
+              PostButton(),
+              SizedBox(
+                height: 10,
+              ),
+              PostCard(),
+            ],
+          )
         ],
       ),
       floatingActionButton: ExpandableFab(
