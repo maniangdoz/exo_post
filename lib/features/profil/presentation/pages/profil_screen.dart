@@ -6,13 +6,13 @@ class ProfilScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
         body: Stack(
       children: <Widget>[
-        AppUtils.firstPosition(context),
-        AppUtils.secondPosition(context, ""),
-        AppUtils.thirdPosition(context),
-        const Center(
+        // AppUtils.firstPosition(context),
+        // AppUtils.secondPosition(context, ""),
+        // AppUtils.thirdPosition(context),
+        Center(
           child: Text(
             'ProfilScreen is working',
             style: TextStyle(fontSize: 20),

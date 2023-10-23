@@ -1,12 +1,12 @@
 import 'package:exo_post/common/router.dart';
 import 'package:exo_post/common/utils/app_utils.dart';
+import 'package:exo_post/features/post/presentation/widgets/skeleton_post.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../shared/presentation/widgets/action_button.dart';
 import '../../../shared/presentation/widgets/expandable_fa.dart';
 import '../widgets/post_button.dart';
-import '../widgets/post_card.dart';
 
 class PostScreen extends StatefulWidget {
   const PostScreen({super.key});
@@ -26,17 +26,20 @@ class _PostScreenState extends State<PostScreen> {
     return Scaffold(
       body: Stack(
         children: <Widget>[
-          AppUtils.firstPosition(context),
-          AppUtils.secondPosition(context, ""),
-          AppUtils.thirdPosition(context),
+          // AppUtils.firstPosition(context),
+          // AppUtils.secondPosition(context, ""),
+          // AppUtils.thirdPosition(context),
           ListView(
-            padding: const EdgeInsets.all(12),
+            padding: const EdgeInsets.all(8),
             children: const [
               PostButton(),
               SizedBox(
                 height: 10,
               ),
-              PostCard(),
+              SkeletonPost(),
+              SizedBox(
+                height: 100,
+              ),
             ],
           )
         ],
