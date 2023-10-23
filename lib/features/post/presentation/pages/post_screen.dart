@@ -24,14 +24,21 @@ class _PostScreenState extends State<PostScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
-        padding: const EdgeInsets.all(12),
-        children: const [
-          PostButton(),
-          SizedBox(
-            height: 10,
-          ),
-          PostCard(),
+      body: Stack(
+        children: <Widget>[
+          AppUtils.firstPosition(context),
+          AppUtils.secondPosition(context, ""),
+          AppUtils.thirdPosition(context),
+          ListView(
+            padding: const EdgeInsets.all(12),
+            children: const [
+              PostButton(),
+              SizedBox(
+                height: 10,
+              ),
+              PostCard(),
+            ],
+          )
         ],
       ),
       floatingActionButton: ExpandableFab(

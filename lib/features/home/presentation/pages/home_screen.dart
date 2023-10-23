@@ -1,5 +1,7 @@
 import 'dart:developer';
 
+import 'package:exo_post/common/styles/colors.dart';
+import 'package:exo_post/common/utils/app_utils.dart';
 import 'package:exo_post/features/profil/presentation/pages/profil_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -43,11 +45,14 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   Widget build(BuildContext context) {
-    log('${widget.index}');
     super.build(context);
+    
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Twitter'),
+        title: const Text("X Like"),
+        backgroundColor: AppUtils.isDarkMode(context)
+            ? Colors.black
+            : AppColors.primaryColor,
         bottom: TabBar(
           controller: _controller,
           tabs: const [

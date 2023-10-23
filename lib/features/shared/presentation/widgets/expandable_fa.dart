@@ -121,9 +121,7 @@ class _ExpandableFabState extends State<ExpandableFab>
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
-            backgroundColor: AppUtils.isDarkMode(context)
-                ? AppColors.primaryColor
-                : AppColors.accentColor,
+            backgroundColor: AppColors.primaryColor,
             child: const Icon(Icons.add_rounded),
           ),
         ),

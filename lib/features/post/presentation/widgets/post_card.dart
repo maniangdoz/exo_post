@@ -23,7 +23,7 @@ class _PostCardState extends State<PostCard>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 200),
+      duration: const Duration(milliseconds: 50),
     );
     _animation = Tween<double>(begin: 1.0, end: 1.5).animate(_controller);
   }
@@ -40,8 +40,8 @@ class _PostCardState extends State<PostCard>
       onTap: _onBackgroundTap,
       child: Card(
         color: AppUtils.isDarkMode(context)
-            ? AppColors.primaryColor
-            : AppColors.accentColor,
+            ? Colors.black
+            : AppColors.primaryColor,
         child: SizedBox(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,12 +53,14 @@ class _PostCardState extends State<PostCard>
                 subtitle: const Text('time'),
                 leading: CircleAvatar(
                   backgroundColor: AppUtils.isDarkMode(context)
-                      ? AppColors.accentColor
-                      : AppColors.primaryColor,
+                      ? AppColors.primaryColor
+                      : AppColors.accentColor,
                   child: Text(
-                    AppUtils.generateAcronym("Winnie Parton"),
-                    style: const TextStyle(
-                      color: Colors.white,
+                    AppUtils.generateAcronym("Sender name"),
+                    style: TextStyle(
+                      color: AppUtils.isDarkMode(context)
+                          ? AppColors.accentColor
+                          : AppColors.scaffoldBackgroundColorDark,
                     ),
                   ),
                 ),
@@ -67,22 +69,22 @@ class _PostCardState extends State<PostCard>
                 onTap: _onContainerTap,
                 child: Center(
                   child: ScaleTransition(
-                    scale: _animation,
-                    child: Container(
-                      width: double.infinity,
-                      height: 150,
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
+                      scale: _animation,
+                      child: Image.asset(
+                        'assets/images/something_wrong.png',
+                        fit: BoxFit.cover,
+                        height: _isZoomed
+                            ? MediaQuery.of(context).size.height * 0.6
+                            : 150,
+                        width: double.infinity,
+                      )),
                 ),
               ),
               const Padding(
                 padding:
                     EdgeInsets.only(left: 18, right: 18, top: 10, bottom: 10),
                 child: ReadMoreText(
-                  "Le lorem ipsum est, en imprimerie, une suite de mots sans signification utilisée à titre provisoire pour calibrer une mise en page, ",
+                  "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.",
                   trimLines: 2,
                   colorClickableText: AppColors.accentColor,
                   trimMode: TrimMode.Line,
@@ -97,18 +99,18 @@ class _PostCardState extends State<PostCard>
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    left: 18, right: 18, top: 10, bottom: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.comment_rounded)),
-                    const Text('0'),
-                  ],
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.mode_comment),
+                  ),
+                  const Text(
+                    '12', // Replace with the actual number of comments
+                  ),
+                  const SizedBox(width: 10), // Adjust the width as needed
+                ],
               ),
             ],
           ),

@@ -52,9 +52,7 @@ class _AuthScreenState extends State<AuthScreen> {
                     margin: const EdgeInsets.fromLTRB(20, 10, 20, 15),
                     child: ButtonShared(
                       text: "SIGN IN",
-                      colorButton: AppUtils.isDarkMode(context)
-                          ? AppColors.primaryColor
-                          : AppColors.accentColor,
+                      colorButton: AppColors.primaryColor,
                       onClick: _doLogin,
                     ),
                   ),

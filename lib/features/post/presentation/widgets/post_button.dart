@@ -13,13 +13,13 @@ class PostButton extends StatelessWidget {
       onPressed: () {},
       icon: Icon(Icons.camera_alt_rounded,
           color: AppUtils.isDarkMode(context)
-              ? AppColors.accentColor
+              ? AppColors.onPrimaryColor
               : AppColors.primaryColor),
       label: Text(
         'Add post',
         style: TextStyle(
           color: AppUtils.isDarkMode(context)
-              ? AppColors.accentColor
+              ? AppColors.onPrimaryColor
               : AppColors.primaryColor,
         ),
       ),
