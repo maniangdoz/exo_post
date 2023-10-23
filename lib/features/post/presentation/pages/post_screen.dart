@@ -51,10 +51,9 @@ class _PostScreenState extends State<PostScreen> {
   }
 
   _showAction(BuildContext context, int i) {
-    if (i == 1) {
-      context.go(ScreenPaths.authPage);
+    if (i == 0) {
     } else {
-      context.go('${ScreenPaths.authPage}g');
+      context.go(ScreenPaths.authPage);
     }
   }
 }

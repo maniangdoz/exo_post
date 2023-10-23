@@ -23,7 +23,7 @@ class _PostCardState extends State<PostCard>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 200),
     );
     _animation = Tween<double>(begin: 1.0, end: 1.5).animate(_controller);
   }
@@ -82,12 +82,12 @@ class _PostCardState extends State<PostCard>
                 padding:
                     EdgeInsets.only(left: 18, right: 18, top: 10, bottom: 10),
                 child: ReadMoreText(
-                  "Le lorem ipsum est, en imprimerie, une suite de mots sans signification utilisée à titre provisoire pour calibrer une mise en page,",
+                  "Le lorem ipsum est, en imprimerie, une suite de mots sans signification utilisée à titre provisoire pour calibrer une mise en page, ",
                   trimLines: 2,
                   colorClickableText: AppColors.accentColor,
                   trimMode: TrimMode.Line,
-                  trimCollapsedText: ' more',
-                  trimExpandedText: ' less',
+                  trimCollapsedText: 'more',
+                  trimExpandedText: 'less',
                   textAlign: TextAlign.start,
                   moreStyle: TextStyle(
                     fontWeight: FontWeight.bold,
@@ -97,8 +97,18 @@ class _PostCardState extends State<PostCard>
                   ),
                 ),
               ),
-              const Row(
-                children: [],
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: 18, right: 18, top: 10, bottom: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    IconButton(
+                        onPressed: () {},
+                        icon: const Icon(Icons.comment_rounded)),
+                    const Text('0'),
+                  ],
+                ),
               ),
             ],
           ),

@@ -47,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen>
     super.build(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('PostsApp'),
+        title: const Text('Twitter'),
         bottom: TabBar(
           controller: _controller,
           tabs: const [

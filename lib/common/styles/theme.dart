@@ -30,5 +30,10 @@ class AppTheme {
       primary: AppColors.primaryColor,
       onPrimary: AppColors.onPrimaryColor,
     ),
+    tabBarTheme: const TabBarTheme(
+      labelColor: AppColors.accentColor,
+      indicatorColor: AppColors.whiteColor,
+      unselectedLabelColor: AppColors.greyColor,
+    ),
   );
 }
