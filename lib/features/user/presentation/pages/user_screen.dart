@@ -10,10 +10,10 @@ class UserScreen extends StatelessWidget {
         title: const Text('UserScreen'),
         centerTitle: true,
       ),
-      body: const Center(
+      body: Center(
         child: Text(
           'UserScreen is working',
-          style: TextStyle(fontSize: 20),
+          style: Theme.of(context).textTheme.headlineLarge,
         ),
       ),
     );

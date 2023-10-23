@@ -10,10 +10,10 @@ class DetailPostScreen extends StatelessWidget {
         title: const Text('DetailPostScreen'),
         centerTitle: true,
       ),
-      body: const Center(
+      body: Center(
         child: Text(
           'DetailPostScreen is working',
-          style: TextStyle(fontSize: 20),
+          style: Theme.of(context).textTheme.headlineLarge,
         ),
       ),
     );

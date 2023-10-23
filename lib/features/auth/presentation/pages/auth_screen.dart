@@ -99,7 +99,7 @@ class _AuthScreenState extends State<AuthScreen> {
           AppUtils.isDarkMode(context)
               ? AppColors.accentColor
               : AppColors.primaryColor);
-      context.go(ScreenPaths.postPage);
+      context.go('/home/0');
     }
   }
 

@@ -5,8 +5,9 @@ import 'package:readmore/readmore.dart';
 import '../../../../common/styles/colors.dart';
 
 class PostCard extends StatefulWidget {
-  const PostCard({Key? key}) : super(key: key);
+  const PostCard({Key? key, required this.type}) : super(key: key);
 
+  final String type;
   @override
   State<PostCard> createState() => _PostCardState();
 }
@@ -46,25 +47,7 @@ class _PostCardState extends State<PostCard>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ListTile(
-                contentPadding:
-                    const EdgeInsets.only(left: 18, right: 18, top: 5),
-                title: const Text('Sender name'),
-                subtitle: const Text('time'),
-                leading: CircleAvatar(
-                  backgroundColor: AppUtils.isDarkMode(context)
-                      ? AppColors.primaryColor
-                      : AppColors.accentColor,
-                  child: Text(
-                    AppUtils.generateAcronym("Sender name"),
-                    style: TextStyle(
-                      color: AppUtils.isDarkMode(context)
-                          ? AppColors.accentColor
-                          : AppColors.scaffoldBackgroundColorDark,
-                    ),
-                  ),
-                ),
-              ),
+              widget.type == 'post' ? _buildPostCard() : Container(),
               GestureDetector(
                 onTap: _onContainerTap,
                 child: Center(
@@ -128,6 +111,27 @@ class _PostCardState extends State<PostCard>
         _controller.reverse();
       }
     });
+  }
+
+  Widget _buildPostCard() {
+    return ListTile(
+      contentPadding: const EdgeInsets.only(left: 18, right: 18, top: 5),
+      title: const Text('Sender name'),
+      subtitle: const Text('time'),
+      leading: CircleAvatar(
+        backgroundColor: AppUtils.isDarkMode(context)
+            ? AppColors.primaryColor
+            : AppColors.accentColor,
+        child: Text(
+          AppUtils.generateAcronym("Sender name"),
+          style: TextStyle(
+            color: AppUtils.isDarkMode(context)
+                ? AppColors.accentColor
+                : AppColors.scaffoldBackgroundColorDark,
+          ),
+        ),
+      ),
+    );
   }
 
   void _onBackgroundTap() {

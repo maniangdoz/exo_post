@@ -41,9 +41,7 @@ class AppUtils {
           child: Center(
             child: Text(
               title,
-              style: const TextStyle(
-                  fontSize: AppSizes.titleLabel,
-                  color: AppColors.onPrimaryColor),
+              style: Theme.of(context).textTheme.labelSmall,
             ),
           ),
         ),

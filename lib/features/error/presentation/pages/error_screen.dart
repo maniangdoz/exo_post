@@ -36,17 +36,12 @@ class _ErrorScreenState extends State<ErrorScreen> {
               ),
             ),
           ),
-          const Positioned(
+          Positioned(
             bottom: 170,
             left: 30,
             child: Text(
               'Oops! The page you are looking for\nis not found',
-              style: TextStyle(
-                color: AppColors.greyColor,
-                fontSize: 16,
-                letterSpacing: 1,
-                fontWeight: FontWeight.w500,
-              ),
+              style: Theme.of(context).textTheme.displayLarge,
               textAlign: TextAlign.start,
             ),
           ),
