@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:readmore/readmore.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-
 class SkeletonPost extends StatefulWidget {
   const SkeletonPost({super.key});
 
