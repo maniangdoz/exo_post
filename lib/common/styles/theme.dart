@@ -12,6 +12,7 @@ class AppTheme {
       foregroundColor: AppColors.appBarForegroundColor,
     ),
     textTheme: const TextTheme(
+        titleSmall: TextStyle(fontSize: 14, color: AppColors.whiteColor),
         headlineMedium: TextStyle(
             color: AppColors.primaryColor, fontWeight: FontWeight.bold),
         displayMedium: TextStyle(

@@ -3,6 +3,8 @@ import 'package:exo_post/common/utils/app_utils.dart';
 import 'package:exo_post/features/post/presentation/widgets/post_card.dart';
 import 'package:flutter/material.dart';
 
+import '../../../shared/presentation/widgets/horizontal_dash.dart';
+
 class ProfilScreen extends StatelessWidget {
   const ProfilScreen({super.key});
 
@@ -34,30 +36,67 @@ class ProfilScreen extends StatelessWidget {
                       'Sender name',
                       style: Theme.of(context).textTheme.headlineMedium,
                     ),
-                    const SizedBox(height: 5),
-                    Text(
-                      'email@email.com',
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                    const SizedBox(height: 20),
-                    Text(
-                      "120 comments",
-                      style: Theme.of(context).textTheme.displayLarge,
-                    ),
-                    const Divider(
-                      color: AppColors.greyColor,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(
+                          Icons.mail_rounded,
+                          color: AppColors.greyColor,
+                        ),
+                        const SizedBox(
+                          width: 4,
+                        ),
+                        Text(
+                          'email@email.com',
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                      ],
                     ),
                   ],
                 ),
               ),
-              Text(
-                "My posts",
-                style: Theme.of(context).textTheme.displaySmall,
+              const SizedBox(
+                height: 20,
               ),
-              const Divider(
-                color: AppColors.greyColor,
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    Text(
+                      "My posts",
+                      style: Theme.of(context).textTheme.displaySmall,
+                    ),
+                    Expanded(
+                      child: Row(
+                        children: [
+                          const Expanded(
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 8.0, right: 2),
+                              child: HorizontalDash(),
+                            ),
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30),
+                              color: AppUtils.isDarkMode(context)
+                                  ? AppColors.accentColor
+                                  : AppColors.primaryColor,
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  right: 8, left: 8, top: 5, bottom: 5),
+                              child: Text(
+                                "120 comments",
+                                style: Theme.of(context).textTheme.titleSmall,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              const SizedBox(height: 20),
               const PostCard(type: 'profil'),
               const PostCard(type: 'profil'),
               const SizedBox(
