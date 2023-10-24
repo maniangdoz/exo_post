@@ -1,6 +1,5 @@
 //method or validator
 import 'package:exo_post/common/styles/colors.dart';
-import 'package:exo_post/common/styles/sizes.dart';
 import 'package:flutter/material.dart';
 
 class AppUtils {
