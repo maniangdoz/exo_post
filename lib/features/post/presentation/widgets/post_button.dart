@@ -3,14 +3,16 @@ import 'package:exo_post/common/utils/app_utils.dart';
 import 'package:flutter/material.dart';
 
 class PostButton extends StatelessWidget {
+  final VoidCallback? onClick;
   const PostButton({
     super.key,
+    required this.onClick,
   });
 
   @override
   Widget build(BuildContext context) {
     return OutlinedButton.icon(
-      onPressed: () {},
+      onPressed: onClick,
       icon: Icon(Icons.camera_alt_rounded,
           color: AppUtils.isDarkMode(context)
               ? AppColors.onPrimaryColor

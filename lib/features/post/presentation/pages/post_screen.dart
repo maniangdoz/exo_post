@@ -1,4 +1,5 @@
 import 'package:exo_post/common/router.dart';
+import 'package:exo_post/features/post/presentation/widgets/post_add.dart';
 import 'package:exo_post/features/post/presentation/widgets/skeleton_post.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -27,13 +28,13 @@ class _PostScreenState extends State<PostScreen> {
         children: <Widget>[
           ListView(
             padding: const EdgeInsets.all(8),
-            children: const [
-              PostButton(),
-              SizedBox(
+            children: [
+              PostButton(onClick: () => _showModalBottomSheet(context)),
+              const SizedBox(
                 height: 10,
               ),
-              SkeletonPost(),
-              SizedBox(
+              const SkeletonPost(),
+              const SizedBox(
                 height: 100,
               ),
             ],
@@ -58,8 +59,18 @@ class _PostScreenState extends State<PostScreen> {
 
   _showAction(BuildContext context, int i) {
     if (i == 0) {
+      _showModalBottomSheet(context);
     } else {
       context.go(ScreenPaths.authPage);
     }
+  }
+
+  void _showModalBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return const PostAdd();
+      },
+    );
   }
 }
