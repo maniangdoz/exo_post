@@ -1,6 +1,16 @@
 //value don't change
 
+import 'package:flutter/material.dart';
+
+import 'styles/colors.dart';
+
 class AppConstants {
   AppConstants._();
 
+  static TextStyle? textStyle() {
+    return const TextStyle(
+      fontSize: 12,
+      color: AppColors.greyColor,
+    );
+  }
 }

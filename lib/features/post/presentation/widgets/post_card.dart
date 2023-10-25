@@ -28,7 +28,14 @@ class _PostCardState extends State<PostCard> {
           children: [
             widget.type == 'post'
                 ? _buildHeaderCard('Sender name')
-                : Container(),
+                : Container(
+                    padding: const EdgeInsets.only(
+                        left: 18, right: 18, top: 5, bottom: 5),
+                    child: Text(
+                      '1 days ago',
+                      style: Theme.of(context).textTheme.displayLarge,
+                    ),
+                  ),
             Image.asset(
               'assets/images/connection_failed.png',
               width: double.infinity,
@@ -79,12 +86,12 @@ class _PostCardState extends State<PostCard> {
     return ListTile(
       contentPadding: const EdgeInsets.only(left: 18, right: 18, top: 5),
       title: Text(name),
-      subtitle: const Text('time'),
+      subtitle: const Text('1 days ago'),
       leading: AvatarUser(name: name, color: color),
     );
   }
 
   void _buildDetailPost(int id) {
-    context.go('/home/0/post-detail/$id');
+    context.go('/home/0/comment/$id');
   }
 }

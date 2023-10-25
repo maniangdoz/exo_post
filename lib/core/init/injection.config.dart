@@ -27,11 +27,11 @@ import '../../features/auth/domain/repository/auth_repo.dart' as _i5;
 import '../../features/auth/domain/usecases/auth_usecases.dart'
     as _i7;
 import '../../features/auth/presentation/bloc/auth_bloc.dart' as _i4;
-import '../../features/detail_post/data/repository/detail_post_repo_imp.dart'
+import '../../features/comment/data/repository/comment_repo_imp.dart'
     as _i9;
-import '../../features/detail_post/domain/repository/detail_post_repo.dart'
+import '../../features/comment/domain/repository/comment_repo.dart'
     as _i8;
-import '../../features/detail_post/domain/usecases/detail_post_usecases.dart'
+import '../../features/comment/domain/usecases/comment_usecases.dart'
     as _i10;
 import '../../features/post/data/repository/post_repo_imp.dart'
     as _i14;
@@ -76,8 +76,8 @@ extension GetItInjectableX on _i1.GetIt {
     gh.factory<_i4.AuthBloc>(() => _i4.AuthBloc());
     gh.factory<_i5.AuthRepo>(() => _i6.AuthRepoImp());
     gh.factory<_i7.AuthUseCases>(() => _i7.AuthUseCases());
-    gh.factory<_i8.DetailPostRepo>(() => _i9.DetailPostRepoImp());
-    gh.factory<_i10.DetailPostUseCases>(() => _i10.DetailPostUseCases());
+    gh.factory<_i8.CommentRepo>(() => _i9.CommentRepoImp());
+    gh.factory<_i10.CommentUseCases>(() => _i10.CommentUseCases());
     gh.factory<_i11.HttpClient>(() => networkModule.client);
     gh.factory<_i12.ImagePicker>(() => imageModule.initImagePicker());
     gh.factory<_i13.PostRepo>(() => _i14.PostRepoImp());
