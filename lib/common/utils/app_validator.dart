@@ -23,4 +23,11 @@ class AppValidors {
     }
     return null;
   }
+
+   static String? commentValidtor(String? value) {
+    if (value == null || value.isEmpty) {
+      return "Comment must not be empty";
+    }
+    return null;
+  }
 }

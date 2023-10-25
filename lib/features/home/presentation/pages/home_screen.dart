@@ -1,3 +1,4 @@
+import 'package:exo_post/common/router.dart';
 import 'package:exo_post/common/styles/colors.dart';
 import 'package:exo_post/common/utils/app_utils.dart';
 import 'package:exo_post/features/profil/presentation/pages/profil_screen.dart';
@@ -70,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen>
     );
   }
 
-  _tap(BuildContext context, int index) => context.go('/home/$index');
+  _tap(BuildContext context, int index) =>context.go(ScreenPaths.homeScreen.replaceAll(':id', index.toString()));
 
   @override
   bool get wantKeepAlive => true;

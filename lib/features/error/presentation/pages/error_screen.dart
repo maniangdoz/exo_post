@@ -61,6 +61,6 @@ class _ErrorScreenState extends State<ErrorScreen> {
   }
 
   void _goBack() {
-    context.go(ScreenPaths.postPage);
+    context.go(ScreenPaths.homeScreen.replaceAll(':id', "0"));
   }
 }
