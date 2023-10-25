@@ -1,18 +1,18 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:exo_post/features/auth/presentation/pages/auth_screen.dart';
-import 'package:exo_post/features/detail_post/presentation/pages/detail_post_screen.dart';
-import 'package:exo_post/features/error/presentation/pages/error_screen.dart';
-import 'package:exo_post/features/post/presentation/pages/post_screen.dart';
-import 'package:exo_post/features/profil/presentation/pages/profil_screen.dart';
-import 'package:exo_post/features/register/presentation/pages/register_screen.dart';
-import 'package:exo_post/features/splash/presentation/pages/splash_screen.dart';
-import 'package:exo_post/features/user/presentation/pages/user_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../features/auth/presentation/pages/auth_screen.dart';
+import '../features/detail_post/presentation/pages/detail_post_screen.dart';
+import '../features/error/presentation/pages/error_screen.dart';
 import '../features/home/presentation/pages/home_screen.dart';
+import '../features/post/presentation/pages/post_screen.dart';
+import '../features/profil/presentation/pages/profil_screen.dart';
+import '../features/register/presentation/pages/register_screen.dart';
+import '../features/splash/presentation/pages/splash_screen.dart';
+import '../features/user/presentation/pages/user_screen.dart';
 
 class ScreenPaths {
   ScreenPaths._();

@@ -1,8 +1,9 @@
-import 'package:exo_post/common/styles/colors.dart';
-import 'package:exo_post/common/utils/app_utils.dart';
-import 'package:exo_post/common/utils/app_validator.dart';
-import 'package:exo_post/features/shared/presentation/widgets/text_field_shared.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../common/styles/colors.dart';
+import '../../../../common/utils/app_utils.dart';
+import '../../../../common/utils/app_validator.dart';
+import 'text_field_shared.dart';
 
 class CommentInput extends StatelessWidget {
   const CommentInput({

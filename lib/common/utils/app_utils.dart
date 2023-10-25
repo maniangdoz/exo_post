@@ -1,6 +1,7 @@
 //method or validator
-import 'package:exo_post/common/styles/colors.dart';
 import 'package:flutter/material.dart';
+
+import '../styles/colors.dart';
 
 class AppUtils {
   static bool regex(String value) => !RegExp(

@@ -1,12 +1,12 @@
-import 'package:exo_post/common/router.dart';
-import 'package:exo_post/common/styles/colors.dart';
-import 'package:exo_post/common/styles/sizes.dart';
-import 'package:exo_post/common/utils/app_utils.dart';
-import 'package:exo_post/features/shared/presentation/widgets/button_shared.dart';
-import 'package:exo_post/features/shared/presentation/widgets/text_label_shared.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../common/router.dart';
+import '../../../../common/styles/colors.dart';
+import '../../../../common/styles/sizes.dart';
+import '../../../../common/utils/app_utils.dart';
+import '../../../../features/shared/presentation/widgets/button_shared.dart';
+import '../../../../features/shared/presentation/widgets/text_label_shared.dart';
 import '../../../shared/presentation/widgets/auth_register_container.dart';
 import '../../../shared/presentation/widgets/email_input.dart';
 import '../../../shared/presentation/widgets/password_input.dart';

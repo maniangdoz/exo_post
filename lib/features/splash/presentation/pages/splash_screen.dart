@@ -1,7 +1,8 @@
-import 'package:exo_post/common/styles/colors.dart';
-import 'package:exo_post/common/utils/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+
+import '../../../../common/styles/colors.dart';
+import '../../../../common/utils/app_utils.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

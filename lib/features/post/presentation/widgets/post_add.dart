@@ -1,11 +1,12 @@
 import 'dart:developer';
 
-import 'package:exo_post/common/styles/colors.dart';
-import 'package:exo_post/common/utils/app_utils.dart';
-import 'package:exo_post/features/shared/presentation/widgets/button_shared.dart';
-import 'package:exo_post/main_dev.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '../../../../common/styles/colors.dart';
+import '../../../../common/utils/app_utils.dart';
+import '../../../../main_dev.dart';
+import '../../../shared/presentation/widgets/button_shared.dart';
 
 class PostAdd extends StatefulWidget {
   const PostAdd({super.key});

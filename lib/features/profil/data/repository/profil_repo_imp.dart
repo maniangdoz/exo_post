@@ -1,7 +1,8 @@
-import 'package:exo_post/features/profil/domain/repository/profil_repo.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../domain/repository/profil_repo.dart';
+
 @Injectable(as: ProfilRepo)
-class ProfilRepoImp extends ProfilRepo{
+class ProfilRepoImp extends ProfilRepo {
   //implementation
 }

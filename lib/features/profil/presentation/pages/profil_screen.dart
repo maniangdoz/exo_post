@@ -1,8 +1,9 @@
-import 'package:exo_post/common/styles/colors.dart';
-import 'package:exo_post/common/utils/app_utils.dart';
-import 'package:exo_post/features/post/presentation/widgets/post_card.dart';
+
 import 'package:flutter/material.dart';
 
+import '../../../../common/styles/colors.dart';
+import '../../../../common/utils/app_utils.dart';
+import '../../../post/presentation/widgets/post_card.dart';
 import '../../../shared/presentation/widgets/horizontal_dash.dart';
 
 class ProfilScreen extends StatelessWidget {

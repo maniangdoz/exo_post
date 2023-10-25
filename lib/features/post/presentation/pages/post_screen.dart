@@ -1,13 +1,13 @@
-import 'package:exo_post/common/router.dart';
-import 'package:exo_post/features/post/presentation/widgets/post_add.dart';
-import 'package:exo_post/features/post/presentation/widgets/skeleton_post.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../common/router.dart';
 import '../../../shared/presentation/widgets/action_button.dart';
 import '../../../shared/presentation/widgets/expandable_fa.dart';
+import '../widgets/post_add.dart';
 import '../widgets/post_button.dart';
 import '../widgets/post_card.dart';
+import '../widgets/skeleton_post.dart';
 
 class PostScreen extends StatefulWidget {
   const PostScreen({super.key});

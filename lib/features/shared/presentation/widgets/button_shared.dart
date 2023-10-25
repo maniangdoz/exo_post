@@ -1,6 +1,7 @@
-import 'package:exo_post/common/styles/colors.dart';
-import 'package:exo_post/common/styles/sizes.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../common/styles/colors.dart';
+import '../../../../common/styles/sizes.dart';
 
 class ButtonShared extends StatelessWidget {
   final String text;

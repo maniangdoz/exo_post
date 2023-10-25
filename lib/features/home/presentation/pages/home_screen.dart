@@ -1,10 +1,10 @@
-import 'package:exo_post/common/styles/colors.dart';
-import 'package:exo_post/common/utils/app_utils.dart';
-import 'package:exo_post/features/profil/presentation/pages/profil_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../common/styles/colors.dart';
+import '../../../../common/utils/app_utils.dart';
 import '../../../post/presentation/pages/post_screen.dart';
+import '../../../profil/presentation/pages/profil_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key, required this.index});

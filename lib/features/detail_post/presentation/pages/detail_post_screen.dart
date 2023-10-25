@@ -1,5 +1,6 @@
-import 'package:exo_post/features/shared/presentation/widgets/comment_input.dart';
 import 'package:flutter/material.dart';
+
+import '../../../shared/presentation/widgets/comment_input.dart';
 
 class DetailPostScreen extends StatefulWidget {
   const DetailPostScreen({super.key});

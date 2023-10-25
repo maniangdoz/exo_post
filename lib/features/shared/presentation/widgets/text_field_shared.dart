@@ -1,7 +1,8 @@
-import 'package:exo_post/common/styles/colors.dart';
-import 'package:exo_post/common/utils/app_utils.dart';
-import 'package:exo_post/features/shared/presentation/widgets/avatar_user.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../common/styles/colors.dart';
+import '../../../../common/utils/app_utils.dart';
+import 'avatar_user.dart';
 
 class TextFieldShared extends StatelessWidget {
   final IconData icon;

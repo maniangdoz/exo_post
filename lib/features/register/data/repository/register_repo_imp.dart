@@ -1,7 +1,8 @@
-import 'package:exo_post/features/register/domain/repository/register_repo.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../domain/repository/register_repo.dart';
+
 @Injectable(as: RegisterRepo)
-class RegisterRepoImp extends RegisterRepo{
+class RegisterRepoImp extends RegisterRepo {
   //implementation
 }

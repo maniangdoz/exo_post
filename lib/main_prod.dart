@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:exo_post/common/router.dart';
-import 'package:exo_post/common/styles/theme.dart';
-import 'package:exo_post/core/init/injection.dart';
 import 'package:flutter/material.dart';
 
+import 'common/router.dart';
+import 'common/styles/theme.dart';
+import 'core/init/injection.dart';
 import 'core/logic/app_logic.dart';
 
 void main() {

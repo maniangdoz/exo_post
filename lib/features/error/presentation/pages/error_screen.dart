@@ -1,8 +1,8 @@
-import 'package:exo_post/common/router.dart';
-import 'package:exo_post/common/styles/colors.dart';
-import 'package:exo_post/features/shared/presentation/widgets/button_shared.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../../../common/styles/colors.dart';
+import '../../../shared/presentation/widgets/button_shared.dart';
 
 class ErrorScreen extends StatefulWidget {
   const ErrorScreen({Key? key}) : super(key: key);
@@ -61,6 +61,6 @@ class _ErrorScreenState extends State<ErrorScreen> {
   }
 
   void _goBack() {
-    context.go(ScreenPaths.homeScreen.replaceAll(':id', "0"));
+    context.go('/home/0');
   }
 }
