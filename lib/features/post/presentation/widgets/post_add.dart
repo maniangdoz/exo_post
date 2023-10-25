@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:exo_post/common/styles/colors.dart';
 import 'package:exo_post/common/utils/app_utils.dart';
 import 'package:exo_post/features/shared/presentation/widgets/button_shared.dart';
+import 'package:exo_post/main_dev.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -13,16 +16,11 @@ class PostAdd extends StatefulWidget {
 
 class _PostAddState extends State<PostAdd> {
   String _postContent = '';
-  // static const double maxImageHeight = 1000;
-  // static const double maxImageWidth = 800;
-  final picker = ImagePicker();
 
   XFile? _pickedFile;
 
   Future<void> _getImage() async {
-    _pickedFile = await picker.pickImage(
-      source: ImageSource.gallery,
-    );
+    _pickedFile = await imageLogic.getImage();
     setState(() {});
   }
 
@@ -67,7 +65,7 @@ class _PostAddState extends State<PostAdd> {
   }
 
   void _addPost() {
-    print('Added post with content: $_postContent');
+    log('Added post with content: $_postContent');
     if (_pickedFile == null) {
       AppUtils.showAlert(
           context, 'Please select an image first', AppColors.errorColor);
@@ -78,6 +76,4 @@ class _PostAddState extends State<PostAdd> {
           context, 'Please enter a caption', AppColors.errorColor);
     }
   }
-
-  void _uploadImage() {}
 }

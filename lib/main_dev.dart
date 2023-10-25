@@ -5,6 +5,7 @@ import 'package:exo_post/core/logic/app_logic.dart';
 import 'package:flutter/material.dart';
 
 import 'core/init/injection.dart';
+import 'core/logic/image_logic.dart';
 
 void main() {
   runZonedGuarded(() async {
@@ -16,6 +17,7 @@ void main() {
 }
 
 AppLogic get appLogic => getIt.get<AppLogic>();
+ImageLogic get imageLogic => getIt.get<ImageLogic>();
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

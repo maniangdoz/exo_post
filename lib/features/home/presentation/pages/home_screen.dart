@@ -1,4 +1,3 @@
-import 'package:exo_post/common/router.dart';
 import 'package:exo_post/common/styles/colors.dart';
 import 'package:exo_post/common/utils/app_utils.dart';
 import 'package:exo_post/features/profil/presentation/pages/profil_screen.dart';
