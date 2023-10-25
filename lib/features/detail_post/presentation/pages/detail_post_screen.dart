@@ -1,9 +1,15 @@
-import 'package:exo_post/features/post/presentation/widgets/post_card.dart';
-import 'package:exo_post/features/post/presentation/widgets/skeleton_post.dart';
+import 'package:exo_post/features/shared/presentation/widgets/comment_input.dart';
 import 'package:flutter/material.dart';
 
-class DetailPostScreen extends StatelessWidget {
+class DetailPostScreen extends StatefulWidget {
   const DetailPostScreen({super.key});
+
+  @override
+  State<DetailPostScreen> createState() => _DetailPostScreenState();
+}
+
+class _DetailPostScreenState extends State<DetailPostScreen> {
+  final _commentTextFieldController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +32,15 @@ class DetailPostScreen extends StatelessWidget {
             ),
           ),
         ],
+      ),
+      bottomSheet: SizedBox(
+        height: 90,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 0, bottom: 0),
+          child: CommentInput(
+            commentTextFieldController: _commentTextFieldController,
+          ),
+        ),
       ),
     );
   }

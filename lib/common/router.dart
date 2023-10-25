@@ -44,15 +44,11 @@ final appRouter = GoRouter(
       builder: (context, state) => const SplashScreen(),
     ),
     GoRoute(
-      path: ScreenPaths.homeScreen,
-      builder: (context, state) {
-        final index = state.pathParameters['index'];
-        return HomeScreen(index: int.parse(index ?? '0'));
-      },
-    ),
-    GoRoute(
-        path: ScreenPaths.postPage,
-        builder: (context, state) => const PostScreen(),
+        path: ScreenPaths.homeScreen,
+        builder: (context, state) {
+          final index = state.pathParameters['index'];
+          return HomeScreen(index: int.parse(index ?? '0'));
+        },
         routes: [
           GoRoute(
             path: ScreenPaths.detailPostPage,
@@ -63,6 +59,10 @@ final appRouter = GoRouter(
             builder: (context, state) => const UserScreen(),
           ),
         ]),
+    GoRoute(
+      path: ScreenPaths.postPage,
+      builder: (context, state) => const PostScreen(),
+    ),
     GoRoute(
       path: ScreenPaths.profilPage,
       builder: (context, state) => const ProfilScreen(),

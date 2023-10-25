@@ -1,7 +1,6 @@
 import 'package:exo_post/common/router.dart';
 import 'package:exo_post/common/utils/app_utils.dart';
 import 'package:exo_post/features/shared/presentation/widgets/avatar_user.dart';
-import 'package:exo_post/features/shared/presentation/widgets/comment_input.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:readmore/readmore.dart';
@@ -17,13 +16,12 @@ class PostCard extends StatefulWidget {
 }
 
 class _PostCardState extends State<PostCard> {
-  final _commentTextFieldController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Card(
       color:
           AppUtils.isDarkMode(context) ? Colors.black : AppColors.primaryColor,
+      margin: const EdgeInsets.only(bottom: 10, top: 10),
       child: SizedBox(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,13 +66,6 @@ class _PostCardState extends State<PostCard> {
                 const SizedBox(width: 10), // Adjust the width as needed
               ],
             ),
-            Padding(
-              padding:
-                  const EdgeInsets.only(left: 18, right: 18, top: 0, bottom: 0),
-              child: CommentInput(
-                commentTextFieldController: _commentTextFieldController,
-              ),
-            ),
           ],
         ),
       ),
@@ -94,7 +85,6 @@ class _PostCardState extends State<PostCard> {
   }
 
   void _buildDetailPost(int id) {
-    context.go(
-        '${ScreenPaths.postPage}/${ScreenPaths.detailPostPage.replaceAll(':id', id.toString())}');
+    context.go('/home/0/post-detail/$id');
   }
 }

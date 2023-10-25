@@ -27,7 +27,6 @@ class _PostAddState extends State<PostAdd> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 300,
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

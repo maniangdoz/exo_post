@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import '../../../shared/presentation/widgets/action_button.dart';
 import '../../../shared/presentation/widgets/expandable_fa.dart';
 import '../widgets/post_button.dart';
+import '../widgets/post_card.dart';
 
 class PostScreen extends StatefulWidget {
   const PostScreen({super.key});
@@ -34,6 +35,7 @@ class _PostScreenState extends State<PostScreen> {
                 height: 10,
               ),
               const SkeletonPost(),
+              const PostCard(type: 'post'),
               const SizedBox(
                 height: 100,
               ),
@@ -70,12 +72,7 @@ class _PostScreenState extends State<PostScreen> {
       isScrollControlled: true,
       context: context,
       builder: (BuildContext context) {
-        return Padding(
-          padding: EdgeInsets.only(
-            bottom: MediaQuery.of(context).viewInsets.bottom,
-          ),
-          child: const PostAdd(),
-        );
+        return const PostAdd();
       },
     );
   }
