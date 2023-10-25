@@ -19,7 +19,7 @@ class _PostAddState extends State<PostAdd> {
 
   XFile? _pickedFile;
 
-  Future _getImage() async {
+  Future<void> _getImage() async {
     _pickedFile = await picker.pickImage(
       source: ImageSource.gallery,
       maxHeight: maxImageHeight,
