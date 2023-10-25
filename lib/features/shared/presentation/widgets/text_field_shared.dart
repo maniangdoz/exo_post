@@ -26,8 +26,9 @@ class TextFieldShared extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color color =
-        AppUtils.isDarkMode(context) ? Colors.black : AppColors.primaryColor;
+    Color color = AppUtils.isDarkMode(context)
+        ? AppColors.scaffoldBackgroundColorDark
+        : AppColors.primaryColor;
 
     return TextFormField(
       obscureText: typeText == "Password" ? true : false,

@@ -17,12 +17,10 @@ class CommentInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-      margin: const EdgeInsets.fromLTRB(0, 0, 0, 15),
       decoration: BoxDecoration(
           color: AppUtils.isDarkMode(context)
-              ? AppColors.scaffoldBackgroundColorDark
-              : AppColors.scaffoldBackgroundColorLight,
-          borderRadius: BorderRadius.circular(10)),
+              ? Colors.black
+              : AppColors.onPrimaryColor),
       child: Column(
         children: [
           TextFieldShared(

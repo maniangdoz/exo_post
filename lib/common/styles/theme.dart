@@ -8,8 +8,8 @@ class AppTheme {
     primaryColor: AppColors.primaryColor,
     scaffoldBackgroundColor: AppColors.scaffoldBackgroundColorLight,
     appBarTheme: const AppBarTheme(
-      backgroundColor: AppColors.appBarBackgroundColorLight,
-      foregroundColor: AppColors.appBarForegroundColor,
+      backgroundColor: AppColors.primaryColor,
+      foregroundColor: AppColors.whiteColor,
     ),
     textTheme: const TextTheme(
         titleSmall: TextStyle(fontSize: 14, color: AppColors.whiteColor),
@@ -41,8 +41,8 @@ class AppTheme {
     primaryColor: AppColors.primaryColor,
     scaffoldBackgroundColor: AppColors.scaffoldBackgroundColorDark,
     appBarTheme: const AppBarTheme(
-      backgroundColor: AppColors.appBarBackgroundColorDark,
-      foregroundColor: AppColors.appBarForegroundColor,
+      foregroundColor: AppColors.primaryColor,
+      backgroundColor: Colors.black,
     ),
     colorScheme: const ColorScheme.dark(
       primary: AppColors.primaryColor,
