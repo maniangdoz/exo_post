@@ -35,7 +35,10 @@ class _PostScreenState extends State<PostScreen> {
                 height: 10,
               ),
               const SkeletonPost(),
-              const PostCard(type: 'post'),
+              PostCard(
+                type: 'post',
+                onClick: () => _infoUser(1),
+              ),
               const SizedBox(
                 height: 100,
               ),
@@ -75,5 +78,9 @@ class _PostScreenState extends State<PostScreen> {
         return const PostAdd();
       },
     );
+  }
+
+  void _infoUser(int index) {
+    context.go('/home/0/post-user/$index');
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../common/constants.dart';
 import '../../../../common/styles/colors.dart';
@@ -37,7 +38,10 @@ class _CommentScreenState extends State<CommentScreen> {
                 (index) => Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    AvatarUser(name: 'Winnie Parton', color: color),
+                    GestureDetector(
+                      onTap: () => _infoUser(index),
+                      child: AvatarUser(name: 'Winnie Parton', color: color),
+                    ),
                     const SizedBox(width: 8),
                     Expanded(
                       child: Column(
@@ -142,4 +146,8 @@ class _CommentScreenState extends State<CommentScreen> {
   }
 
   void _addComment() {}
+
+  void _infoUser(int index) {
+    context.go('/home/0/post-user/$index');
+  }
 }
