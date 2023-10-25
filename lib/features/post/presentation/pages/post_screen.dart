@@ -67,9 +67,15 @@ class _PostScreenState extends State<PostScreen> {
 
   void _showModalBottomSheet(BuildContext context) {
     showModalBottomSheet(
+      isScrollControlled: true,
       context: context,
       builder: (BuildContext context) {
-        return const PostAdd();
+        return Padding(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
+          child: const PostAdd(),
+        );
       },
     );
   }
