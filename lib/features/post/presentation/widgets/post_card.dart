@@ -18,8 +18,9 @@ class _PostCardState extends State<PostCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color:
-          AppUtils.isDarkMode(context) ? Colors.black : AppColors.primaryColor,
+      color: AppUtils.isDarkMode(context)
+          ? Colors.black
+          : AppColors.onPrimaryColor,
       margin: const EdgeInsets.only(bottom: 10, top: 10),
       child: SizedBox(
         child: Column(
