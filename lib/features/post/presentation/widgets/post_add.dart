@@ -13,8 +13,8 @@ class PostAdd extends StatefulWidget {
 
 class _PostAddState extends State<PostAdd> {
   String _postContent = '';
-  static const double maxImageHeight = 1000;
-  static const double maxImageWidth = 800;
+  // static const double maxImageHeight = 1000;
+  // static const double maxImageWidth = 800;
   final picker = ImagePicker();
 
   XFile? _pickedFile;
@@ -22,9 +22,6 @@ class _PostAddState extends State<PostAdd> {
   Future<void> _getImage() async {
     _pickedFile = await picker.pickImage(
       source: ImageSource.gallery,
-      maxHeight: maxImageHeight,
-      maxWidth: maxImageWidth,
-      imageQuality: 70,
     );
     setState(() {});
   }

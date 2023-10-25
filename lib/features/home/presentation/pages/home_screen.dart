@@ -45,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("X Like"),
@@ -71,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen>
     );
   }
 
-  _tap(BuildContext context, int index) =>context.go(ScreenPaths.homeScreen.replaceAll(':id', index.toString()));
+  _tap(BuildContext context, int index) => context.go('/home/$index');
 
   @override
   bool get wantKeepAlive => true;

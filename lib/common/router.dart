@@ -31,7 +31,7 @@ class ScreenPaths {
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
 final appRouter = GoRouter(
-  initialLocation: '/home/1',
+  initialLocation: '/home/0',
   navigatorKey: _rootNavigatorKey,
   errorBuilder: (context, state) {
     log(state.error!.message);
