@@ -1,18 +1,24 @@
+import 'package:exo_post/common/router.dart';
 import 'package:exo_post/common/utils/app_utils.dart';
+import 'package:exo_post/features/shared/presentation/widgets/avatar_user.dart';
+import 'package:exo_post/features/shared/presentation/widgets/comment_input.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:readmore/readmore.dart';
 
 import '../../../../common/styles/colors.dart';
 
 class PostCard extends StatefulWidget {
+  final String type;
   const PostCard({Key? key, required this.type}) : super(key: key);
 
-  final String type;
   @override
   State<PostCard> createState() => _PostCardState();
 }
 
 class _PostCardState extends State<PostCard> {
+  final _commentTextFieldController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -22,7 +28,9 @@ class _PostCardState extends State<PostCard> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            widget.type == 'post' ? _buildPostCard() : Container(),
+            widget.type == 'post'
+                ? _buildHeaderCard('Sender name')
+                : Container(),
             Image.asset(
               'assets/images/connection_failed.png',
               width: double.infinity,
@@ -30,15 +38,14 @@ class _PostCardState extends State<PostCard> {
               fit: BoxFit.cover,
             ),
             const Padding(
-              padding:
-                  EdgeInsets.only(left: 18, right: 18, top: 10, bottom: 10),
+              padding: EdgeInsets.only(left: 18, right: 18, top: 10),
               child: ReadMoreText(
-                "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.",
+                "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum",
                 trimLines: 2,
                 colorClickableText: AppColors.accentColor,
                 trimMode: TrimMode.Line,
-                trimCollapsedText: 'more',
-                trimExpandedText: 'less',
+                trimCollapsedText: ' more',
+                trimExpandedText: ' less',
                 textAlign: TextAlign.start,
                 moreStyle: TextStyle(
                   fontWeight: FontWeight.bold,
@@ -52,8 +59,8 @@ class _PostCardState extends State<PostCard> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.mode_comment),
+                  onPressed: () => _buildDetailPost(1),
+                  icon: const Icon(Icons.mode_comment_outlined),
                 ),
                 const Text(
                   '12', // Replace with the actual number of comments
@@ -61,30 +68,33 @@ class _PostCardState extends State<PostCard> {
                 const SizedBox(width: 10), // Adjust the width as needed
               ],
             ),
+            Padding(
+              padding:
+                  const EdgeInsets.only(left: 18, right: 18, top: 0, bottom: 0),
+              child: CommentInput(
+                commentTextFieldController: _commentTextFieldController,
+              ),
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildPostCard() {
+  Widget _buildHeaderCard(String name) {
+    Color color = AppUtils.isDarkMode(context)
+        ? AppColors.primaryColor
+        : AppColors.accentColor;
     return ListTile(
       contentPadding: const EdgeInsets.only(left: 18, right: 18, top: 5),
-      title: const Text('Sender name'),
+      title: Text(name),
       subtitle: const Text('time'),
-      leading: CircleAvatar(
-        backgroundColor: AppUtils.isDarkMode(context)
-            ? AppColors.primaryColor
-            : AppColors.accentColor,
-        child: Text(
-          AppUtils.generateAcronym("Sender name"),
-          style: TextStyle(
-            color: AppUtils.isDarkMode(context)
-                ? AppColors.accentColor
-                : AppColors.scaffoldBackgroundColorDark,
-          ),
-        ),
-      ),
+      leading: AvatarUser(name: name, color: color),
     );
+  }
+
+  void _buildDetailPost(int id) {
+    context.go(
+        '${ScreenPaths.postPage}/${ScreenPaths.detailPostPage.replaceAll(':id', id.toString())}');
   }
 }

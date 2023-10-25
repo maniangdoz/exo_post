@@ -1,4 +1,6 @@
 import 'package:exo_post/common/styles/colors.dart';
+import 'package:exo_post/common/utils/app_utils.dart';
+import 'package:exo_post/features/shared/presentation/widgets/avatar_user.dart';
 import 'package:flutter/material.dart';
 
 class TextFieldShared extends StatelessWidget {
@@ -17,11 +19,15 @@ class TextFieldShared extends StatelessWidget {
     required this.labelText,
     required this.typeText,
     required this.maxLines,
-    this.validator, this.suffixIcon,
+    this.validator,
+    this.suffixIcon,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    Color color =
+        AppUtils.isDarkMode(context) ? Colors.black : AppColors.primaryColor;
+
     return TextFormField(
       obscureText: typeText == "Password" ? true : false,
       controller: controller,
@@ -29,10 +35,15 @@ class TextFieldShared extends StatelessWidget {
       style: const TextStyle(color: AppColors.greyColor),
       decoration: InputDecoration(
         border: InputBorder.none,
-        prefixIcon: Icon(
-          icon,
-          color: AppColors.primaryColor,
-        ),
+        prefixIcon: typeText == "TextArea"
+            ? Padding(
+                padding: const EdgeInsets.only(right: 10),
+                child: AvatarUser(name: 'Winnie Parton', color: color),
+              )
+            : Icon(
+                icon,
+                color: AppColors.primaryColor,
+              ),
         suffixIcon: suffixIcon,
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(
