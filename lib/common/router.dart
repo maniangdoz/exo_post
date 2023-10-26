@@ -5,10 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../features/auth/presentation/pages/auth_screen.dart';
-import '../features/detail_post/presentation/pages/detail_post_screen.dart';
+import '../features/comment/presentation/pages/comment_screen.dart';
 import '../features/error/presentation/pages/error_screen.dart';
 import '../features/home/presentation/pages/home_screen.dart';
-import '../features/post/presentation/pages/post_screen.dart';
 import '../features/profil/presentation/pages/profil_screen.dart';
 import '../features/register/presentation/pages/register_screen.dart';
 import '../features/splash/presentation/pages/splash_screen.dart';
@@ -19,8 +18,7 @@ class ScreenPaths {
 
   static String splash = '/';
   static String homeScreen = '/home/:index';
-  static String postPage = '/post';
-  static String detailPostPage = 'post-detail/:id';
+  static String commentPage = 'comment/:id';
   static String authPage = '/login';
   static String authPageRegister = 'register';
   static String registerPage = '/register';
@@ -51,18 +49,14 @@ final appRouter = GoRouter(
         },
         routes: [
           GoRoute(
-            path: ScreenPaths.detailPostPage,
-            builder: (context, state) => const DetailPostScreen(),
+            path: ScreenPaths.commentPage,
+            builder: (context, state) => const CommentScreen(),
           ),
           GoRoute(
             path: ScreenPaths.userPostPage,
             builder: (context, state) => const UserScreen(),
           ),
         ]),
-    GoRoute(
-      path: ScreenPaths.postPage,
-      builder: (context, state) => const PostScreen(),
-    ),
     GoRoute(
       path: ScreenPaths.profilPage,
       builder: (context, state) => const ProfilScreen(),

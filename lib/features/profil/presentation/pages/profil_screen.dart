@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '../../../../common/styles/colors.dart';
@@ -6,9 +5,14 @@ import '../../../../common/utils/app_utils.dart';
 import '../../../post/presentation/widgets/post_card.dart';
 import '../../../shared/presentation/widgets/horizontal_dash.dart';
 
-class ProfilScreen extends StatelessWidget {
+class ProfilScreen extends StatefulWidget {
   const ProfilScreen({super.key});
 
+  @override
+  State<ProfilScreen> createState() => _ProfilScreenState();
+}
+
+class _ProfilScreenState extends State<ProfilScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,8 +102,14 @@ class ProfilScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              const PostCard(type: 'profil'),
-              const PostCard(type: 'profil'),
+              PostCard(
+                type: 'profil',
+                onClick: () => {},
+              ),
+              PostCard(
+                type: 'profil',
+                onClick: () => {},
+              ),
               const SizedBox(
                 height: 100,
               ),
