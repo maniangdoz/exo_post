@@ -115,22 +115,50 @@ class _CommentScreenState extends State<CommentScreen> {
           ),
         ],
       ),
-      bottomSheet: SizedBox(
-        height: 90,
-        child: Padding(
-          padding: const EdgeInsets.only(top: 0, bottom: 0),
-          child: Row(
-            children: [
-              Expanded(
-                child: CommentInput(
-                  commentTextFieldController: _commentTextFieldController,
+      bottomNavigationBar: Padding(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+        ),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.transparent,
+            borderRadius: BorderRadius.circular(30),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.only(
+              left: 5,
+              right: 5,
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Expanded(
+                  child: CommentInput(
+                    commentTextFieldController: _commentTextFieldController,
+                  ),
                 ),
-              ),
-              IconButton(
-                onPressed: _addComment,
-                icon: const Icon(Icons.send_sharp),
-              ),
-            ],
+                GestureDetector(
+                  onTap: _addComment,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 7, horizontal: 2.5),
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        color: AppColors.primaryColor,
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Padding(
+                        padding: EdgeInsets.all(10),
+                        child: Icon(
+                          Icons.send_rounded,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

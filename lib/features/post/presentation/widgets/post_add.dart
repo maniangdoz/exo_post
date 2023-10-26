@@ -104,7 +104,7 @@ class _PostAddState extends State<PostAdd> {
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
                   decoration: const InputDecoration(
-                    hintText: 'Write your text here...',
+                    hintText: 'What\'s news?',
                     hintStyle: TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.normal,

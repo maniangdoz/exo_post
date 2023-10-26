@@ -13,4 +13,5 @@ class AppColors {
   static const Color appBarBackgroundColorDark = scaffoldBackgroundColorDark;
   static const Color appBarForegroundColor = onPrimaryColor;
   static const Color whiteColor = Colors.white;
+  static Color greyColor100 = Colors.grey[100]!;
 }
