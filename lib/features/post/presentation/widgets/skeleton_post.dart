@@ -19,6 +19,10 @@ class _SkeletonPostState extends State<SkeletonPost> {
           (index) => Skeletonizer(
             enabled: true,
             child: Card(
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(0),
+              ),
               child: SizedBox(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

@@ -28,7 +28,7 @@ class _PostScreenState extends State<PostScreen> {
       body: Stack(
         children: <Widget>[
           ListView(
-            padding: const EdgeInsets.all(8),
+            padding: const EdgeInsets.all(0),
             children: [
               PostButton(onClick: () => _showModalBottomSheet(context)),
               const SizedBox(

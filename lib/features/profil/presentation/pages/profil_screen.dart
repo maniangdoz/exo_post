@@ -19,7 +19,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
       body: Stack(
         children: <Widget>[
           ListView(
-            padding: const EdgeInsets.all(8),
+            padding: const EdgeInsets.all(0),
             children: [
               Align(
                 alignment: Alignment.topCenter,

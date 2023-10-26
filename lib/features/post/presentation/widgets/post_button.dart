@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '../../../../common/styles/colors.dart';
@@ -13,22 +12,26 @@ class PostButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return OutlinedButton.icon(
-      onPressed: onClick,
-      icon: Icon(Icons.camera_alt_rounded,
-          color: AppUtils.isDarkMode(context)
-              ? AppColors.onPrimaryColor
-              : AppColors.primaryColor),
-      label: Text(
-        'Add post',
-        style: TextStyle(
-          color: AppUtils.isDarkMode(context)
-              ? AppColors.onPrimaryColor
-              : AppColors.primaryColor,
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: OutlinedButton.icon(
+        onPressed: onClick,
+        icon: Icon(Icons.camera_alt_rounded,
+            color: AppUtils.isDarkMode(context)
+                ? AppColors.onPrimaryColor
+                : AppColors.primaryColor),
+        label: Text(
+          'Add post',
+          style: TextStyle(
+            color: AppUtils.isDarkMode(context)
+                ? AppColors.onPrimaryColor
+                : AppColors.primaryColor,
+          ),
         ),
-      ),
-      style: OutlinedButton.styleFrom(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        style: OutlinedButton.styleFrom(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        ),
       ),
     );
   }

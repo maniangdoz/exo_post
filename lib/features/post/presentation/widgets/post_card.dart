@@ -20,10 +20,14 @@ class _PostCardState extends State<PostCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(0),
+      ),
       color: AppUtils.isDarkMode(context)
           ? Colors.black
           : AppColors.onPrimaryColor,
-      margin: const EdgeInsets.only(bottom: 10, top: 10),
+      margin: const EdgeInsets.only(top: 5),
       child: SizedBox(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
