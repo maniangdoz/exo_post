@@ -69,8 +69,9 @@ class _PostScreenState extends State<PostScreen> {
 
   void _showModalBottomSheet(BuildContext context) {
     showModalBottomSheet(
-      isScrollControlled: true,
       context: context,
+      isScrollControlled: true,
+      useSafeArea: true,
       builder: (BuildContext context) {
         return const PostAdd();
       },
