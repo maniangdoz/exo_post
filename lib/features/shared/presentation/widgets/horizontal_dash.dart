@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../../common/styles/colors.dart';
 import '../../../../common/utils/app_utils.dart';
 
 class HorizontalDash extends StatelessWidget {
@@ -22,9 +21,7 @@ class HorizontalDash extends StatelessWidget {
             width: 3,
             child: DecoratedBox(
               decoration: BoxDecoration(
-                color: AppUtils.isDarkMode(context)
-                    ? AppColors.accentColor
-                    : AppColors.primaryColor,
+                color: AppUtils.accentprimaryColor(context),
                 borderRadius: BorderRadius.circular(15),
               ),
             ),

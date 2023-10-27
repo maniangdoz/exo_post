@@ -60,17 +60,13 @@ class _AuthScreenState extends State<AuthScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       TextLabelShared(
-                          colorTextLabel: AppUtils.isDarkMode(context)
-                              ? AppColors.onPrimaryColor
-                              : AppColors.greyColor,
+                          colorTextLabel: AppUtils.onprimarygreyColor(context),
                           labelText: "DON'T HAVE AN ACCOUNT ? ",
                           sizeLabelText: AppSizes.meduimText,
                           fontLabelText: FontWeight.w500,
                           onClick: () {}),
                       TextLabelShared(
-                        colorTextLabel: AppUtils.isDarkMode(context)
-                            ? AppColors.accentColor
-                            : AppColors.primaryColor,
+                        colorTextLabel: AppUtils.accentprimaryColor(context),
                         labelText: " SIGN UP",
                         sizeLabelText: AppSizes.meduimText,
                         fontLabelText: FontWeight.w700,
@@ -94,11 +90,7 @@ class _AuthScreenState extends State<AuthScreen> {
       String message = "email: $email password: $password";
 
       AppUtils.showAlert(
-          context,
-          "Login: $message",
-          AppUtils.isDarkMode(context)
-              ? AppColors.accentColor
-              : AppColors.primaryColor);
+          context, "Login: $message", AppUtils.accentprimaryColor(context));
       context.go(ScreenPaths.homeScreen.replaceAll(':id', 0.toString()));
     }
   }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../common/styles/colors.dart';
 import '../../../../common/utils/app_utils.dart';
 import '../../../post/presentation/pages/post_screen.dart';
 import '../../../profil/presentation/pages/profil_screen.dart';
@@ -48,9 +47,7 @@ class _HomeScreenState extends State<HomeScreen>
     return Scaffold(
       appBar: AppBar(
         title: const Text("X Like"),
-        backgroundColor: AppUtils.isDarkMode(context)
-            ? Colors.black
-            : AppColors.primaryColor,
+        backgroundColor: AppUtils.blackprimaryColor(context),
         bottom: TabBar(
           controller: _controller,
           tabs: const [

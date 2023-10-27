@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../../common/styles/colors.dart';
 import '../../../../common/utils/app_utils.dart';
 
 @immutable
@@ -19,16 +18,12 @@ class ActionButton extends StatelessWidget {
     return Material(
       shape: const CircleBorder(),
       clipBehavior: Clip.antiAlias,
-      color: AppUtils.isDarkMode(context)
-          ? AppColors.primaryColor
-          : AppColors.accentColor,
+      color: AppUtils.primaryaccentColor(context),
       elevation: 4,
       child: IconButton(
         onPressed: onPressed,
         icon: icon,
-        color: AppUtils.isDarkMode(context)
-            ? AppColors.accentColor
-            : AppColors.primaryColor,
+        color: AppUtils.accentprimaryColor(context),
       ),
     );
   }

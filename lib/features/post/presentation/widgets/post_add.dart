@@ -89,9 +89,7 @@ class _PostAddState extends State<PostAdd> {
                   ),
                 ),
                 Container(
-                  color: AppUtils.isDarkMode(context)
-                      ? Colors.black
-                      : AppColors.primaryColor,
+                  color: AppUtils.blackprimaryColor(context),
                   child: TextButton.icon(
                     onPressed: _addPost,
                     icon: const Icon(
@@ -171,9 +169,7 @@ class _PostAddState extends State<PostAdd> {
               ),
             if (_pickedFile == null)
               Container(
-                color: AppUtils.isDarkMode(context)
-                    ? Colors.black
-                    : AppColors.primaryColor,
+                color: AppUtils.blackprimaryColor(context),
                 child: Align(
                   alignment: Alignment.bottomLeft,
                   child: TextButton.icon(

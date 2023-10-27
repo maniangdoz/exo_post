@@ -28,9 +28,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
                     const SizedBox(height: 10),
                     CircleAvatar(
                       radius: 50,
-                      backgroundColor: AppUtils.isDarkMode(context)
-                          ? AppColors.accentColor
-                          : AppColors.primaryColor,
+                      backgroundColor: AppUtils.accentprimaryColor(context),
                       child: Text(
                         AppUtils.generateAcronym("Sender name"),
                         style: Theme.of(context).textTheme.displayMedium,
@@ -83,9 +81,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
                           Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(30),
-                              color: AppUtils.isDarkMode(context)
-                                  ? AppColors.accentColor
-                                  : AppColors.primaryColor,
+                              color: AppUtils.accentprimaryColor(context),
                             ),
                             child: Padding(
                               padding: const EdgeInsets.only(

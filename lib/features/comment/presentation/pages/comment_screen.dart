@@ -19,9 +19,7 @@ class _CommentScreenState extends State<CommentScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Color color =
-        AppUtils.isDarkMode(context) ? Colors.black : AppColors.onPrimaryColor;
-
+    
     return Scaffold(
       appBar: AppBar(
         title: const Text('Comments'),
@@ -40,7 +38,7 @@ class _CommentScreenState extends State<CommentScreen> {
                   children: <Widget>[
                     GestureDetector(
                       onTap: () => _infoUser(index),
-                      child: AvatarUser(name: 'Winnie Parton', color: color),
+                      child: AvatarUser(name: 'Winnie Parton', color: AppUtils.blackonprimaryColor(context)),
                     ),
                     const SizedBox(width: 8),
                     Expanded(
@@ -100,9 +98,7 @@ class _CommentScreenState extends State<CommentScreen> {
                           ),
                           const SizedBox(height: 10),
                           Divider(
-                            color: AppUtils.isDarkMode(context)
-                                ? Colors.black
-                                : AppColors.onPrimaryColor,
+                            color: AppUtils.blackonprimaryColor(context),
                           ),
                           const SizedBox(height: 10),
                         ],

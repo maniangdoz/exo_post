@@ -24,47 +24,23 @@ class _PostCardState extends State<PostCard> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(0),
       ),
-      color: AppUtils.isDarkMode(context)
-          ? Colors.black
-          : AppColors.onPrimaryColor,
+      color: AppUtils.blackonprimaryColor(context),
       margin: const EdgeInsets.only(top: 5),
       child: SizedBox(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            widget.type == 'post'
-                ? _buildHeaderCard('Sender name')
-                : Container(
-                    padding: const EdgeInsets.only(
-                        left: 18, right: 18, top: 5, bottom: 5),
-                    child: Text(
-                      '1 days ago',
-                      style: Theme.of(context).textTheme.displayLarge,
-                    ),
-                  ),
+            _buildHeaderCard('Sender name'),
             Image.asset(
               'assets/images/connection_failed.png',
               width: double.infinity,
               height: 150,
               fit: BoxFit.cover,
             ),
-            const Padding(
-              padding: EdgeInsets.only(left: 18, right: 18, top: 10),
-              child: ReadMoreText(
-                "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum",
-                trimLines: 2,
-                colorClickableText: AppColors.accentColor,
-                trimMode: TrimMode.Line,
-                trimCollapsedText: ' more',
-                trimExpandedText: ' less',
-                textAlign: TextAlign.start,
-                moreStyle: TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-                lessStyle: TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+            Padding(
+              padding: const EdgeInsets.only(left: 18, right: 18, top: 10),
+              child: _buildCommentCard(
+                  "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum"),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -86,19 +62,45 @@ class _PostCardState extends State<PostCard> {
   }
 
   Widget _buildHeaderCard(String name) {
-    Color color = AppUtils.isDarkMode(context)
-        ? AppColors.primaryColor
-        : AppColors.accentColor;
-    return ListTile(
-      onTap: widget.onClick,
-      contentPadding: const EdgeInsets.only(left: 18, right: 18, top: 5),
-      title: Text(name),
-      subtitle: const Text('1 days ago'),
-      leading: AvatarUser(name: name, color: color),
-    );
+    Color color = AppUtils.primaryaccentColor(context);
+    if (widget.type == 'post') {
+      return ListTile(
+        onTap: widget.onClick,
+        contentPadding: const EdgeInsets.only(left: 18, right: 18, top: 5),
+        title: Text(name),
+        subtitle: const Text('1 days ago'),
+        leading: AvatarUser(name: name, color: color),
+      );
+    } else {
+      return Container(
+        padding: const EdgeInsets.only(left: 18, right: 18, top: 10, bottom: 5),
+        child: Text(
+          '1 days ago',
+          style: Theme.of(context).textTheme.displayLarge,
+        ),
+      );
+    }
   }
 
   void _buildDetailPost(int id) {
     context.go('/home/0/comment/$id');
+  }
+
+  Widget _buildCommentCard(String comment) {
+    return ReadMoreText(
+      comment,
+      trimLines: 2,
+      colorClickableText: AppColors.accentColor,
+      trimMode: TrimMode.Line,
+      trimCollapsedText: ' more',
+      trimExpandedText: ' less',
+      textAlign: TextAlign.start,
+      moreStyle: const TextStyle(
+        fontWeight: FontWeight.bold,
+      ),
+      lessStyle: const TextStyle(
+        fontWeight: FontWeight.bold,
+      ),
+    );
   }
 }

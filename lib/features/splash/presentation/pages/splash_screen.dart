@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
-import '../../../../common/styles/colors.dart';
 import '../../../../common/utils/app_utils.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -21,9 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 130),
               child: CircleAvatar(
-                      backgroundColor: AppUtils.isDarkMode(context)
-                          ? AppColors.accentColor
-                          : AppColors.primaryColor)
+                      backgroundColor: AppUtils.accentprimaryColor(context))
                   .animate()
                   .slideY(begin: -0.5, end: 0.2, duration: 0.5.seconds)
                   .then(delay: 600.milliseconds)

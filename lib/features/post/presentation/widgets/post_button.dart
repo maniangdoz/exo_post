@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../../common/styles/colors.dart';
 import '../../../../common/utils/app_utils.dart';
 
 class PostButton extends StatelessWidget {
@@ -17,15 +16,11 @@ class PostButton extends StatelessWidget {
       child: OutlinedButton.icon(
         onPressed: onClick,
         icon: Icon(Icons.camera_alt_rounded,
-            color: AppUtils.isDarkMode(context)
-                ? AppColors.onPrimaryColor
-                : AppColors.primaryColor),
+            color: AppUtils.primaryColor(context)),
         label: Text(
           'Add post',
           style: TextStyle(
-            color: AppUtils.isDarkMode(context)
-                ? AppColors.onPrimaryColor
-                : AppColors.primaryColor,
+            color: AppUtils.primaryColor(context),
           ),
         ),
         style: OutlinedButton.styleFrom(

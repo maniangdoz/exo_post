@@ -90,4 +90,38 @@ class AppUtils {
     }
     return acronym.toUpperCase();
   }
+
+  static Color primaryaccentColor(BuildContext context) {
+    return AppUtils.isDarkMode(context)
+        ? AppColors.primaryColor
+        : AppColors.accentColor;
+  }
+
+  static Color accentprimaryColor(BuildContext context) {
+    return AppUtils.isDarkMode(context)
+        ? AppColors.accentColor
+        : AppColors.primaryColor;
+  }
+
+  static Color blackonprimaryColor(BuildContext context) {
+    return AppUtils.isDarkMode(context)
+        ? Colors.black
+        : AppColors.onPrimaryColor;
+  }
+
+  static Color blackprimaryColor(BuildContext context) {
+    return AppUtils.isDarkMode(context) ? Colors.black : AppColors.primaryColor;
+  }
+
+  static Color primaryColor(BuildContext context) {
+    return AppUtils.isDarkMode(context)
+        ? AppColors.onPrimaryColor
+        : AppColors.primaryColor;
+  }
+
+  static Color onprimarygreyColor(BuildContext context) {
+    return AppUtils.isDarkMode(context)
+        ? AppColors.onPrimaryColor
+        : AppColors.greyColor;
+  }
 }

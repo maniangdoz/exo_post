@@ -64,17 +64,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       TextLabelShared(
-                          colorTextLabel: AppUtils.isDarkMode(context)
-                              ? AppColors.onPrimaryColor
-                              : AppColors.greyColor,
+                          colorTextLabel: AppUtils.onprimarygreyColor(context),
                           labelText: "ALREADY HAVE ON ACCOUNT ? ",
                           sizeLabelText: AppSizes.meduimText,
                           fontLabelText: FontWeight.w500,
                           onClick: () {}),
                       TextLabelShared(
-                          colorTextLabel: AppUtils.isDarkMode(context)
-                              ? AppColors.accentColor
-                              : AppColors.primaryColor,
+                          colorTextLabel: AppUtils.accentprimaryColor(context),
                           labelText: " LOGIN",
                           sizeLabelText: AppSizes.meduimText,
                           fontLabelText: FontWeight.w700,
@@ -99,11 +95,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       // widget.registerBloc.add(RegisterEventDoRegister(
       //     registerRequest: RegisterRequest(email: email, password: password)));
       AppUtils.showAlert(
-          context,
-          "Register: $message",
-          AppUtils.isDarkMode(context)
-              ? AppColors.accentColor
-              : AppColors.primaryColor);
+          context, "Register: $message", AppUtils.accentprimaryColor(context));
       context.go('/home/0');
     }
   }
