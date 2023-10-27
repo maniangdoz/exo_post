@@ -13,4 +13,10 @@ class AppConstants {
       color: AppColors.greyColor,
     );
   }
+
+  static TextStyle? textWhite() {
+    return const TextStyle(
+      color: AppColors.onPrimaryColor,
+    );
+  }
 }

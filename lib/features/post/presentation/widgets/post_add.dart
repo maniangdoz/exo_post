@@ -7,7 +7,9 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../../common/constants.dart';
 import '../../../../common/styles/colors.dart';
+import '../../../../common/utils/app_utils.dart';
 import '../../../../main_dev.dart';
 
 class PostAdd extends StatefulWidget {
@@ -43,6 +45,7 @@ class _PostAddState extends State<PostAdd> {
   }
 
   Future<void> _getImage() async {
+    print("rrrrrrrrrrrrrrrrrrrrrrrrr");
     _pickedFile = await imageLogic.getImage();
     setState(() {});
   }
@@ -85,9 +88,21 @@ class _PostAddState extends State<PostAdd> {
                     ),
                   ),
                 ),
-                TextButton(
-                  onPressed: _addPost,
-                  child: const Text('Post'),
+                Container(
+                  color: AppUtils.isDarkMode(context)
+                      ? Colors.black
+                      : AppColors.primaryColor,
+                  child: TextButton.icon(
+                    onPressed: _addPost,
+                    icon: const Icon(
+                      Icons.add_box,
+                      color: AppColors.onPrimaryColor,
+                    ),
+                    label: Text(
+                      'Add Post',
+                      style: AppConstants.textWhite(),
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -155,12 +170,23 @@ class _PostAddState extends State<PostAdd> {
                 ],
               ),
             if (_pickedFile == null)
-              Align(
-                alignment: Alignment.bottomLeft,
-                child: TextButton.icon(
-                  onPressed: _getImage,
-                  icon: const Icon(Icons.camera_alt_rounded),
-                  label: const Text('Choose a photo'),
+              Container(
+                color: AppUtils.isDarkMode(context)
+                    ? Colors.black
+                    : AppColors.primaryColor,
+                child: Align(
+                  alignment: Alignment.bottomLeft,
+                  child: TextButton.icon(
+                    onPressed: _getImage,
+                    icon: const Icon(
+                      Icons.camera_alt_rounded,
+                      color: AppColors.onPrimaryColor,
+                    ),
+                    label: Text(
+                      'Choose a photo',
+                      style: AppConstants.textWhite(),
+                    ),
+                  ),
                 ),
               ),
           ],
