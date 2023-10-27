@@ -43,16 +43,36 @@ class _PostCardState extends State<PostCard> {
                   "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum"),
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                IconButton(
-                  onPressed: () => _buildDetailPost(1),
-                  icon: const Icon(Icons.mode_comment_outlined),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 18),
+                      child: GestureDetector(
+                        onTap: () => _editPost(),
+                        child: const Text('Edit'),
+                      ),
+                    ),
+                    const SizedBox(width: 25),
+                    GestureDetector(
+                      onTap: _removePost,
+                      child: const Text('Remove'),
+                    ),
+                  ],
                 ),
-                const Text(
-                  '12', // Replace with the actual number of comments
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    IconButton(
+                      onPressed: () => _buildDetailPost(1),
+                      icon: const Icon(Icons.mode_comment_outlined),
+                    ),
+                    const Text('12'),
+                    const SizedBox(width: 10),
+                  ],
                 ),
-                const SizedBox(width: 10), // Adjust the width as needed
               ],
             ),
           ],
@@ -103,4 +123,8 @@ class _PostCardState extends State<PostCard> {
       ),
     );
   }
+
+  void _editPost() {}
+
+  void _removePost() {}
 }
