@@ -88,17 +88,19 @@ class _PostAddState extends State<PostAdd> {
                     ),
                   ),
                 ),
-                Container(
-                  color: AppUtils.blackprimaryColor(context),
+                Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
                   child: TextButton.icon(
                     onPressed: _addPost,
                     icon: const Icon(
                       Icons.add_box,
-                      color: AppColors.onPrimaryColor,
                     ),
-                    label: Text(
+                    style: TextButton.styleFrom(
+                      backgroundColor: AppColors.greyColor,
+                      foregroundColor: Colors.white,
+                    ),
+                    label: const Text(
                       'Add Post',
-                      style: AppConstants.textWhite(),
                     ),
                   ),
                 ),
@@ -168,8 +170,8 @@ class _PostAddState extends State<PostAdd> {
                 ],
               ),
             if (_pickedFile == null)
-              Container(
-                color: AppUtils.blackprimaryColor(context),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
                 child: Align(
                   alignment: Alignment.bottomLeft,
                   child: TextButton.icon(
@@ -177,6 +179,10 @@ class _PostAddState extends State<PostAdd> {
                     icon: const Icon(
                       Icons.camera_alt_rounded,
                       color: AppColors.onPrimaryColor,
+                    ),
+                    style: TextButton.styleFrom(
+                      backgroundColor: AppColors.primaryColor,
+                      foregroundColor: Colors.white,
                     ),
                     label: Text(
                       'Choose a photo',
