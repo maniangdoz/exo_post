@@ -177,6 +177,7 @@ class _CommentScreenState extends State<CommentScreen> {
           padding: const EdgeInsets.only(
             left: 5,
             right: 5,
+            bottom: 15,
           ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.end,

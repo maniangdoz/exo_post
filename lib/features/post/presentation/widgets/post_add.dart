@@ -171,7 +171,7 @@ class _PostAddState extends State<PostAdd> {
               ),
             if (_pickedFile == null)
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(20),
                 child: Align(
                   alignment: Alignment.bottomLeft,
                   child: TextButton.icon(

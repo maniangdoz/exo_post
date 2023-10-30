@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:photo_view/photo_view.dart';
 import 'package:readmore/readmore.dart';
 
 import '../../../../common/styles/colors.dart';
@@ -31,11 +32,27 @@ class _PostCardState extends State<PostCard> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildHeaderCard('Sender name'),
-            Image.asset(
-              'assets/images/connection_failed.png',
-              width: double.infinity,
-              height: 150,
-              fit: BoxFit.cover,
+            GestureDetector(
+              onTap: () {
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  useSafeArea: true,
+                  builder: (context) => SizedBox(
+                    height: MediaQuery.of(context).size.height,
+                    child: PhotoView(
+                      imageProvider: const AssetImage(
+                          'assets/images/connection_failed.png'),
+                    ),
+                  ),
+                );
+              },
+              child: Image.asset(
+                'assets/images/connection_failed.png',
+                width: double.infinity,
+                height: 500,
+                fit: BoxFit.cover,
+              ),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 18, right: 18, top: 10),

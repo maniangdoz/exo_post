@@ -19,4 +19,7 @@ class AppConstants {
       color: AppColors.onPrimaryColor,
     );
   }
+
+  static const String baseUrlDev = '';
+  static const String baseUrlProd = '';
 }
