@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../common/utils/app_utils.dart';
 import '../../../post/presentation/widgets/post_card.dart';
 import '../../../shared/presentation/widgets/info_user.dart';
 import '../../../shared/presentation/widgets/total_comment.dart';
@@ -28,7 +29,7 @@ class UserScreen extends StatelessWidget {
                 child: Row(
                   children: [
                     Text(
-                      "Her Posts",
+                      "${AppUtils.generateAcronym('sender name')}'s posts",
                       style: Theme.of(context).textTheme.displaySmall,
                     ),
                     const TotalComment(nbcomments: 1),

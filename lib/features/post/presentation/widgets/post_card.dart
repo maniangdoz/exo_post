@@ -47,11 +47,13 @@ class _PostCardState extends State<PostCard> {
                   ),
                 );
               },
-              child: Image.asset(
-                'assets/images/connection_failed.png',
-                width: double.infinity,
-                height: 500,
-                fit: BoxFit.cover,
+              child: Container(
+                constraints: const BoxConstraints(
+                    minHeight: 300, minWidth: double.infinity, maxHeight: 500),
+                child: Image.asset(
+                  'assets/images/connection_failed.png',
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
             Padding(
