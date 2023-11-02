@@ -45,8 +45,8 @@ class _AuthScreenState extends State<AuthScreen> {
             } else if (state.status == Status.failed) {
               //show error message;
               context.pop();
-              AppUtils.showAlert(
-                  context, "Error", AppUtils.accentprimaryColor(context));
+              AppUtils.showAlert(context, state.message ?? 'Error',
+                  AppUtils.accentprimaryColor(context));
             }
           }
         },
