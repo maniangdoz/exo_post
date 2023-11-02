@@ -23,11 +23,11 @@ import 'package:exo_post/features/auth/domain/usecases/auth_usecases.dart'
 import 'package:exo_post/features/auth/presentation/bloc/auth_bloc.dart'
     as _i27;
 import 'package:exo_post/features/comment/data/repository/comment_repo_imp.dart'
-    as _i6;
-import 'package:exo_post/features/comment/domain/repository/comment_repo.dart'
     as _i5;
+import 'package:exo_post/features/comment/domain/repository/comment_repo.dart'
+    as _i4;
 import 'package:exo_post/features/comment/domain/usecases/comment_usecases.dart'
-    as _i7;
+    as _i6;
 import 'package:exo_post/features/post/data/repository/post_repo_imp.dart'
     as _i10;
 import 'package:exo_post/features/post/domain/repository/post_repo.dart' as _i9;
@@ -52,9 +52,9 @@ import 'package:exo_post/features/user/domain/repository/user_repo.dart'
 import 'package:exo_post/features/user/domain/usecases/user_usecases.dart'
     as _i21;
 import 'package:get_it/get_it.dart' as _i1;
-import 'package:http/http.dart' as _i4;
 import 'package:image_picker/image_picker.dart' as _i8;
 import 'package:injectable/injectable.dart' as _i2;
+import 'package:pretty_http_logger/pretty_http_logger.dart' as _i7;
 import 'package:shared_preferences/shared_preferences.dart' as _i18;
 
 extension GetItInjectableX on _i1.GetIt {
@@ -72,9 +72,9 @@ extension GetItInjectableX on _i1.GetIt {
     final imageModule = _$ImageModule();
     final appModule = _$AppModule();
     gh.factory<_i3.AppLogic>(() => _i3.AppLogic());
-    gh.factory<_i4.Client>(() => networkModule.client);
-    gh.factory<_i5.CommentRepo>(() => _i6.CommentRepoImp());
-    gh.factory<_i7.CommentUseCases>(() => _i7.CommentUseCases());
+    gh.factory<_i4.CommentRepo>(() => _i5.CommentRepoImp());
+    gh.factory<_i6.CommentUseCases>(() => _i6.CommentUseCases());
+    gh.factory<_i7.HttpWithMiddleware>(() => networkModule.client);
     gh.factory<_i8.ImagePicker>(() => imageModule.initImagePicker());
     gh.factory<_i9.PostRepo>(() => _i10.PostRepoImp());
     gh.factory<_i11.PostUseCases>(() => _i11.PostUseCases());
@@ -89,7 +89,7 @@ extension GetItInjectableX on _i1.GetIt {
     gh.factory<_i19.UserRepo>(() => _i20.UserRepoImp());
     gh.factory<_i21.UserUseCases>(() => _i21.UserUseCases());
     gh.factory<_i22.ApiServices>(
-        () => _i22.ApiServices(client: gh<_i4.Client>()));
+        () => _i22.ApiServices(client: gh<_i7.HttpWithMiddleware>()));
     gh.factory<_i23.AuthRepo>(
         () => _i24.AuthRepoImp(api: gh<_i22.ApiServices>()));
     gh.factory<_i25.AuthUseCases>(

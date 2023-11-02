@@ -1,8 +1,13 @@
 import 'package:injectable/injectable.dart';
-import 'package:http/http.dart' as http;
+import 'package:pretty_http_logger/pretty_http_logger.dart' as l;
+
+import '../services/logger_app.dart';
 
 //here we create one and one instance httpclient for app
 @module
 abstract class NetworkModule {
-  http.Client get client => http.Client();
+  @factoryMethod
+  l.HttpWithMiddleware get client => l.HttpWithMiddleware.build(middlewares: [
+        LoggerApp(),
+      ]);
 }
