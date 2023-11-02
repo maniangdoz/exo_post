@@ -20,6 +20,12 @@ class AppConstants {
     );
   }
 
-  static const String baseUrlDev = '';
+  static const String baseUrlDev = 'xoc1-kd2t-7p9b.n7c.xano.io';
   static const String baseUrlProd = '';
+}
+
+enum Status {
+  waiting,
+  succeded,
+  failed,
 }

@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'common/router.dart';
 import 'common/styles/theme.dart';
 import 'core/init/injection.dart';
 import 'core/logic/app_logic.dart';
 import 'core/logic/image_logic.dart';
+import 'features/auth/presentation/bloc/auth_bloc.dart';
 
 void main() {
   runZonedGuarded(() async {
@@ -24,11 +26,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
-      routerConfig: appRouter,
-      debugShowCheckedModeBanner: false,
+    return MultiBlocProvider(
+      providers: [
+       BlocProvider<AuthBloc>(create: (context) => getIt<AuthBloc>()),
+      ],
+      child: MaterialApp.router(
+        theme: AppTheme.lightTheme,
+        darkTheme: AppTheme.darkTheme,
+        routerConfig: appRouter,
+        debugShowCheckedModeBanner: false,
+      ),
     );
   }
 }

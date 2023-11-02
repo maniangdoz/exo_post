@@ -1,4 +1,6 @@
+import 'package:exo_post/common/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../common/router.dart';
@@ -10,6 +12,7 @@ import '../../../../features/shared/presentation/widgets/text_label_shared.dart'
 import '../../../shared/presentation/widgets/auth_register_container.dart';
 import '../../../shared/presentation/widgets/email_input.dart';
 import '../../../shared/presentation/widgets/password_input.dart';
+import '../bloc/auth_bloc.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({Key? key}) : super(key: key);
@@ -26,59 +29,79 @@ class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          AppUtils.firstPosition(context),
-          AppUtils.secondPosition(context, "Login"),
-          AppUtils.thirdPosition(context),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Form(
-              key: _formKey,
-              child: ListView(
-                children: <Widget>[
-                  AuthRegisterContainer(
-                    children: [
-                      EmailInput(
-                        emailTextFieldController: _emailTextFieldController,
-                      ),
-                      PasswordInput(
-                        passwordTextFieldController:
-                            _passwordTextFieldController,
-                      ),
-                    ],
-                  ),
-                  Container(
-                    margin: const EdgeInsets.fromLTRB(20, 10, 20, 15),
-                    child: ButtonShared(
-                      text: "SIGN IN",
-                      colorButton: AppColors.primaryColor,
-                      onClick: _doLogin,
+      body: BlocListener<AuthBloc, AuthState>(
+        listener: (context, state) {
+          if (state is LoginFinished) {
+            if (state.status == Status.waiting) {
+              //show loader
+            } else if (state.status == Status.succeded) {
+              //show loader
+              AppUtils.showAlert(
+                  context, "Success", AppUtils.accentprimaryColor(context));
+              // context
+              //     .go(ScreenPaths.homeScreen.replaceAll(':id', 0.toString()));
+            } else if (state.status == Status.failed) {
+              //show error message;
+              AppUtils.showAlert(
+                  context, "Error", AppUtils.accentprimaryColor(context));
+            }
+          }
+        },
+        child: Stack(
+          children: <Widget>[
+            AppUtils.firstPosition(context),
+            AppUtils.secondPosition(context, "Login"),
+            AppUtils.thirdPosition(context),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Form(
+                key: _formKey,
+                child: ListView(
+                  children: <Widget>[
+                    AuthRegisterContainer(
+                      children: [
+                        EmailInput(
+                          emailTextFieldController: _emailTextFieldController,
+                        ),
+                        PasswordInput(
+                          passwordTextFieldController:
+                              _passwordTextFieldController,
+                        ),
+                      ],
                     ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      TextLabelShared(
-                          colorTextLabel: AppUtils.onprimarygreyColor(context),
-                          labelText: "DON'T HAVE AN ACCOUNT ? ",
-                          sizeLabelText: AppSizes.meduimText,
-                          fontLabelText: FontWeight.w500,
-                          onClick: () {}),
-                      TextLabelShared(
-                        colorTextLabel: AppUtils.accentprimaryColor(context),
-                        labelText: " SIGN UP",
-                        sizeLabelText: AppSizes.meduimText,
-                        fontLabelText: FontWeight.w700,
-                        onClick: _goToRegisterPage,
+                    Container(
+                      margin: const EdgeInsets.fromLTRB(20, 10, 20, 15),
+                      child: ButtonShared(
+                        text: "SIGN IN",
+                        colorButton: AppColors.primaryColor,
+                        onClick: _doLogin,
                       ),
-                    ],
-                  )
-                ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        TextLabelShared(
+                            colorTextLabel:
+                                AppUtils.onprimarygreyColor(context),
+                            labelText: "DON'T HAVE AN ACCOUNT ? ",
+                            sizeLabelText: AppSizes.meduimText,
+                            fontLabelText: FontWeight.w500,
+                            onClick: () {}),
+                        TextLabelShared(
+                          colorTextLabel: AppUtils.accentprimaryColor(context),
+                          labelText: " SIGN UP",
+                          sizeLabelText: AppSizes.meduimText,
+                          fontLabelText: FontWeight.w700,
+                          onClick: _goToRegisterPage,
+                        ),
+                      ],
+                    )
+                  ],
+                ),
               ),
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }
@@ -87,11 +110,7 @@ class _AuthScreenState extends State<AuthScreen> {
     if (_formKey.currentState!.validate()) {
       String email = _emailTextFieldController.text.toString().trim();
       String password = _passwordTextFieldController.text.toString().trim();
-      String message = "email: $email password: $password";
-
-      AppUtils.showAlert(
-          context, "Login: $message", AppUtils.accentprimaryColor(context));
-      context.go(ScreenPaths.homeScreen.replaceAll(':id', 0.toString()));
+      context.read<AuthBloc>().add(Login(email: email, password: password));
     }
   }
 

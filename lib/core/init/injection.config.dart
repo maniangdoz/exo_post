@@ -9,52 +9,53 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:exo_post/core/logic/app_logic.dart' as _i3;
-import 'package:exo_post/core/logic/image_logic.dart' as _i27;
+import 'package:exo_post/core/logic/image_logic.dart' as _i26;
 import 'package:exo_post/core/modules/app_module.dart' as _i30;
 import 'package:exo_post/core/modules/image_module.dart' as _i29;
 import 'package:exo_post/core/modules/network_module.dart' as _i28;
-import 'package:exo_post/core/services/api_services.dart' as _i26;
+import 'package:exo_post/core/services/api_services.dart' as _i22;
 import 'package:exo_post/features/auth/data/repository/auth_repo_imp.dart'
-    as _i6;
-import 'package:exo_post/features/auth/domain/repository/auth_repo.dart' as _i5;
-import 'package:exo_post/features/auth/domain/usecases/auth_usecases.dart'
-    as _i7;
-import 'package:exo_post/features/auth/presentation/bloc/auth_bloc.dart' as _i4;
-import 'package:exo_post/features/comment/data/repository/comment_repo_imp.dart'
-    as _i10;
-import 'package:exo_post/features/comment/domain/repository/comment_repo.dart'
-    as _i9;
-import 'package:exo_post/features/comment/domain/usecases/comment_usecases.dart'
-    as _i11;
-import 'package:exo_post/features/post/data/repository/post_repo_imp.dart'
-    as _i14;
-import 'package:exo_post/features/post/domain/repository/post_repo.dart'
-    as _i13;
-import 'package:exo_post/features/post/domain/usecases/post_usecases.dart'
-    as _i16;
-import 'package:exo_post/features/profil/data/repository/profil_repo_imp.dart'
-    as _i18;
-import 'package:exo_post/features/profil/domain/repository/profil_repo.dart'
-    as _i17;
-import 'package:exo_post/features/profil/domain/usecases/profil_usecases.dart'
-    as _i15;
-import 'package:exo_post/features/register/data/repository/register_repo_imp.dart'
-    as _i20;
-import 'package:exo_post/features/register/domain/repository/register_repo.dart'
-    as _i19;
-import 'package:exo_post/features/register/domain/usecases/register_usecases.dart'
-    as _i21;
-import 'package:exo_post/features/user/data/repository/user_repo_imp.dart'
     as _i24;
-import 'package:exo_post/features/user/domain/repository/user_repo.dart'
+import 'package:exo_post/features/auth/domain/repository/auth_repo.dart'
     as _i23;
-import 'package:exo_post/features/user/domain/usecases/user_usecases.dart'
+import 'package:exo_post/features/auth/domain/usecases/auth_usecases.dart'
     as _i25;
+import 'package:exo_post/features/auth/presentation/bloc/auth_bloc.dart'
+    as _i27;
+import 'package:exo_post/features/comment/data/repository/comment_repo_imp.dart'
+    as _i6;
+import 'package:exo_post/features/comment/domain/repository/comment_repo.dart'
+    as _i5;
+import 'package:exo_post/features/comment/domain/usecases/comment_usecases.dart'
+    as _i7;
+import 'package:exo_post/features/post/data/repository/post_repo_imp.dart'
+    as _i10;
+import 'package:exo_post/features/post/domain/repository/post_repo.dart' as _i9;
+import 'package:exo_post/features/post/domain/usecases/post_usecases.dart'
+    as _i12;
+import 'package:exo_post/features/profil/data/repository/profil_repo_imp.dart'
+    as _i14;
+import 'package:exo_post/features/profil/domain/repository/profil_repo.dart'
+    as _i13;
+import 'package:exo_post/features/profil/domain/usecases/profil_usecases.dart'
+    as _i11;
+import 'package:exo_post/features/register/data/repository/register_repo_imp.dart'
+    as _i16;
+import 'package:exo_post/features/register/domain/repository/register_repo.dart'
+    as _i15;
+import 'package:exo_post/features/register/domain/usecases/register_usecases.dart'
+    as _i17;
+import 'package:exo_post/features/user/data/repository/user_repo_imp.dart'
+    as _i20;
+import 'package:exo_post/features/user/domain/repository/user_repo.dart'
+    as _i19;
+import 'package:exo_post/features/user/domain/usecases/user_usecases.dart'
+    as _i21;
 import 'package:get_it/get_it.dart' as _i1;
-import 'package:http/http.dart' as _i8;
-import 'package:image_picker/image_picker.dart' as _i12;
+import 'package:http/http.dart' as _i4;
+import 'package:image_picker/image_picker.dart' as _i8;
 import 'package:injectable/injectable.dart' as _i2;
-import 'package:shared_preferences/shared_preferences.dart' as _i22;
+import 'package:shared_preferences/shared_preferences.dart' as _i18;
 
 extension GetItInjectableX on _i1.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -71,29 +72,34 @@ extension GetItInjectableX on _i1.GetIt {
     final imageModule = _$ImageModule();
     final appModule = _$AppModule();
     gh.factory<_i3.AppLogic>(() => _i3.AppLogic());
-    gh.factory<_i4.AuthBloc>(() => _i4.AuthBloc());
-    gh.factory<_i5.AuthRepo>(() => _i6.AuthRepoImp());
-    gh.factory<_i7.AuthUseCases>(() => _i7.AuthUseCases());
-    gh.factory<_i8.Client>(() => networkModule.client);
-    gh.factory<_i9.CommentRepo>(() => _i10.CommentRepoImp());
-    gh.factory<_i11.CommentUseCases>(() => _i11.CommentUseCases());
-    gh.factory<_i12.ImagePicker>(() => imageModule.initImagePicker());
-    gh.factory<_i13.PostRepo>(() => _i14.PostRepoImp());
-    gh.factory<_i15.PostUseCases>(() => _i15.PostUseCases());
-    gh.factory<_i16.PostUseCases>(() => _i16.PostUseCases());
-    gh.factory<_i17.ProfilRepo>(() => _i18.ProfilRepoImp());
-    gh.factory<_i19.RegisterRepo>(() => _i20.RegisterRepoImp());
-    gh.factory<_i21.RegisterUseCases>(() => _i21.RegisterUseCases());
-    await gh.factoryAsync<_i22.SharedPreferences>(
+    gh.factory<_i4.Client>(() => networkModule.client);
+    gh.factory<_i5.CommentRepo>(() => _i6.CommentRepoImp());
+    gh.factory<_i7.CommentUseCases>(() => _i7.CommentUseCases());
+    gh.factory<_i8.ImagePicker>(() => imageModule.initImagePicker());
+    gh.factory<_i9.PostRepo>(() => _i10.PostRepoImp());
+    gh.factory<_i11.PostUseCases>(() => _i11.PostUseCases());
+    gh.factory<_i12.PostUseCases>(() => _i12.PostUseCases());
+    gh.factory<_i13.ProfilRepo>(() => _i14.ProfilRepoImp());
+    gh.factory<_i15.RegisterRepo>(() => _i16.RegisterRepoImp());
+    gh.factory<_i17.RegisterUseCases>(() => _i17.RegisterUseCases());
+    await gh.factoryAsync<_i18.SharedPreferences>(
       () => appModule.prefs,
       preResolve: true,
     );
-    gh.factory<_i23.UserRepo>(() => _i24.UserRepoImp());
-    gh.factory<_i25.UserUseCases>(() => _i25.UserUseCases());
-    gh.factory<_i26.ApiServices>(
-        () => _i26.ApiServices(client: gh<_i8.Client>()));
-    gh.factory<_i27.ImageLogic>(
-        () => _i27.ImageLogic(picker: gh<_i12.ImagePicker>()));
+    gh.factory<_i19.UserRepo>(() => _i20.UserRepoImp());
+    gh.factory<_i21.UserUseCases>(() => _i21.UserUseCases());
+    gh.factory<_i22.ApiServices>(
+        () => _i22.ApiServices(client: gh<_i4.Client>()));
+    gh.factory<_i23.AuthRepo>(
+        () => _i24.AuthRepoImp(api: gh<_i22.ApiServices>()));
+    gh.factory<_i25.AuthUseCases>(
+        () => _i25.AuthUseCases(repo: gh<_i23.AuthRepo>()));
+    gh.factory<_i26.ImageLogic>(
+        () => _i26.ImageLogic(picker: gh<_i8.ImagePicker>()));
+    gh.factory<_i27.AuthBloc>(() => _i27.AuthBloc(
+          gh<_i25.AuthUseCases>(),
+          gh<_i18.SharedPreferences>(),
+        ));
     return this;
   }
 }
