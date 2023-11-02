@@ -27,4 +27,26 @@ class ApiServices {
       throw 'Error occured';
     }
   }
+
+  Future<http.Response> signup(
+      {required String email,
+      required String password,
+      required String name}) async {
+    try {
+      final response = await _client.post(
+        Uri.https(AppConstants.baseUrlDev, '/api:xbcc5VEi/auth/signup'),
+        body: jsonEncode({
+          'email': email,
+          'password': password,
+          'name': name,
+        }),
+        headers: <String, String>{'Content-Type': 'application/json'},
+      );
+
+      return response;
+    } catch (e) {
+      log(e.toString());
+      throw 'Error occured';
+    }
+  }
 }

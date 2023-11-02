@@ -5,16 +5,18 @@ part 'auth.g.dart';
 
 @JsonSerializable()
 class Auth extends Equatable {
-  final String? authToken;
+  final String? _authToken;
 
-  const Auth({this.authToken});
+  const Auth({String? authToken}) : _authToken = authToken;
 
-  AuthEntity toEntity() => AuthEntity(authToken: authToken);
+  String? get authToken => _authToken;
+
+  AuthEntity toEntity() => AuthEntity(authToken: _authToken);
 
   factory Auth.fromJson(Map<String, dynamic> json) => _$AuthFromJson(json);
 
   Map<String, dynamic> toJson() => _$AuthToJson(this);
 
   @override
-  List<Object?> get props => [authToken];
+  List<Object?> get props => [_authToken];
 }

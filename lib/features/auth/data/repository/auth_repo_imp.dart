@@ -22,7 +22,7 @@ class AuthRepoImp extends AuthRepo {
         } else if (value.statusCode == 400) {
           throw '400'; //message to show if we have 400 code error
         } else if (value.statusCode == 403) {
-          throw '403'; //message to show if we have 403 code error
+          throw 'Email or password incorrect !'; //message to show if we have 403 code error
         } else if (value.statusCode == 404) {
           throw '404'; //message to show if we have 404 code error
         } else if (value.statusCode == 429) {

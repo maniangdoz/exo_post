@@ -1,9 +1,9 @@
 import 'package:equatable/equatable.dart';
 
-class AuthEntity extends Equatable {
+class RegisterEntity extends Equatable {
   final String? _authToken;
 
-  const AuthEntity({required String? authToken}) : _authToken = authToken;
+  const RegisterEntity({required String? authToken}) : _authToken = authToken;
 
   String? get authToken => _authToken;
 

@@ -1,4 +1,6 @@
+import 'package:exo_post/common/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../common/router.dart';
@@ -11,6 +13,7 @@ import '../../../shared/presentation/widgets/email_input.dart';
 import '../../../shared/presentation/widgets/name_input.dart';
 import '../../../shared/presentation/widgets/password_input.dart';
 import '../../../shared/presentation/widgets/text_label_shared.dart';
+import '../bloc/register_bloc.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -28,60 +31,78 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          AppUtils.firstPosition(context),
-          AppUtils.secondPosition(context, "Register"),
-          AppUtils.thirdPosition(context),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Form(
-              key: _formKey,
-              child: ListView(
-                children: <Widget>[
-                  AuthRegisterContainer(
-                    children: [
-                      NameInput(
-                          nameTextFieldController: _nameTextFieldController),
-                      EmailInput(
-                        emailTextFieldController: _emailTextFieldController,
-                      ),
-                      PasswordInput(
-                        passwordTextFieldController:
-                            _passwordTextFieldController,
-                      ),
-                    ],
-                  ),
-                  Container(
-                    margin: const EdgeInsets.fromLTRB(20, 10, 20, 15),
-                    child: ButtonShared(
-                      text: "SIGNUP",
-                      colorButton: AppColors.primaryColor,
-                      onClick: _doRegister,
+      body: BlocListener<RegisterBloc, RegisterState>(
+        listener: (context, state) {
+          if (state is SignupFinished) {
+            if (state.status == Status.waiting) {
+              AppUtils.showLoader(context: context, message: 'signup...');
+            } else if (state.status == Status.succeded) {
+              context.pop();
+              context.go('/home/0');
+            } else if (state.status == Status.failed) {
+              context.pop();
+              AppUtils.showAlert(context, state.message ?? '',
+                  AppUtils.accentprimaryColor(context));
+            }
+          }
+        },
+        child: Stack(
+          children: <Widget>[
+            AppUtils.firstPosition(context),
+            AppUtils.secondPosition(context, "Register"),
+            AppUtils.thirdPosition(context),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Form(
+                key: _formKey,
+                child: ListView(
+                  children: <Widget>[
+                    AuthRegisterContainer(
+                      children: [
+                        NameInput(
+                            nameTextFieldController: _nameTextFieldController),
+                        EmailInput(
+                          emailTextFieldController: _emailTextFieldController,
+                        ),
+                        PasswordInput(
+                          passwordTextFieldController:
+                              _passwordTextFieldController,
+                        ),
+                      ],
                     ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      TextLabelShared(
-                          colorTextLabel: AppUtils.onprimarygreyColor(context),
-                          labelText: "ALREADY HAVE ON ACCOUNT ? ",
-                          sizeLabelText: AppSizes.meduimText,
-                          fontLabelText: FontWeight.w500,
-                          onClick: () {}),
-                      TextLabelShared(
-                          colorTextLabel: AppUtils.accentprimaryColor(context),
-                          labelText: " LOGIN",
-                          sizeLabelText: AppSizes.meduimText,
-                          fontLabelText: FontWeight.w700,
-                          onClick: _goToLoginPage),
-                    ],
-                  )
-                ],
+                    Container(
+                      margin: const EdgeInsets.fromLTRB(20, 10, 20, 15),
+                      child: ButtonShared(
+                        text: "SIGNUP",
+                        colorButton: AppColors.primaryColor,
+                        onClick: _doRegister,
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        TextLabelShared(
+                            colorTextLabel:
+                                AppUtils.onprimarygreyColor(context),
+                            labelText: "ALREADY HAVE ON ACCOUNT ? ",
+                            sizeLabelText: AppSizes.meduimText,
+                            fontLabelText: FontWeight.w500,
+                            onClick: () {}),
+                        TextLabelShared(
+                            colorTextLabel:
+                                AppUtils.accentprimaryColor(context),
+                            labelText: " LOGIN",
+                            sizeLabelText: AppSizes.meduimText,
+                            fontLabelText: FontWeight.w700,
+                            onClick: _goToLoginPage),
+                      ],
+                    )
+                  ],
+                ),
               ),
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }
@@ -91,12 +112,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
       String email = _emailTextFieldController.text.toString().trim();
       String name = _nameTextFieldController.text.toString().trim();
       String password = _passwordTextFieldController.text.toString().trim();
-      String message = "name: $name email: $email password: $password";
-      // widget.registerBloc.add(RegisterEventDoRegister(
-      //     registerRequest: RegisterRequest(email: email, password: password)));
-      AppUtils.showAlert(
-          context, "Register: $message", AppUtils.accentprimaryColor(context));
-      context.go('/home/0');
+
+      context
+          .read<RegisterBloc>()
+          .add(Signup(name: name, email: email, password: password));
     }
   }
 

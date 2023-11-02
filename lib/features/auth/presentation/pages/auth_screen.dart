@@ -38,10 +38,7 @@ class _AuthScreenState extends State<AuthScreen> {
             } else if (state.status == Status.succeded) {
               //show loader
               context.pop();
-              AppUtils.showAlert(
-                  context, "Success", AppUtils.accentprimaryColor(context));
-              // context
-              //     .go(ScreenPaths.homeScreen.replaceAll(':id', 0.toString()));
+              context.go('/home/0');
             } else if (state.status == Status.failed) {
               //show error message;
               context.pop();
