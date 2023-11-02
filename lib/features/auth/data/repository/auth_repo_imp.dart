@@ -33,7 +33,6 @@ class AuthRepoImp extends AuthRepo {
           throw 'Not repertoried'; //message to show if we have nothing
         }
       }).catchError((e) {
-        log('error: ${e.toString()}');
         throw e;
       });
 }

@@ -124,4 +124,23 @@ class AppUtils {
         ? AppColors.onPrimaryColor
         : AppColors.greyColor;
   }
+
+  static void showLoader(
+      {required BuildContext context, String? message = 'Loading...'}) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog.adaptive(
+        content: Row(
+          children: [
+            const CircularProgressIndicator.adaptive(),
+            const SizedBox(
+              width: 10,
+            ),
+            Text(message!),
+          ],
+        ),
+      ),
+    );
+  }
 }

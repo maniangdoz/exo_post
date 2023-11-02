@@ -34,14 +34,17 @@ class _AuthScreenState extends State<AuthScreen> {
           if (state is LoginFinished) {
             if (state.status == Status.waiting) {
               //show loader
+              AppUtils.showLoader(context: context);
             } else if (state.status == Status.succeded) {
               //show loader
+              context.pop();
               AppUtils.showAlert(
                   context, "Success", AppUtils.accentprimaryColor(context));
               // context
               //     .go(ScreenPaths.homeScreen.replaceAll(':id', 0.toString()));
             } else if (state.status == Status.failed) {
               //show error message;
+              context.pop();
               AppUtils.showAlert(
                   context, "Error", AppUtils.accentprimaryColor(context));
             }

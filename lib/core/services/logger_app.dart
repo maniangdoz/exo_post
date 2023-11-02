@@ -16,16 +16,16 @@ class LoggerApp extends MiddlewareContract {
 
   @override
   void interceptRequest(RequestData data) {
-    logger.t("Url: ${data.url}");
-    logger.t("Method: ${data.method}");
-    logger.t("Body: ${data.body}");
-    logger.t("Header: ${data.headers}");
+    logger.t("Url request: ${data.url}");
+    logger.t("Method request: ${data.method}");
+    logger.t("Body request: ${data.body}");
+    logger.t("Header request: ${data.headers}");
   }
 
   @override
   void interceptResponse(ResponseData data) {
-    logger.w("Body: ${data.body}");
-    logger.w("Header: ${data.headers}");
-    logger.w("Status Code: ${data.statusCode}");
+    logger.i("Body response: ${data.body}");
+    logger.i("Header response: ${data.headers}");
+    logger.i("Status Code response: ${data.statusCode}");
   }
 }
