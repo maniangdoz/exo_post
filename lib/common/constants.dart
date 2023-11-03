@@ -21,7 +21,9 @@ class AppConstants {
   }
 
   static const String baseUrlDev = 'xoc1-kd2t-7p9b.n7c.xano.io';
-  static const String baseUrlProd = '';
+  static const String baseUrlProd = 'xoc1-kd2t-7p9b.n7c.xano.io';
+  static const String baseUrlImage =
+      'https://storage.googleapis.com/xoc1-kd2t-7p9b.n7c.xano.io';
 }
 
 enum Status {

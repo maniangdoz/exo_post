@@ -39,6 +39,13 @@ class UserScreen extends StatelessWidget {
               PostCard(
                 type: 'profil',
                 onClick: () => {},
+                authorname: 'Winnie',
+                postcreatedat: '12-04',
+                content: 'Hello world',
+                commentscount: 3,
+                urlimage: 'null',
+                widthimage: 50,
+                heightimage: 1290,
               ),
               const SizedBox(
                 height: 100,

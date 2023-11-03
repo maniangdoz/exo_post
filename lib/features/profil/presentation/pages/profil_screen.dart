@@ -39,10 +39,26 @@ class _ProfilScreenState extends State<ProfilScreen> {
               PostCard(
                 type: 'profil',
                 onClick: () => {},
+                authorname: 'Winnie',
+                postcreatedat: '12-04',
+                content: 'Hello world',
+                commentscount: 3,
+                urlimage:
+                    '/vault/LvZKvql2/OHXEHCAiyP4eSoQMAJxv8hEyPE8/KEMODw../autruche.jpg',
+                widthimage: 50,
+                heightimage: 1290,
               ),
               PostCard(
                 type: 'profil',
                 onClick: () => {},
+                authorname: 'Winnie',
+                postcreatedat: '12-04',
+                content: 'Hello world',
+                commentscount: 3,
+                urlimage:
+                    '/vault/LvZKvql2/shhFWkLCqHemaVH-7QQNiL3fA9M/wtZ1sQ../file-86498c.jpeg',
+                widthimage: 50,
+                heightimage: 1290,
               ),
               const SizedBox(
                 height: 100,

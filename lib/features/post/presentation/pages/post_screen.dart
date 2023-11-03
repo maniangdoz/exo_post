@@ -37,7 +37,15 @@ class _PostScreenState extends State<PostScreen> {
               const SkeletonPost(),
               PostCard(
                 type: 'post',
-                onClick: () => _infoUser(1),
+                authorname: 'Winnie',
+                postcreatedat: '12-04',
+                content: 'Hello world',
+                commentscount: 5,
+                urlimage:
+                    '/vault/LvZKvql2/OHXEHCAiyP4eSoQMAJxv8hEyPE8/KEMODw../autruche.jpg',
+                widthimage: 50,
+                heightimage: 1290,
+                onClick: () => {},
               ),
               const SizedBox(
                 height: 100,

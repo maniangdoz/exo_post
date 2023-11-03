@@ -78,17 +78,17 @@ class AppUtils {
       MediaQuery.of(context).size.width * 7 / 8;
 
   static String generateAcronym(String fullName) {
-    var nameParts = fullName.split(' ');
-    var acronym = '';
-    for (var part in nameParts) {
-      if (part.isNotEmpty) {
-        acronym += part[0];
-      }
-      if (acronym.length >= 2) {
-        break;
+    final List<String> nameParts = fullName.split(' ');
+    final StringBuffer initials = StringBuffer();
+
+    for (int i = 0; i < nameParts.length; i++) {
+      final String namePart = nameParts[i];
+      if (namePart.isNotEmpty) {
+        initials.write(namePart[0].toUpperCase());
       }
     }
-    return acronym.toUpperCase();
+
+    return initials.toString().toUpperCase();
   }
 
   static Color primaryaccentColor(BuildContext context) {
