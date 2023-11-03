@@ -17,11 +17,7 @@ class PostScreen extends StatefulWidget {
 }
 
 class _PostScreenState extends State<PostScreen> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
+  final isLoading = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,19 +30,7 @@ class _PostScreenState extends State<PostScreen> {
               const SizedBox(
                 height: 10,
               ),
-              const SkeletonPost(),
-              PostCard(
-                type: 'post',
-                authorname: 'Winnie',
-                postcreatedat: 1697484100909,
-                content: 'Hello world',
-                commentscount: 5,
-                urlimage:
-                    '/vault/LvZKvql2/OHXEHCAiyP4eSoQMAJxv8hEyPE8/KEMODw../autruche.jpg',
-                widthimage: 50,
-                heightimage: 1290,
-                onClick: () => _infoUser(1),
-              ),
+              _showPostMain(),
               const SizedBox(
                 height: 100,
               ),
@@ -87,6 +71,25 @@ class _PostScreenState extends State<PostScreen> {
         return const PostAdd();
       },
     );
+  }
+
+  Widget _showPostMain() {
+    if (isLoading) {
+      return const SkeletonPost();
+    } else {
+      return PostCard(
+        type: 'post',
+        authorname: 'Winnie',
+        postcreatedat: 1697484100909,
+        content: 'Hello world',
+        commentscount: 5,
+        urlimage:
+            '/vault/LvZKvql2/OHXEHCAiyP4eSoQMAJxv8hEyPE8/KEMODw../autruche.jpg',
+        widthimage: 50,
+        heightimage: 1290,
+        onClick: () => _infoUser(1),
+      );
+    }
   }
 
   void _infoUser(int index) {
