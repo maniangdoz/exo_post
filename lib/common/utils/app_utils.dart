@@ -84,7 +84,11 @@ class AppUtils {
     for (int i = 0; i < nameParts.length; i++) {
       final String namePart = nameParts[i];
       if (namePart.isNotEmpty) {
-        initials.write(namePart[0].toUpperCase());
+        if (nameParts.length == 1 && namePart.length >= 2) {
+          initials.write(namePart.substring(0, 2).toUpperCase());
+        } else {
+          initials.write(namePart[0].toUpperCase());
+        }
       }
     }
 

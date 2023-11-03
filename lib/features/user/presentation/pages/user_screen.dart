@@ -40,7 +40,7 @@ class UserScreen extends StatelessWidget {
                 type: 'profil',
                 onClick: () => {},
                 authorname: 'Winnie',
-                postcreatedat: '12-04',
+                postcreatedat: 1697401556595,
                 content: 'Hello world',
                 commentscount: 3,
                 urlimage: 'null',

@@ -11,7 +11,7 @@ import '../../../shared/presentation/widgets/avatar_user.dart';
 class PostCard extends StatefulWidget {
   final String type;
   final String authorname;
-  final String postcreatedat;
+  final int postcreatedat;
   final String content;
   final String urlimage;
   final double widthimage;

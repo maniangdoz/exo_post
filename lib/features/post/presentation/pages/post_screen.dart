@@ -38,14 +38,14 @@ class _PostScreenState extends State<PostScreen> {
               PostCard(
                 type: 'post',
                 authorname: 'Winnie',
-                postcreatedat: '12-04',
+                postcreatedat: 1697484100909,
                 content: 'Hello world',
                 commentscount: 5,
                 urlimage:
                     '/vault/LvZKvql2/OHXEHCAiyP4eSoQMAJxv8hEyPE8/KEMODw../autruche.jpg',
                 widthimage: 50,
                 heightimage: 1290,
-                onClick: () => {},
+                onClick: () => _infoUser(1),
               ),
               const SizedBox(
                 height: 100,
