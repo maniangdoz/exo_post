@@ -1,6 +1,8 @@
 import 'package:equatable/equatable.dart';
-import 'package:exo_post/features/register/domain/entities/register_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
+
+import '../../domain/entities/register_entity.dart';
+
 part 'register_model.g.dart';
 
 @JsonSerializable()

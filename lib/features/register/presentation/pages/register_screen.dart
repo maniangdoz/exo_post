@@ -1,8 +1,8 @@
-import 'package:exo_post/common/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../common/constants.dart';
 import '../../../../common/router.dart';
 import '../../../../common/styles/colors.dart';
 import '../../../../common/styles/sizes.dart';

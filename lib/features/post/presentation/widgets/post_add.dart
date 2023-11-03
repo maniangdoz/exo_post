@@ -9,7 +9,6 @@ import 'package:image_picker/image_picker.dart';
 
 import '../../../../common/constants.dart';
 import '../../../../common/styles/colors.dart';
-import '../../../../common/utils/app_utils.dart';
 import '../../../../main_dev.dart';
 
 class PostAdd extends StatefulWidget {

@@ -1,6 +1,7 @@
-import 'package:exo_post/features/auth/domain/entities/auth_entity.dart';
-import 'package:exo_post/features/auth/domain/repository/auth_repo.dart';
 import 'package:injectable/injectable.dart';
+
+import '../entities/auth_entity.dart';
+import '../repository/auth_repo.dart';
 
 @injectable
 class AuthUseCases {

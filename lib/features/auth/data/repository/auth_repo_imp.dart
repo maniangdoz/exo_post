@@ -1,12 +1,11 @@
 import 'dart:convert';
-import 'dart:developer';
 
-import 'package:exo_post/core/services/api_services.dart';
-import 'package:exo_post/features/auth/data/models/auth.dart';
-import 'package:exo_post/features/auth/domain/entities/auth_entity.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../../core/services/api_services.dart';
+import '../../domain/entities/auth_entity.dart';
 import '../../domain/repository/auth_repo.dart';
+import '../models/auth.dart';
 
 @Injectable(as: AuthRepo)
 class AuthRepoImp extends AuthRepo {

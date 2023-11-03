@@ -1,13 +1,13 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:equatable/equatable.dart';
-import 'package:exo_post/common/constants.dart';
-import 'package:exo_post/features/auth/domain/entities/auth_entity.dart';
-import 'package:exo_post/features/auth/domain/usecases/auth_usecases.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../../common/constants.dart';
+import '../../domain/entities/auth_entity.dart';
+import '../../domain/usecases/auth_usecases.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';

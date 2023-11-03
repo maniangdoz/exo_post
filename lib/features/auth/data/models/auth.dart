@@ -1,6 +1,8 @@
 import 'package:equatable/equatable.dart';
-import 'package:exo_post/features/auth/domain/entities/auth_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
+
+import '../../domain/entities/auth_entity.dart';
+
 part 'auth.g.dart';
 
 @JsonSerializable()

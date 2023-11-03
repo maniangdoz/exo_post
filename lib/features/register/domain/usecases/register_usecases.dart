@@ -1,6 +1,7 @@
-import 'package:exo_post/features/register/domain/entities/register_entity.dart';
-import 'package:exo_post/features/register/domain/repository/register_repo.dart';
 import 'package:injectable/injectable.dart';
+
+import '../entities/register_entity.dart';
+import '../repository/register_repo.dart';
 
 @injectable
 class RegisterUseCases {

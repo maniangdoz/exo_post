@@ -1,12 +1,13 @@
 import 'dart:async';
 
 import 'package:equatable/equatable.dart';
-import 'package:exo_post/common/constants.dart';
-import 'package:exo_post/features/register/domain/entities/register_entity.dart';
-import 'package:exo_post/features/register/domain/usecases/register_usecases.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../../common/constants.dart';
+import '../../domain/entities/register_entity.dart';
+import '../../domain/usecases/register_usecases.dart';
 
 part 'register_event.dart';
 part 'register_state.dart';

@@ -1,4 +1,4 @@
-import 'package:exo_post/features/auth/domain/entities/auth_entity.dart';
+import '../entities/auth_entity.dart';
 
 abstract class AuthRepo {
   //constructor login

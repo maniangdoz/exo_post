@@ -1,11 +1,11 @@
 import 'dart:convert';
 
-import 'package:exo_post/core/services/api_services.dart';
-import 'package:exo_post/features/register/data/models/register_model.dart';
-import 'package:exo_post/features/register/domain/entities/register_entity.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../../core/services/api_services.dart';
+import '../../domain/entities/register_entity.dart';
 import '../../domain/repository/register_repo.dart';
+import '../models/register_model.dart';
 
 @Injectable(as: RegisterRepo)
 class RegisterRepoImp extends RegisterRepo {
