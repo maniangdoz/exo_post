@@ -102,15 +102,16 @@ class _PostCardState extends State<PostCard> {
         onTap: widget.onClick,
         contentPadding: const EdgeInsets.only(left: 18, right: 18, top: 5),
         title: Text(name),
-        subtitle: Text(widget.postcreatedat.toString()),
+        subtitle: Text(AppUtils.formatTimeFromNow(widget.postcreatedat)),
         leading: AvatarUser(name: name, color: color),
       );
     } else {
       return Container(
-        padding: const EdgeInsets.only(left: 18, right: 18, top: 10, bottom: 5),
+        padding:
+            const EdgeInsets.only(left: 18, right: 18, top: 10, bottom: 10),
         child: Text(
-          widget.postcreatedat.toString(),
-          style: Theme.of(context).textTheme.displayLarge,
+          AppUtils.formatTimeFromNow(widget.postcreatedat),
+          style: Theme.of(context).textTheme.displaySmall,
         ),
       );
     }

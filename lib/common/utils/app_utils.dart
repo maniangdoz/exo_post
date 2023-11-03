@@ -1,5 +1,6 @@
 //method or validator
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../styles/colors.dart';
 
@@ -146,5 +147,37 @@ class AppUtils {
         ),
       ),
     );
+  }
+
+  static String formatTimeFromNow(int timestamp) {
+    final DateTime now = DateTime.now();
+    final DateTime timestampDate =
+        DateTime.fromMillisecondsSinceEpoch(timestamp);
+
+    final Duration difference = now.difference(timestampDate);
+
+    if (difference.inDays > 6) {
+      return DateFormat('d MMMM').format(timestampDate);
+    } else if (difference.inDays > 0) {
+      if (difference.inDays == 1) {
+        return '1 day ago';
+      } else {
+        return '${difference.inDays} days ago';
+      }
+    } else if (difference.inHours > 0) {
+      if (difference.inHours == 1) {
+        return '1 hour ago';
+      } else {
+        return '${difference.inHours} hours ago';
+      }
+    } else if (difference.inMinutes > 0) {
+      if (difference.inMinutes == 1) {
+        return '1 minute ago';
+      } else {
+        return '${difference.inMinutes} minutes ago';
+      }
+    } else {
+      return 'Just now';
+    }
   }
 }
