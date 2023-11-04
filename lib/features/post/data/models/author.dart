@@ -1,19 +1,33 @@
-class Author {
-  final int id;
-  final String createdAt;
-  final String name;
+import 'package:equatable/equatable.dart';
+import 'package:exo_post/features/post/domain/entities/author_entity.dart';
+import 'package:json_annotation/json_annotation.dart';
 
-  Author({
-    required this.id,
-    required this.createdAt,
-    required this.name,
-  });
+part 'author.g.dart';
 
-  factory Author.fromJson(Map<String, dynamic> json) {
-    return Author(
-      id: json['id'],
-      createdAt: json['created_at'],
-      name: json['name'],
-    );
-  }
+@JsonSerializable()
+class Author extends Equatable {
+  final int? _id;
+  final int? _createdAt;
+  final String? _name;
+
+  const Author(
+      {required int? id, required int? createdAt, required String? name})
+      : _id = id,
+        _createdAt = createdAt,
+        _name = name;
+
+  int? get id => _id;
+
+  @JsonKey(name: 'created_at')
+  int? get createdAt => _createdAt;
+  String? get name => _name;
+
+  factory Author.fromJson(Map<String, dynamic> json) => _$AuthorFromJson(json);
+  Map<String, dynamic> toJson() => _$AuthorToJson(this);
+
+  AuthorEntity toEntity() =>
+      AuthorEntity(id: _id, createdAt: _createdAt, name: _name);
+
+  @override
+  List<Object?> get props => [_id, _createdAt, _name];
 }

@@ -52,11 +52,11 @@ class ApiServices {
   }
 
   Future<http.Response> postList(
-      {required String page, required String perPage}) async {
+      {required int page, required int perPage}) async {
     try {
       final response = await _client.get(
         Uri.https(AppConstants.baseUrlDev, '/api:xbcc5VEi/post',
-            {'page': page, 'per_page': perPage}),
+            {'page': '$page', 'per_page': '$perPage'}),
         headers: <String, String>{'Content-Type': 'application/json'},
       );
       return response;

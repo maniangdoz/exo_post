@@ -1,9 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:readmore/readmore.dart';
 
-import '../../../../common/constants.dart';
 import '../../../../common/styles/colors.dart';
 import '../../../../common/utils/app_utils.dart';
 import '../../../shared/presentation/widgets/avatar_user.dart';
@@ -13,7 +14,7 @@ class PostCard extends StatefulWidget {
   final String authorname;
   final int postcreatedat;
   final String content;
-  final String urlimage;
+  final String? urlimage;
   final double widthimage;
   final double heightimage;
   final int commentscount;
@@ -26,7 +27,7 @@ class PostCard extends StatefulWidget {
     required this.authorname,
     required this.postcreatedat,
     required this.content,
-    required this.urlimage,
+    this.urlimage,
     required this.widthimage,
     required this.heightimage,
     required this.commentscount,
@@ -102,7 +103,9 @@ class _PostCardState extends State<PostCard> {
         onTap: widget.onClick,
         contentPadding: const EdgeInsets.only(left: 18, right: 18, top: 5),
         title: Text(name),
-        subtitle: Text(AppUtils.formatTimeFromNow(widget.postcreatedat)),
+        subtitle: Text(
+          AppUtils.formatTimeFromNow(widget.postcreatedat),
+        ),
         leading: AvatarUser(name: name, color: color),
       );
     } else {
@@ -140,7 +143,7 @@ class _PostCardState extends State<PostCard> {
   }
 
   Widget _buildImageCard() {
-    if (widget.urlimage != 'null') {
+    if (widget.urlimage != null) {
       return GestureDetector(
         onTap: () {
           showModalBottomSheet(
@@ -150,8 +153,7 @@ class _PostCardState extends State<PostCard> {
             builder: (context) => SizedBox(
               height: MediaQuery.of(context).size.height,
               child: PhotoView(
-                imageProvider: NetworkImage(
-                    '${AppConstants.baseUrlImage}${widget.urlimage}'),
+                imageProvider: NetworkImage('${widget.urlimage}'),
               ),
             ),
           );
@@ -160,14 +162,18 @@ class _PostCardState extends State<PostCard> {
           constraints: const BoxConstraints(
               minHeight: 300, minWidth: double.infinity, maxHeight: 500),
           child: Image.network(
-            '${AppConstants.baseUrlImage}${widget.urlimage}',
+            '${widget.urlimage}',
             fit: BoxFit.cover,
             loadingBuilder: (BuildContext context, Widget child,
                 ImageChunkEvent? loadingProgress) {
               if (loadingProgress == null) {
                 return child;
               } else {
-                return const CircularProgressIndicator();
+                return const SizedBox(
+                  width: 40,
+                  height: 40,
+                  child: Center(child: CircularProgressIndicator()),
+                );
               }
             },
           ),

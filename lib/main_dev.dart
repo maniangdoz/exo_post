@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:exo_post/features/post/presentation/bloc/post_bloc.dart';
 import 'package:exo_post/features/register/presentation/bloc/register_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
       providers: [
        BlocProvider<AuthBloc>(create: (context) => getIt<AuthBloc>()),
        BlocProvider<RegisterBloc>(create: (context) => getIt<RegisterBloc>()),
+       BlocProvider<PostBloc>(create: (context) => getIt<PostBloc>()),
       ],
       child: MaterialApp.router(
         theme: AppTheme.lightTheme,

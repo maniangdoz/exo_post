@@ -1,10 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:exo_post/features/post/domain/entities/image_entity.dart';
-import 'package:json_annotation/json_annotation.dart';
-part 'image.g.dart';
 
-@JsonSerializable()
-class ImageModel extends Equatable {
+class ImageEntity extends Equatable {
   final String? _path;
   final String? _name;
   final String? _type;
@@ -12,7 +8,7 @@ class ImageModel extends Equatable {
   final String? _mime;
   final String? _url;
 
-  const ImageModel(
+  const ImageEntity(
       {required String? path,
       required String? name,
       required String? type,
@@ -32,18 +28,6 @@ class ImageModel extends Equatable {
   int? get size => _size;
   String? get mime => _mime;
   String? get url => _url;
-
-  factory ImageModel.fromJson(Map<String, dynamic> json) =>
-      _$ImageModelFromJson(json);
-  Map<String, dynamic> toJson() => _$ImageModelToJson(this);
-
-  ImageEntity toEntity() => ImageEntity(
-      path: _path,
-      name: _name,
-      type: _type,
-      size: _size,
-      mime: _mime,
-      url: _url);
 
   @override
   List<Object?> get props => [_path, _name, _type, _size, _mime, _url];
