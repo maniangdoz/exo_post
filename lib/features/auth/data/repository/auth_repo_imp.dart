@@ -19,15 +19,15 @@ class AuthRepoImp extends AuthRepo {
         if (value.statusCode == 200) {
           return Auth.fromJson(jsonDecode(value.body)).toEntity();
         } else if (value.statusCode == 400) {
-          throw '400'; //message to show if we have 400 code error
+          throw 'Input Error'; //message to show if we have 400 code error
         } else if (value.statusCode == 403) {
           throw 'Email or password incorrect !'; //message to show if we have 403 code error
         } else if (value.statusCode == 404) {
-          throw '404'; //message to show if we have 404 code error
+          throw 'Not Found'; //message to show if we have 404 code error
         } else if (value.statusCode == 429) {
-          throw '429'; //message to show if we have 429 code error
+          throw 'Rate Limited. Too many requests.'; //message to show if we have 429 code error
         } else if (value.statusCode == 500) {
-          throw '500'; //message to show if we have 500 code error
+          throw 'Unexpected error'; //message to show if we have 500 code error
         } else {
           throw 'Not repertoried'; //message to show if we have nothing
         }

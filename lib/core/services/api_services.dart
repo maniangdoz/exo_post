@@ -50,4 +50,19 @@ class ApiServices {
       throw 'Error occured';
     }
   }
+
+  Future<http.Response> postList(
+      {required String page, required String perPage}) async {
+    try {
+      final response = await _client.get(
+        Uri.https(AppConstants.baseUrlDev, '/api:xbcc5VEi/post',
+            {'page': page, 'per_page': perPage}),
+        headers: <String, String>{'Content-Type': 'application/json'},
+      );
+      return response;
+    } catch (e) {
+      log(e.toString());
+      throw 'Error occured';
+    }
+  }
 }
