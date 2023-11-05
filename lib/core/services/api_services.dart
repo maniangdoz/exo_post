@@ -65,4 +65,17 @@ class ApiServices {
       throw 'Error occured';
     }
   }
+
+  Future<http.Response> detailPost({required int postId}) async {
+    try {
+      final response = await _client.get(
+        Uri.https(AppConstants.baseUrlDev, '/api:xbcc5VEi/post/$postId'),
+        headers: <String, String>{'Content-Type': 'application/json'},
+      );
+      return response;
+    } catch (e) {
+      log(e.toString());
+      throw 'Error occured';
+    }
+  }
 }
