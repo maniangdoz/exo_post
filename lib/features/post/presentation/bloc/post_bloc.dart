@@ -1,12 +1,12 @@
 import 'dart:async';
 
 import 'package:equatable/equatable.dart';
-import 'package:exo_post/common/constants.dart';
-import 'package:exo_post/features/post/domain/entities/post_response_entity.dart';
-import 'package:exo_post/features/post/domain/entities/requests/post_request.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../../common/constants.dart';
+import '../../domain/entities/post_response_entity.dart';
+import '../../domain/entities/requests/post_request.dart';
 import '../../domain/usecases/post_usecases.dart';
 
 part 'post_event.dart';
@@ -26,7 +26,8 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     try {
       emit(const GetAllPostsFinished(status: Status.waiting));
       var response = await _useCase.getAllPosts(request: event.request);
-      emit(GetAllPostsFinished(status: Status.succeded, postResponseEntity: response));
+      emit(GetAllPostsFinished(
+          status: Status.succeded, postResponseEntity: response));
     } catch (e) {
       emit(GetAllPostsFinished(status: Status.failed, message: e.toString()));
     }

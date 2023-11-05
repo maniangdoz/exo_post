@@ -1,12 +1,12 @@
 import 'dart:convert';
 
-import 'package:exo_post/features/post/data/models/post_response.dart';
-import 'package:exo_post/features/post/domain/entities/post_response_entity.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../core/services/api_services.dart';
+import '../../domain/entities/post_response_entity.dart';
 import '../../domain/entities/requests/post_request.dart';
 import '../../domain/repository/post_repo.dart';
+import '../models/post_response.dart';
 
 @Injectable(as: PostRepo)
 class PostRepoImp extends PostRepo {

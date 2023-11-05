@@ -1,11 +1,11 @@
-import 'package:exo_post/common/styles/colors.dart';
-import 'package:exo_post/common/utils/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../common/constants.dart';
 import '../../../../common/router.dart';
+import '../../../../common/styles/colors.dart';
+import '../../../../common/utils/app_utils.dart';
 import '../../../shared/presentation/widgets/action_button.dart';
 import '../../../shared/presentation/widgets/expandable_fa.dart';
 import '../../domain/entities/post_response_entity.dart';

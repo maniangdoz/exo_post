@@ -1,6 +1,5 @@
 import 'dart:async';
-import 'package:exo_post/features/post/presentation/bloc/post_bloc.dart';
-import 'package:exo_post/features/register/presentation/bloc/register_bloc.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -10,6 +9,8 @@ import 'core/init/injection.dart';
 import 'core/logic/app_logic.dart';
 import 'core/logic/image_logic.dart';
 import 'features/auth/presentation/bloc/auth_bloc.dart';
+import 'features/post/presentation/bloc/post_bloc.dart';
+import 'features/register/presentation/bloc/register_bloc.dart';
 
 void main() {
   runZonedGuarded(() async {

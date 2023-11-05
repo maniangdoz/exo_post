@@ -1,7 +1,8 @@
-import 'package:exo_post/features/post/domain/entities/requests/post_request.dart';
-import 'package:exo_post/features/post/domain/repository/post_repo.dart';
 import 'package:injectable/injectable.dart';
+
 import '../entities/post_response_entity.dart';
+import '../entities/requests/post_request.dart';
+import '../repository/post_repo.dart';
 
 @injectable
 class PostUseCases {

@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:exo_post/features/post/domain/entities/post_entity.dart';
+
+import 'post_entity.dart';
 
 class PostResponseEntity extends Equatable {
   final int? _itemsReceived;
