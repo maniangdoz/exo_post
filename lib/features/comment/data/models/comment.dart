@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import '../../../post/data/models/author.dart';
+part 'comment.g.dart';
 
 @JsonSerializable()
 class Comment extends Equatable {
