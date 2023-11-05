@@ -38,6 +38,11 @@ class CommentResponse extends Equatable {
         _comments = comments,
         _author = author;
 
+  factory CommentResponse.fromJson(Map<String, dynamic> json) =>
+      _$CommentResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$CommentResponseToJson(this);
+  
   @override
   List<Object?> get props =>
       [_id, _createdAt, _content, _author, _image, _comments];

@@ -27,8 +27,8 @@ class Comment extends Equatable {
         _content = content,
         _author = author;
 
-  // factory Comment.fromJson(Map<String, dynamic> json) => _$CommentFromJson(json);
-  // Map<String, dynamic> toJson() => _$CommentToJson(this);
+  factory Comment.fromJson(Map<String, dynamic> json) => _$CommentFromJson(json);
+  Map<String, dynamic> toJson() => _$CommentToJson(this);
 
   @override
   List<Object?> get props => [_id, _createdAt, _content, _author];
