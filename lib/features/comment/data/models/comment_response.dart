@@ -5,6 +5,8 @@ import '../../../post/data/models/author.dart';
 import '../../../post/data/models/image.dart';
 import 'comment.dart';
 
+part 'comment_response.g.dart';
+
 @JsonSerializable()
 class CommentResponse extends Equatable {
   final int? _id;

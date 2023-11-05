@@ -118,7 +118,6 @@ class _PostScreenState extends State<PostScreen> {
             ...List.generate(
               _postResponseEntity!.items!.length,
               (index) => PostCard(
-                index: index,
                 key: ValueKey<String>('post_$index'),
                 type: 'post',
                 authorname: _postResponseEntity!.items![index].author!.name!,
