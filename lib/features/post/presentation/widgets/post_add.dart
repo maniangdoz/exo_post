@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:developer';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -9,6 +9,7 @@ import 'package:image_picker/image_picker.dart';
 
 import '../../../../common/constants.dart';
 import '../../../../common/styles/colors.dart';
+import '../../../../common/utils/app_validator.dart';
 import '../../../../main_dev.dart';
 
 class PostAdd extends StatefulWidget {
@@ -24,7 +25,8 @@ class _PostAddState extends State<PostAdd> {
   late FocusNode _focus;
   late StreamSubscription<bool> _keyboardSubscription;
   late KeyboardVisibilityController _keyboardVisibilityController;
-  late TextEditingController _controller;
+  late TextEditingController _contentTextFieldController;
+  final _formKey = GlobalKey<FormState>();
   bool readOnly = true;
 
   @override
@@ -32,11 +34,10 @@ class _PostAddState extends State<PostAdd> {
     super.initState();
     _scrollController = ScrollController();
     _focus = FocusNode();
-    _controller = TextEditingController();
+    _contentTextFieldController = TextEditingController();
     _keyboardVisibilityController = KeyboardVisibilityController();
     _keyboardSubscription =
         _keyboardVisibilityController.onChange.listen((event) {
-      log('event $event');
       setState(() {
         readOnly = !event;
       });
@@ -53,7 +54,7 @@ class _PostAddState extends State<PostAdd> {
   void dispose() {
     _focus.dispose();
     _keyboardSubscription.cancel();
-    _controller.dispose();
+    _contentTextFieldController.dispose();
     super.dispose();
   }
 
@@ -74,19 +75,7 @@ class _PostAddState extends State<PostAdd> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                GestureDetector(
-                  onTap: () {
-                    context.pop();
-                  },
-                  child: const Padding(
-                    padding: EdgeInsets.only(left: 10),
-                    child: Icon(
-                      Icons.close_rounded,
-                      size: 20,
-                      color: AppColors.greyColor,
-                    ),
-                  ),
-                ),
+                _buttonClosePop(),
                 Padding(
                   padding: const EdgeInsets.only(right: 8.0),
                   child: TextButton.icon(
@@ -108,95 +97,141 @@ class _PostAddState extends State<PostAdd> {
             Expanded(
               child: Scrollbar(
                 controller: _scrollController,
-                child: TextFormField(
-                  controller: _controller,
-                  onTap: _textFieldOnTap,
-                  focusNode: _focus,
-                  showCursor: true,
-                  readOnly: readOnly,
-                  scrollController: _scrollController,
-                  keyboardType: TextInputType.multiline,
-                  maxLines: null,
-                  decoration: const InputDecoration(
-                    hintText: 'What\'s news?',
-                    hintStyle: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.normal,
-                    ),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                    ),
-                  ),
-                ),
+                child: _sectionContentTextPost(),
               ),
             ),
-            if (_pickedFile != null)
-              Stack(
-                children: [
-                  Image.file(
-                    File(_pickedFile!.path),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        _pickedFile = null;
-                      });
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                        right: 5,
-                        top: 5,
-                      ),
-                      child: Align(
-                        alignment: Alignment.topRight,
-                        child: Container(
-                          decoration: const BoxDecoration(
-                            color: AppColors.greyColor,
-                            shape: BoxShape.circle,
-                          ),
-                          child: const Padding(
-                            padding: EdgeInsets.all(4),
-                            child: Icon(
-                              Icons.close_rounded,
-                              size: 16,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            if (_pickedFile == null)
-              Padding(
-                padding: const EdgeInsets.all(20),
-                child: Align(
-                  alignment: Alignment.bottomLeft,
-                  child: TextButton.icon(
-                    onPressed: _getImage,
-                    icon: const Icon(
-                      Icons.camera_alt_rounded,
-                      color: AppColors.onPrimaryColor,
-                    ),
-                    style: TextButton.styleFrom(
-                      backgroundColor: AppColors.primaryColor,
-                      foregroundColor: Colors.white,
-                    ),
-                    label: Text(
-                      'Choose a photo',
-                      style: AppConstants.textWhite(),
-                    ),
-                  ),
-                ),
-              ),
+            _displayImageUpload(),
+            _buttonUploadImage(),
           ],
         ),
       );
     });
   }
 
-  void _addPost() {}
+  Widget _buttonClosePop() {
+    return GestureDetector(
+      onTap: () {
+        context.pop();
+      },
+      child: const Padding(
+        padding: EdgeInsets.only(left: 10),
+        child: Icon(
+          Icons.close_rounded,
+          size: 20,
+          color: AppColors.greyColor,
+        ),
+      ),
+    );
+  }
+
+  Widget _displayImageUpload() {
+    if (_pickedFile != null) {
+      return Stack(
+        children: [
+          Image.file(
+            File(_pickedFile!.path),
+          ),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                _pickedFile = null;
+              });
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(
+                right: 5,
+                top: 5,
+              ),
+              child: Align(
+                alignment: Alignment.topRight,
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: AppColors.greyColor,
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Padding(
+                    padding: EdgeInsets.all(4),
+                    child: Icon(
+                      Icons.close_rounded,
+                      size: 16,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      );
+    }
+    return Container();
+  }
+
+  Widget _sectionContentTextPost() {
+    return Form(
+      key: _formKey,
+      child: TextFormField(
+        controller: _contentTextFieldController,
+        onTap: _textFieldOnTap,
+        focusNode: _focus,
+        showCursor: true,
+        readOnly: readOnly,
+        scrollController: _scrollController,
+        keyboardType: TextInputType.multiline,
+        maxLines: null,
+        decoration: const InputDecoration(
+          hintText: 'What\'s news?',
+          hintStyle: TextStyle(
+            fontSize: 25,
+            fontWeight: FontWeight.normal,
+          ),
+          border: OutlineInputBorder(
+            borderSide: BorderSide.none,
+          ),
+        ),
+        validator: AppValidors.commentValidtor,
+      ),
+    );
+  }
+
+  Widget _buttonUploadImage() {
+    if (_pickedFile == null) {
+      return Padding(
+        padding: const EdgeInsets.all(20),
+        child: Align(
+          alignment: Alignment.bottomLeft,
+          child: TextButton.icon(
+            onPressed: _getImage,
+            icon: const Icon(
+              Icons.camera_alt_rounded,
+              color: AppColors.onPrimaryColor,
+            ),
+            style: TextButton.styleFrom(
+              backgroundColor: AppColors.primaryColor,
+              foregroundColor: Colors.white,
+            ),
+            label: Text(
+              'Choose a photo',
+              style: AppConstants.textWhite(),
+            ),
+          ),
+        ),
+      );
+    }
+    return Container();
+  }
+
+  Future<void> _addPost() async {
+    if (_formKey.currentState!.validate()) {
+      String content = _contentTextFieldController.text.toString().trim();
+      String base64Image = '';
+      if (_pickedFile != null) {
+        List<int> imageBytes = await _pickedFile!.readAsBytes();
+        base64Image = base64Encode(imageBytes);
+      }
+      print("object $content already $base64Image");
+    }
+  }
 
   void _textFieldOnTap() {
     setState(() {

@@ -118,6 +118,8 @@ class _PostScreenState extends State<PostScreen> {
             ...List.generate(
               _postResponseEntity!.items!.length,
               (index) => PostCard(
+                index: index,
+                key: ValueKey<String>('post_$index'),
                 type: 'post',
                 authorname: _postResponseEntity!.items![index].author!.name!,
                 postcreatedat: _postResponseEntity!.items![index].createdAt!,
@@ -130,6 +132,8 @@ class _PostScreenState extends State<PostScreen> {
                 widthimage: 50,
                 heightimage: 1290,
                 onClick: () => _infoUser(1),
+                authorid: _postResponseEntity!.items![index].author!.id!,
+                postid: _postResponseEntity!.items![index].id!,
               ),
             ),
           ],
