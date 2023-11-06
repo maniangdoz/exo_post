@@ -49,9 +49,11 @@ final appRouter = GoRouter(
         },
         routes: [
           GoRoute(
-            path: ScreenPaths.commentPage,
-            builder: (context, state) => const CommentScreen(),
-          ),
+              path: ScreenPaths.commentPage,
+              builder: (context, state) {
+                final index = state.pathParameters['id'];
+                return CommentScreen(idpost: int.parse(index ?? '0'));
+              }),
           GoRoute(
             path: ScreenPaths.userPostPage,
             builder: (context, state) => const UserScreen(),

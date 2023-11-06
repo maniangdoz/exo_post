@@ -18,7 +18,7 @@ class CommentResponseEntity extends Equatable {
   String? get content => _content;
   ImageEntity? get image => _image;
   AuthorEntity? get author => _author;
-  List<CommentEntity>? get commentsCount => _comments;
+  List<CommentEntity>? get comments => _comments;
 
   const CommentResponseEntity(
       {required int? id,
