@@ -3,6 +3,8 @@ import 'package:json_annotation/json_annotation.dart';
 
 import '../../../post/data/models/author.dart';
 import '../../../post/data/models/image.dart';
+import '../../domain/entities/comment_entity.dart';
+import '../../domain/entities/comment_response_entity.dart';
 import 'comment.dart';
 
 part 'comment_response.g.dart';
@@ -42,7 +44,23 @@ class CommentResponse extends Equatable {
       _$CommentResponseFromJson(json);
 
   Map<String, dynamic> toJson() => _$CommentResponseToJson(this);
-  
+
+  CommentResponseEntity toEntity() {
+    List<CommentEntity> items = [];
+    if (_comments != null) {
+      for (var element in _comments!) {
+        items.add(element.toEntity());
+      }
+    }
+    return CommentResponseEntity(
+        id: _id,
+        createdAt: _createdAt,
+        content: _content,
+        image: _image != null ? _image!.toEntity() : null,
+        author: _author != null ? _author!.toEntity() : null,
+        comments: items);
+  }
+
   @override
   List<Object?> get props =>
       [_id, _createdAt, _content, _author, _image, _comments];

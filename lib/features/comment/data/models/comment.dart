@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import '../../../post/data/models/author.dart';
+import '../../domain/entities/comment_entity.dart';
 part 'comment.g.dart';
 
 @JsonSerializable()
@@ -27,8 +28,15 @@ class Comment extends Equatable {
         _content = content,
         _author = author;
 
-  factory Comment.fromJson(Map<String, dynamic> json) => _$CommentFromJson(json);
+  factory Comment.fromJson(Map<String, dynamic> json) =>
+      _$CommentFromJson(json);
   Map<String, dynamic> toJson() => _$CommentToJson(this);
+
+  CommentEntity toEntity() => CommentEntity(
+      id: _id,
+      createdAt: _createdAt,
+      content: _content,
+      author: _author != null ? _author!.toEntity() : null);
 
   @override
   List<Object?> get props => [_id, _createdAt, _content, _author];
