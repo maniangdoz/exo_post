@@ -13,3 +13,18 @@ class GetAllPosts extends PostEvent {
   @override
   List<Object?> get props => [_repuest];
 }
+
+class AddPost extends PostEvent {
+  final String _content;
+  final String? _base64Image;
+
+  const AddPost({required String content, required String? base64Image})
+      : _content = content,
+        _base64Image = base64Image;
+
+  String? get content => _content;
+  String? get base64Image => _base64Image;
+
+  @override
+  List<Object?> get props => [_content, _base64Image];
+}

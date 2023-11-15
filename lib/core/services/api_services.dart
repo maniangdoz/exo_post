@@ -1,11 +1,12 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';
 import 'package:pretty_http_logger/pretty_http_logger.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../common/constants.dart';
+import '../../common/utils/app_utils.dart';
 
 @injectable
 class ApiServices {
@@ -24,8 +25,7 @@ class ApiServices {
 
       return response;
     } catch (e) {
-      log(e.toString());
-      throw 'Error occured';
+      throw e.toString();
     }
   }
 
@@ -46,8 +46,7 @@ class ApiServices {
 
       return response;
     } catch (e) {
-      log(e.toString());
-      throw 'Error occured';
+      throw e.toString();
     }
   }
 
@@ -61,8 +60,7 @@ class ApiServices {
       );
       return response;
     } catch (e) {
-      log(e.toString());
-      throw 'Error occured';
+      throw e.toString();
     }
   }
 
@@ -74,8 +72,37 @@ class ApiServices {
       );
       return response;
     } catch (e) {
-      log(e.toString());
-      throw 'Error occured';
+      throw e.toString();
     }
+  }
+
+  Future<http.Response> addPost(
+      {required String content, String? base64Image}) async {
+    try {
+      final Map<String, String?> body = {
+        'content': content,
+        'base_64_image': base64Image,
+      };
+
+      final response = await _client.post(
+        Uri.https(AppConstants.baseUrlDev, '/api:xbcc5VEi/post'),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ${token()}'
+        },
+        body: jsonEncode(body),
+      );
+
+      return response;
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  Future<String?> token() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? authToken = prefs.getString(AppUtils.authTokenKey);
+
+    return authToken;
   }
 }

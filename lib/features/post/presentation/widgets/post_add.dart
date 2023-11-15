@@ -3,14 +3,17 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../../common/constants.dart';
 import '../../../../common/styles/colors.dart';
+import '../../../../common/utils/app_utils.dart';
 import '../../../../common/utils/app_validator.dart';
 import '../../../../main_dev.dart';
+import '../bloc/post_bloc.dart';
 
 class PostAdd extends StatefulWidget {
   const PostAdd({super.key});
@@ -45,7 +48,6 @@ class _PostAddState extends State<PostAdd> {
   }
 
   Future<void> _getImage() async {
-    print("rrrrrrrrrrrrrrrrrrrrrrrrr");
     _pickedFile = await imageLogic.getImage();
     setState(() {});
   }
@@ -63,49 +65,65 @@ class _PostAddState extends State<PostAdd> {
     if (readOnly) {
       _focus.requestFocus();
     }
-    return StatefulBuilder(builder: (context, setState) {
-      return Padding(
-        padding: EdgeInsets.only(
-          bottom: _pickedFile == null
-              ? MediaQuery.of(context).viewInsets.bottom
-              : 0,
-        ),
-        child: Column(
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                _buttonClosePop(),
-                Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: TextButton.icon(
-                    onPressed: _addPost,
-                    icon: const Icon(
-                      Icons.add_box,
-                    ),
-                    style: TextButton.styleFrom(
-                      backgroundColor: AppColors.greyColor,
-                      foregroundColor: Colors.white,
-                    ),
-                    label: const Text(
-                      'Add Post',
+    return BlocListener<PostBloc, PostState>(listener: (context, state) {
+      if (state is AddPostFinished) {
+        if (state.status == Status.waiting) {
+          AppUtils.showLoader(context: context);
+        } else if (state.status == Status.succeded) {
+          context.pop();
+          AppUtils.showAlert(context, state.message ?? 'Success',
+              AppUtils.accentprimaryColor(context));
+          context.go('/home/0');
+        } else if (state.status == Status.failed) {
+          AppUtils.showAlert(context, state.message ?? 'Error',
+              AppUtils.accentprimaryColor(context));
+        }
+      }
+    }, child: StatefulBuilder(
+      builder: (context, setState) {
+        return Padding(
+          padding: EdgeInsets.only(
+            bottom: _pickedFile == null
+                ? MediaQuery.of(context).viewInsets.bottom
+                : 0,
+          ),
+          child: Column(
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _buttonClosePop(),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: TextButton.icon(
+                      onPressed: _addPost,
+                      icon: const Icon(
+                        Icons.add_box,
+                      ),
+                      style: TextButton.styleFrom(
+                        backgroundColor: AppColors.greyColor,
+                        foregroundColor: Colors.white,
+                      ),
+                      label: const Text(
+                        'Add Post',
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            Expanded(
-              child: Scrollbar(
-                controller: _scrollController,
-                child: _sectionContentTextPost(),
+                ],
               ),
-            ),
-            _displayImageUpload(),
-            _buttonUploadImage(),
-          ],
-        ),
-      );
-    });
+              Expanded(
+                child: Scrollbar(
+                  controller: _scrollController,
+                  child: _sectionContentTextPost(),
+                ),
+              ),
+              _displayImageUpload(),
+              _buttonUploadImage(),
+            ],
+          ),
+        );
+      },
+    ));
   }
 
   Widget _buttonClosePop() {
@@ -221,16 +239,22 @@ class _PostAddState extends State<PostAdd> {
     return Container();
   }
 
-  Future<void> _addPost() async {
+  void _addPost() async {
     if (_formKey.currentState!.validate()) {
       String content = _contentTextFieldController.text.toString().trim();
-      String base64Image = '';
+      String? base64Image;
       if (_pickedFile != null) {
         List<int> imageBytes = await _pickedFile!.readAsBytes();
         base64Image = base64Encode(imageBytes);
       }
-      print("object $content already $base64Image");
+      _callApiAdd(content, base64Image);
     }
+  }
+
+  void _callApiAdd(String content, String? base64Image) {
+    context
+        .read<PostBloc>()
+        .add(AddPost(content: content, base64Image: base64Image));
   }
 
   void _textFieldOnTap() {
