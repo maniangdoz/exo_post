@@ -1,10 +1,9 @@
 import 'dart:convert';
-import 'dart:developer';
 
+import 'package:exo_post/common/constants.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../core/services/api_services.dart';
-import '../../domain/entities/post_add_entity.dart';
 import '../../domain/entities/post_add_response_entity.dart';
 import '../../domain/entities/post_response_entity.dart';
 import '../../domain/entities/requests/post_request.dart';
@@ -52,14 +51,16 @@ class PostRepoImp extends PostRepo {
           return PostAddResponseEntity(
               postAddEntity:
                   PostAdd.fromJson(jsonDecode(value.body)).toEntity());
+        } else if (value.statusCode == 401) {
+          return const PostAddResponseEntity(
+              errorMessage: AppConstants.messageError401);
         } else {
           String error = ErrorApiResponse.fromJson(jsonDecode(value.body))
               .toEntity()
               .message;
-
           return PostAddResponseEntity(errorMessage: error);
         }
       }).catchError((e) {
-        throw PostAddResponseEntity(errorMessage: e.message);
+        throw PostAddResponseEntity(errorMessage: e.toString());
       });
 }

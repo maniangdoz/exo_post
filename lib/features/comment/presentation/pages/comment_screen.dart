@@ -24,10 +24,16 @@ class _CommentScreenState extends State<CommentScreen> {
 
   bool isLoading = true;
   CommentResponseEntity? _commentResponseEntity;
+  bool isValidToken = false;
 
   @override
   void initState() {
     super.initState();
+    AppUtils.isAuthTokenValid().then((value) {
+      setState(() {
+        isValidToken = value;
+      });
+    });
     context.read<CommentBloc>().add(GetAllCommentByPost(postId: widget.idpost));
   }
 
@@ -130,9 +136,9 @@ class _CommentScreenState extends State<CommentScreen> {
         style: AppConstants.textStyle(),
       ),
       const SizedBox(width: 20),
-      _buttonEdit(content, id),
+      if (isValidToken) _buttonEdit(content, id),
       const SizedBox(width: 15),
-      _buttonDelete(id),
+      if (isValidToken) _buttonDelete(id),
     ];
   }
 

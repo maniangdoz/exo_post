@@ -83,12 +83,15 @@ class ApiServices {
         'content': content,
         'base_64_image': base64Image,
       };
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      final String? authToken = prefs.getString(AppUtils.authTokenKey);
+      print("authTokenauthTokenauthToken $authToken");
 
       final response = await _client.post(
         Uri.https(AppConstants.baseUrlDev, '/api:xbcc5VEi/post'),
         headers: <String, String>{
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ${token()}'
+          'Authorization': 'Bearer $authToken'
         },
         body: jsonEncode(body),
       );
@@ -99,10 +102,15 @@ class ApiServices {
     }
   }
 
-  Future<String?> token() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? authToken = prefs.getString(AppUtils.authTokenKey);
-
-    return authToken;
+  Future<http.Response> authMe() async {
+    try {
+      final response = await _client.get(
+        Uri.https(AppConstants.baseUrlDev, '/api:xbcc5VEi/auth/me'),
+        headers: <String, String>{'Content-Type': 'application/json'},
+      );
+      return response;
+    } catch (e) {
+      throw e.toString();
+    }
   }
 }

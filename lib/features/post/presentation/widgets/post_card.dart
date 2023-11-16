@@ -40,6 +40,17 @@ class PostCard extends StatefulWidget {
 }
 
 class _PostCardState extends State<PostCard> {
+  bool isValidToken = false;
+  @override
+  void initState() {
+    super.initState();
+    AppUtils.isAuthTokenValid().then((value) {
+      setState(() {
+        isValidToken = value;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -65,18 +76,20 @@ class _PostCardState extends State<PostCard> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 18),
-                      child: GestureDetector(
-                        onTap: () => _editPost(),
-                        child: const Text('Edit'),
+                    if (isValidToken)
+                      Padding(
+                        padding: const EdgeInsets.only(left: 18),
+                        child: GestureDetector(
+                          onTap: () => _editPost(),
+                          child: const Text('Edit'),
+                        ),
                       ),
-                    ),
                     const SizedBox(width: 25),
-                    GestureDetector(
-                      onTap: _removePost,
-                      child: const Text('Remove'),
-                    ),
+                    if (isValidToken)
+                      GestureDetector(
+                        onTap: _removePost,
+                        child: const Text('Remove'),
+                      ),
                   ],
                 ),
                 Row(

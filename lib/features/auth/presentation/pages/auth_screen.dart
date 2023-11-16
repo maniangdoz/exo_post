@@ -43,7 +43,7 @@ class _AuthScreenState extends State<AuthScreen> {
               //show error message;
               context.pop();
               AppUtils.showAlert(context, state.message ?? 'Error',
-                  AppUtils.accentprimaryColor(context));
+                  AppColors.errorColor);
             }
           }
         },

@@ -75,8 +75,10 @@ class _PostAddState extends State<PostAdd> {
               AppUtils.accentprimaryColor(context));
           context.go('/home/0');
         } else if (state.status == Status.failed) {
-          AppUtils.showAlert(context, state.message ?? 'Error',
-              AppUtils.accentprimaryColor(context));
+          context.pop();
+          context.pop();
+          AppUtils.showAlert(
+              context, state.message ?? 'Error', AppColors.errorColor);
         }
       }
     }, child: StatefulBuilder(
