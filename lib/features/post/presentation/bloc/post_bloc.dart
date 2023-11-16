@@ -39,8 +39,6 @@ class PostBloc extends Bloc<PostEvent, PostState> {
       emit(const AddPostFinished(status: Status.waiting));
       var result = await _useCase.addPost(
           content: event.content ?? '', base64Image: event.base64Image);
-      print(
-          "result.errorMessageresult.errorMessage ${result.errorMessage} eeeeeeee ${result.errorMessage != null}");
       if (result.errorMessage != null) {
         emit(AddPostFinished(
             status: Status.failed, message: result.errorMessage));
@@ -48,7 +46,6 @@ class PostBloc extends Bloc<PostEvent, PostState> {
         emit(const AddPostFinished(status: Status.succeded));
       }
     } catch (e) {
-      print("e.toString()e.toString()e.toString()e.toString()  $e");
       emit(AddPostFinished(status: Status.failed, message: e.toString()));
     }
   }

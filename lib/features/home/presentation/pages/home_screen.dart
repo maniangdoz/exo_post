@@ -20,7 +20,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen>
     with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   late TabController _controller;
-  bool _isLoggedIn = false;
 
   @override
   void initState() {
@@ -36,16 +35,6 @@ class _HomeScreenState extends State<HomeScreen>
   void dispose() {
     _controller.dispose();
     super.dispose();
-  }
-
-  @override
-  void didUpdateWidget(covariant HomeScreen oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    _verifyAuthorization(widget.index).then((number) {
-      setState(() {
-        _isLoggedIn = number > 0;
-      });
-    });
   }
 
   @override
@@ -69,33 +58,49 @@ class _HomeScreenState extends State<HomeScreen>
         controller: _controller,
         children: [
           const PostScreen(),
-          if (_isLoggedIn) const ProfilScreen() else _displayUnauthorized(),
+          _displayUnauthorized(),
         ],
       ),
     );
   }
 
   Widget _displayUnauthorized() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text(
-            AppConstants.messageError401,
-            style: TextStyle(color: Colors.red, fontSize: 18),
-          ),
-          Container(
-            margin: const EdgeInsets.fromLTRB(20, 10, 20, 15),
-            child: ButtonShared(
-              text: "Go to Posts",
-              colorButton: AppColors.primaryColor,
-              onClick: () {
-                _tap(0);
-              },
-            ),
-          )
-        ],
-      ),
+    return FutureBuilder<int>(
+      future: _verifyAuthorization(1),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const CircularProgressIndicator();
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        } else {
+          int number = snapshot.data ?? 0;
+          if (number == 0) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    AppConstants.messageError401,
+                    style: TextStyle(color: Colors.red, fontSize: 18),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.fromLTRB(20, 10, 20, 15),
+                    child: ButtonShared(
+                      text: "Go to Posts",
+                      colorButton: AppColors.primaryColor,
+                      onClick: () {
+                        _tap(0);
+                      },
+                    ),
+                  )
+                ],
+              ),
+            );
+          } else {
+            return const ProfilScreen();
+          }
+        }
+      },
     );
   }
 

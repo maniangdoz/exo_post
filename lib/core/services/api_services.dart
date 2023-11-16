@@ -79,22 +79,32 @@ class ApiServices {
   Future<http.Response> addPost(
       {required String content, String? base64Image}) async {
     try {
-      final Map<String, String?> body = {
-        'content': content,
-        'base_64_image': base64Image,
-      };
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       final String? authToken = prefs.getString(AppUtils.authTokenKey);
-      print("authTokenauthTokenauthToken $authToken");
-
-      final response = await _client.post(
+      var request = http.MultipartRequest(
+        'POST',
         Uri.https(AppConstants.baseUrlDev, '/api:xbcc5VEi/post'),
-        headers: <String, String>{
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $authToken'
-        },
-        body: jsonEncode(body),
       );
+
+      request.headers.addAll({
+        'Authorization': 'Bearer $authToken',
+      });
+
+      request.fields['content'] = content;
+
+      if (base64Image != null) {
+        List<int> imageBytes = base64Decode(base64Image);
+        var image = http.MultipartFile.fromBytes(
+          'base_64_image',
+          imageBytes,
+          filename: 'image.jpg',
+        );
+        request.files.add(image);
+      }
+
+      var streamedResponse = await request.send();
+
+      var response = await http.Response.fromStream(streamedResponse);
 
       return response;
     } catch (e) {
