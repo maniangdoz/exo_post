@@ -15,14 +15,18 @@ import '../../../../common/utils/app_validator.dart';
 import '../../../../main_dev.dart';
 import '../bloc/post_bloc.dart';
 
-class PostAdd extends StatefulWidget {
-  const PostAdd({super.key});
+class PostAddEdit extends StatefulWidget {
+  final int? postid;
+  final String? content;
+  final String? urlimage;
+
+  const PostAddEdit({super.key, this.postid, this.content, this.urlimage});
 
   @override
-  State<PostAdd> createState() => _PostAddState();
+  State<PostAddEdit> createState() => _PostAddEditState();
 }
 
-class _PostAddState extends State<PostAdd> {
+class _PostAddEditState extends State<PostAddEdit> {
   XFile? _pickedFile;
   late ScrollController _scrollController;
   late FocusNode _focus;
@@ -31,13 +35,13 @@ class _PostAddState extends State<PostAdd> {
   late TextEditingController _contentTextFieldController;
   final _formKey = GlobalKey<FormState>();
   bool readOnly = true;
-
+  String? _urlImage;
   @override
   void initState() {
     super.initState();
     _scrollController = ScrollController();
     _focus = FocusNode();
-    _contentTextFieldController = TextEditingController();
+    _contentTextFieldController = TextEditingController(text: widget.content);
     _keyboardVisibilityController = KeyboardVisibilityController();
     _keyboardSubscription =
         _keyboardVisibilityController.onChange.listen((event) {
@@ -45,6 +49,10 @@ class _PostAddState extends State<PostAdd> {
         readOnly = !event;
       });
     });
+
+    if (widget.urlimage != null && widget.urlimage!.isNotEmpty) {
+      _urlImage = widget.urlimage;
+    }
   }
 
   Future<void> _getImage() async {
@@ -69,13 +77,31 @@ class _PostAddState extends State<PostAdd> {
       if (state is AddPostFinished) {
         if (state.status == Status.waiting) {
           AppUtils.showLoader(context: context);
-        } else if (state.status == Status.succeded) {
+        }
+        // Navigator.of(context, rootNavigator: true).pop();
+        if (state.status == Status.succeded) {
           context.pop();
           context.pop();
           AppUtils.showAlert(context, state.message ?? 'Success',
               AppUtils.accentprimaryColor(context));
         } else if (state.status == Status.failed) {
           context.pop();
+          context.pop();
+          AppUtils.showAlert(
+              context, state.message ?? 'Error', AppColors.errorColor);
+        }
+      }
+      if (state is UpdatePostFinished) {
+        if (state.status == Status.waiting) {
+          AppUtils.showLoader(context: context);
+        }
+        if (state.status == Status.succeded) {
+          context.pop();
+          context.pop();
+          AppUtils.showAlert(context, state.message ?? 'Success',
+              AppUtils.accentprimaryColor(context));
+        } else if (state.status == Status.failed) {
+          Navigator.of(context, rootNavigator: true).pop();
           context.pop();
           AppUtils.showAlert(
               context, state.message ?? 'Error', AppColors.errorColor);
@@ -98,7 +124,7 @@ class _PostAddState extends State<PostAdd> {
                   Padding(
                     padding: const EdgeInsets.only(right: 8.0),
                     child: TextButton.icon(
-                      onPressed: _addPost,
+                      onPressed: _addEditPost,
                       icon: const Icon(
                         Icons.add_box,
                       ),
@@ -106,8 +132,8 @@ class _PostAddState extends State<PostAdd> {
                         backgroundColor: AppColors.greyColor,
                         foregroundColor: Colors.white,
                       ),
-                      label: const Text(
-                        'Add Post',
+                      label: Text(
+                        widget.postid != null ? 'Update Post' : 'Add Post',
                       ),
                     ),
                   ),
@@ -145,16 +171,32 @@ class _PostAddState extends State<PostAdd> {
   }
 
   Widget _displayImageUpload() {
-    if (_pickedFile != null) {
+    if (_pickedFile != null || _urlImage != null) {
       return Stack(
         children: [
-          Image.file(
-            File(_pickedFile!.path),
-          ),
+          if (_pickedFile != null) Image.file(File(_pickedFile!.path)),
+          if (_urlImage != null)
+            Image.network(
+              '$_urlImage',
+              fit: BoxFit.cover,
+              loadingBuilder: (BuildContext context, Widget child,
+                  ImageChunkEvent? loadingProgress) {
+                if (loadingProgress == null) {
+                  return child;
+                } else {
+                  return const SizedBox(
+                    width: 40,
+                    height: 40,
+                    child: Center(child: CircularProgressIndicator()),
+                  );
+                }
+              },
+            ),
           GestureDetector(
             onTap: () {
               setState(() {
                 _pickedFile = null;
+                _urlImage = null;
               });
             },
             child: Padding(
@@ -241,7 +283,7 @@ class _PostAddState extends State<PostAdd> {
     return Container();
   }
 
-  void _addPost() async {
+  void _addEditPost() async {
     if (_formKey.currentState!.validate()) {
       String content = _contentTextFieldController.text.toString().trim();
       String? base64Image;
@@ -249,7 +291,17 @@ class _PostAddState extends State<PostAdd> {
         List<int> imageBytes = await _pickedFile!.readAsBytes();
         base64Image = base64Encode(imageBytes);
       }
-      _callApiAdd(content, base64Image);
+      if (widget.postid != null) {
+        if (base64Image != null) {
+          _callApiUpdate(content, base64Image, 'base64Image');
+        } else {
+          _callApiUpdate(content, _urlImage, 'url');
+        }
+      } else {
+        print("createcreatecreatecreate $content");
+
+        _callApiAdd(content, base64Image);
+      }
     }
   }
 
@@ -257,6 +309,14 @@ class _PostAddState extends State<PostAdd> {
     context
         .read<PostBloc>()
         .add(AddPost(content: content, base64Image: base64Image));
+  }
+
+  void _callApiUpdate(String content, String? base64Image, String type) {
+    context.read<PostBloc>().add(UpdatePost(
+        postId: widget.postid ?? 0,
+        content: content,
+        base64Image: base64Image,
+        type: type));
   }
 
   void _textFieldOnTap() {

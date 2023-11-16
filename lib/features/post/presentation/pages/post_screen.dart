@@ -11,7 +11,7 @@ import '../../../shared/presentation/widgets/expandable_fa.dart';
 import '../../domain/entities/post_response_entity.dart';
 import '../../domain/entities/requests/post_request.dart';
 import '../bloc/post_bloc.dart';
-import '../widgets/post_add.dart';
+import '../widgets/post_add_edit.dart';
 import '../widgets/post_button.dart';
 import '../widgets/post_card.dart';
 import '../widgets/skeleton_post.dart';
@@ -103,7 +103,7 @@ class _PostScreenState extends State<PostScreen> {
       isScrollControlled: true,
       useSafeArea: true,
       builder: (BuildContext context) {
-        return const PostAdd();
+        return const PostAddEdit();
       },
     );
   }

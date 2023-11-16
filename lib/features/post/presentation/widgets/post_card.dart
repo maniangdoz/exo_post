@@ -6,6 +6,7 @@ import 'package:readmore/readmore.dart';
 import '../../../../common/styles/colors.dart';
 import '../../../../common/utils/app_utils.dart';
 import '../../../shared/presentation/widgets/avatar_user.dart';
+import 'post_add_edit.dart';
 
 class PostCard extends StatefulWidget {
   final String type;
@@ -198,7 +199,21 @@ class _PostCardState extends State<PostCard> {
     }
   }
 
-  void _editPost() {}
+  void _editPost() {
+    // postid
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      useSafeArea: true,
+      builder: (BuildContext context) {
+        return PostAddEdit(
+          content: widget.content,
+          postid: widget.postid,
+          urlimage: widget.urlimage,
+        );
+      },
+    );
+  }
 
   void _removePost() {}
 }

@@ -4,7 +4,7 @@ import 'package:exo_post/common/constants.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../core/services/api_services.dart';
-import '../../domain/entities/post_add_response_entity.dart';
+import '../../domain/entities/post_add_edit_response_entity.dart';
 import '../../domain/entities/post_response_entity.dart';
 import '../../domain/entities/requests/post_request.dart';
 import '../../domain/repository/post_repo.dart';
@@ -44,23 +44,50 @@ class PostRepoImp extends PostRepo {
   }
 
   @override
-  Future<PostAddResponseEntity> addPost(
+  Future<PostAddEditResponseEntity> addPost(
           {required String content, String? base64Image}) =>
       _api.addPost(content: content, base64Image: base64Image).then((value) {
         if (value.statusCode == 200) {
-          return PostAddResponseEntity(
+          return PostAddEditResponseEntity(
               postAddEntity:
                   PostAdd.fromJson(jsonDecode(value.body)).toEntity());
         } else if (value.statusCode == 401) {
-          return const PostAddResponseEntity(
+          return const PostAddEditResponseEntity(
               errorMessage: AppConstants.messageError401);
         } else {
           String error = ErrorApiResponse.fromJson(jsonDecode(value.body))
               .toEntity()
               .message;
-          return PostAddResponseEntity(errorMessage: error);
+          return PostAddEditResponseEntity(errorMessage: error);
         }
       }).catchError((e) {
-        throw PostAddResponseEntity(errorMessage: e.toString());
+        throw PostAddEditResponseEntity(errorMessage: e.toString());
+      });
+
+  @override
+  Future<PostAddEditResponseEntity> updatePost(
+          {required int postId,
+          required String content,
+          required String type,
+          String? base64Image}) =>
+      _api
+          .updatePost(
+              postId: postId,
+              content: content,
+              base64Image: base64Image,
+              type: type)
+          .then((value) {
+        if (value.statusCode == 200) {
+          return PostAddEditResponseEntity(
+              postAddEntity:
+                  PostAdd.fromJson(jsonDecode(value.body)).toEntity());
+        } else {
+          String error = ErrorApiResponse.fromJson(jsonDecode(value.body))
+              .toEntity()
+              .message;
+          return PostAddEditResponseEntity(errorMessage: error);
+        }
+      }).catchError((e) {
+        throw PostAddEditResponseEntity(errorMessage: e.toString());
       });
 }

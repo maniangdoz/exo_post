@@ -20,6 +20,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     on<PostEvent>((event, emit) {});
     on<GetAllPosts>(_getAllPosts);
     on<AddPost>(_addPost);
+    on<UpdatePost>(_addUpdatePost);
   }
 
   FutureOr<void> _getAllPosts(
@@ -47,6 +48,26 @@ class PostBloc extends Bloc<PostEvent, PostState> {
       }
     } catch (e) {
       emit(AddPostFinished(status: Status.failed, message: e.toString()));
+    }
+  }
+
+  FutureOr<void> _addUpdatePost(
+      UpdatePost event, Emitter<PostState> emit) async {
+    try {
+      emit(const UpdatePostFinished(status: Status.waiting));
+      var result = await _useCase.updatePost(
+          type: event.type ?? '',
+          content: event.content ?? '',
+          postId: event.postId ?? 0,
+          base64Image: event.base64Image);
+      if (result.errorMessage != null) {
+        emit(UpdatePostFinished(
+            status: Status.failed, message: result.errorMessage));
+      } else {
+        emit(const UpdatePostFinished(status: Status.succeded));
+      }
+    } catch (e) {
+      emit(UpdatePostFinished(status: Status.failed, message: e.toString()));
     }
   }
 }

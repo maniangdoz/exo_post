@@ -3,9 +3,8 @@ import 'package:equatable/equatable.dart';
 import 'author_entity.dart';
 import 'image_entity.dart';
 
-class PostAddEntity extends Equatable {
+class PostAddEditEntity extends Equatable {
   final int? _id;
-
   final int? _createdAt;
   final String? _content;
   final ImageEntity? _image;
@@ -17,7 +16,7 @@ class PostAddEntity extends Equatable {
   ImageEntity? get image => _image;
   AuthorEntity? get author => _author;
 
-  const PostAddEntity(
+  const PostAddEditEntity(
       {required int? id,
       required int? createdAt,
       required String? content,

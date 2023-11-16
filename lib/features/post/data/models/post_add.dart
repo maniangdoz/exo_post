@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-import '../../domain/entities/post_add_entity.dart';
+import '../../domain/entities/post_add_edit_entity.dart';
 import 'author.dart';
 import 'image.dart';
 
@@ -39,7 +39,7 @@ class PostAdd extends Equatable {
       _$PostAddFromJson(json);
   Map<String, dynamic> toJson() => _$PostAddToJson(this);
 
-  PostAddEntity toEntity() => PostAddEntity(
+  PostAddEditEntity toEntity() => PostAddEditEntity(
       id: _id,
       createdAt: _createdAt,
       content: _content,

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';
@@ -121,6 +122,69 @@ class ApiServices {
       return response;
     } catch (e) {
       throw e.toString();
+    }
+  }
+
+  Future<http.Response> updatePost(
+      {required int postId,
+      required String type,
+      required String content,
+      String? base64Image}) async {
+    try {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      final String? authToken = prefs.getString(AppUtils.authTokenKey);
+      var request = http.MultipartRequest(
+        'PATCH',
+        Uri.https(AppConstants.baseUrlDev, '/api:xbcc5VEi/post/$postId'),
+      );
+
+      request.headers.addAll({
+        'Authorization': 'Bearer $authToken',
+      });
+
+      request.fields['content'] = content;
+
+      if (type == 'url' && base64Image != null) {
+        fetchImageBytes(base64Image).then((imageBytes) {
+          var image = http.MultipartFile.fromBytes(
+            'base_64_image',
+            imageBytes,
+            filename: 'image.jpg',
+          );
+
+          request.files.add(image);
+        }).catchError((error) {
+          print('Error fetching image: $error');
+        });
+      } else {
+        if (base64Image != null) {
+          List<int> imageBytes = base64Decode(base64Image);
+          var image = http.MultipartFile.fromBytes(
+            'base_64_image',
+            imageBytes,
+            filename: 'image.jpg',
+          );
+          request.files.add(image);
+        }
+      }
+
+      var streamedResponse = await request.send();
+
+      var response = await http.Response.fromStream(streamedResponse);
+
+      return response;
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  Future<Uint8List> fetchImageBytes(String imageUrl) async {
+    final response = await http.get(Uri.parse(imageUrl));
+
+    if (response.statusCode == 200) {
+      return response.bodyBytes;
+    } else {
+      throw Exception('Failed to fetch image');
     }
   }
 }

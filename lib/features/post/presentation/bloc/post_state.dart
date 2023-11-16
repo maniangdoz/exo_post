@@ -37,3 +37,13 @@ class AddPostFinished extends PostState {
   @override
   List<Object?> get props => [status, message];
 }
+
+class UpdatePostFinished extends PostState {
+  final Status? status;
+  final String? message;
+
+  const UpdatePostFinished({this.status, this.message});
+
+  @override
+  List<Object?> get props => [status, message];
+}

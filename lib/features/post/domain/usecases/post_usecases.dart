@@ -1,6 +1,6 @@
 import 'package:injectable/injectable.dart';
 
-import '../entities/post_add_response_entity.dart';
+import '../entities/post_add_edit_response_entity.dart';
 import '../entities/post_response_entity.dart';
 import '../entities/requests/post_request.dart';
 import '../repository/post_repo.dart';
@@ -14,7 +14,18 @@ class PostUseCases {
   Future<PostResponseEntity> getAllPosts({required PostRequest request}) =>
       _repo.postList(postRequest: request);
 
-  Future<PostAddResponseEntity> addPost(
+  Future<PostAddEditResponseEntity> addPost(
           {required String content, String? base64Image}) =>
       _repo.addPost(content: content, base64Image: base64Image);
+
+  Future<PostAddEditResponseEntity> updatePost(
+          {required String content,
+          required int postId,
+          required String type,
+          String? base64Image}) =>
+      _repo.updatePost(
+          postId: postId,
+          content: content,
+          base64Image: base64Image,
+          type: type);
 }
