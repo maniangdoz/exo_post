@@ -37,6 +37,9 @@ class _ProfilScreenState extends State<ProfilScreen> {
                 ),
               ),
               PostCard(
+                authorid: 1,
+                postid: 1,
+                key: const ValueKey<String>('post_0'),
                 type: 'profil',
                 onClick: () => {},
                 authorname: 'Winnie',

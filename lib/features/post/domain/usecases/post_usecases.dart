@@ -1,7 +1,9 @@
-import 'package:exo_post/features/post/domain/entities/requests/post_request.dart';
-import 'package:exo_post/features/post/domain/repository/post_repo.dart';
 import 'package:injectable/injectable.dart';
+
+import '../entities/post_add_edit_response_entity.dart';
 import '../entities/post_response_entity.dart';
+import '../entities/requests/post_request.dart';
+import '../repository/post_repo.dart';
 
 @injectable
 class PostUseCases {
@@ -11,4 +13,22 @@ class PostUseCases {
 
   Future<PostResponseEntity> getAllPosts({required PostRequest request}) =>
       _repo.postList(postRequest: request);
+
+  Future<PostAddEditResponseEntity> addPost(
+          {required String content, String? base64Image}) =>
+      _repo.addPost(content: content, base64Image: base64Image);
+
+  Future<PostAddEditResponseEntity> updatePost(
+          {required String content,
+          required int postId,
+          required String type,
+          String? base64Image}) =>
+      _repo.updatePost(
+          postId: postId,
+          content: content,
+          base64Image: base64Image,
+          type: type);
+
+  Future<dynamic> removePost({required int postId}) =>
+      _repo.removePost(postId: postId);
 }

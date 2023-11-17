@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../../common/constants.dart';
 import '../../../../common/styles/colors.dart';
 import '../../../../common/utils/app_utils.dart';
 import '../../../shared/presentation/widgets/avatar_user.dart';
 import '../../../shared/presentation/widgets/comment_input.dart';
+import '../../domain/entities/comment_response_entity.dart';
+import '../bloc/comment_bloc.dart';
 
 class CommentScreen extends StatefulWidget {
-  const CommentScreen({super.key});
+  final int idpost;
+  const CommentScreen({Key? key, required this.idpost}) : super(key: key);
 
   @override
   State<CommentScreen> createState() => _CommentScreenState();
@@ -17,6 +22,21 @@ class CommentScreen extends StatefulWidget {
 class _CommentScreenState extends State<CommentScreen> {
   final _commentTextFieldController = TextEditingController();
 
+  bool isLoading = true;
+  CommentResponseEntity? _commentResponseEntity;
+  bool isValidToken = false;
+
+  @override
+  void initState() {
+    super.initState();
+    AppUtils.isAuthTokenValid().then((value) {
+      setState(() {
+        isValidToken = value;
+      });
+    });
+    context.read<CommentBloc>().add(GetAllCommentByPost(postId: widget.idpost));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,62 +44,110 @@ class _CommentScreenState extends State<CommentScreen> {
           title: const Text('Comments'),
           centerTitle: true,
         ),
-        body: Column(
-          children: <Widget>[
-            const SizedBox(height: 10),
-            Expanded(
-              child: ListView(
-                padding: const EdgeInsets.all(8),
-                children: List.generate(
-                  10,
-                  (index) => Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      GestureDetector(
-                        onTap: () => _infoUser(index),
-                        child: AvatarUser(
-                            name: '$index Parton',
-                            color: AppUtils.blackonprimaryColor(context)),
-                      ),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: Column(
+        body: BlocListener<CommentBloc, CommentState>(
+          listener: (context, state) {
+            if (state is GetAllCommentsFinished) {
+              if (state.status == Status.waiting) {
+                setState(() {
+                  isLoading = true;
+                });
+              } else if (state.status == Status.succeded) {
+                setState(() {
+                  isLoading = false;
+                  _commentResponseEntity = state.commentResponseEntity;
+                });
+              } else if (state.status == Status.failed) {
+                setState(() {
+                  isLoading = false;
+                });
+                AppUtils.showAlert(
+                    context, state.message ?? '', AppColors.accentColor);
+              }
+            }
+          },
+          child: Skeletonizer(
+            enabled: isLoading ? true : false,
+            child: Column(
+              children: <Widget>[
+                const SizedBox(height: 10),
+                if (_commentResponseEntity != null &&
+                    _commentResponseEntity!.comments!.isNotEmpty)
+                  Expanded(
+                    child: ListView(
+                      padding: const EdgeInsets.all(8),
+                      children: List.generate(
+                        _commentResponseEntity!.comments!.length,
+                        (index) => Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            _textComment('$index Parton',
-                                'List item dddddddddd dddddd dddddddddd ddddd ddddddd ddddd dd dd'),
-                            const SizedBox(height: 4),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  '18 days ago',
-                                  style: AppConstants.textStyle(),
-                                ),
-                                const SizedBox(width: 20),
-                                _buttonEdit(
-                                    "List item dddddddddd dddddd dddddddddd ddddd ddddddd ddddd dd dd",
-                                    index),
-                                const SizedBox(width: 15),
-                                _buttonDelete(index),
-                              ],
+                            _avatarUser(
+                                _commentResponseEntity!.author!.id!,
+                                _commentResponseEntity!
+                                    .comments![index].author!.name!),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  _textComment(
+                                      _commentResponseEntity!
+                                          .comments![index].author!.name!,
+                                      _commentResponseEntity!
+                                          .comments![index].content!),
+                                  const SizedBox(height: 4),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: _actionButton(
+                                        _commentResponseEntity!
+                                            .comments![index].createdAt!,
+                                        _commentResponseEntity!
+                                            .comments![index].content!,
+                                        _commentResponseEntity!
+                                            .comments![index].id!),
+                                  ),
+                                  const SizedBox(height: 10),
+                                  Divider(
+                                      color: AppUtils.blackonprimaryColor(
+                                          context)),
+                                  const SizedBox(height: 10),
+                                ],
+                              ),
                             ),
-                            const SizedBox(height: 10),
-                            Divider(
-                              color: AppUtils.blackonprimaryColor(context),
-                            ),
-                            const SizedBox(height: 10),
                           ],
                         ),
                       ),
-                    ],
+                    ),
+                  )
+                else
+                  const Center(
+                    child: Text('No comments'),
                   ),
-                ),
-              ),
+              ],
             ),
-          ],
+          ),
         ),
         bottomNavigationBar: _bottomInputText());
+  }
+
+  List<Widget> _actionButton(createdAt, content, id) {
+    return <Widget>[
+      Text(
+        AppUtils.formatTimeFromNow(createdAt),
+        style: AppConstants.textStyle(),
+      ),
+      const SizedBox(width: 20),
+      if (isValidToken) _buttonEdit(content, id),
+      const SizedBox(width: 15),
+      if (isValidToken) _buttonDelete(id),
+    ];
+  }
+
+  Widget _avatarUser(id, name) {
+    return GestureDetector(
+      onTap: () => _infoUser(id),
+      child:
+          AvatarUser(name: name, color: AppUtils.primaryaccentColor(context)),
+    );
   }
 
   void _editComment(String text) {

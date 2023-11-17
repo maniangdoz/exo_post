@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
-import 'package:exo_post/features/post/domain/entities/author_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
+
+import '../../domain/entities/author_entity.dart';
 
 part 'author.g.dart';
 

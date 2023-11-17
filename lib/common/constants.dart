@@ -24,6 +24,9 @@ class AppConstants {
   static const String baseUrlProd = 'xoc1-kd2t-7p9b.n7c.xano.io';
   static const String baseUrlImage =
       'https://storage.googleapis.com/xoc1-kd2t-7p9b.n7c.xano.io';
+      
+  static const String messageError401 =
+      'Please log in before you can perform this action.';
 }
 
 enum Status {

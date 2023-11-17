@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:photo_view/photo_view.dart';
@@ -8,10 +6,13 @@ import 'package:readmore/readmore.dart';
 import '../../../../common/styles/colors.dart';
 import '../../../../common/utils/app_utils.dart';
 import '../../../shared/presentation/widgets/avatar_user.dart';
+import 'post_add_edit.dart';
 
 class PostCard extends StatefulWidget {
   final String type;
   final String authorname;
+  final int authorid;
+  final int postid;
   final int postcreatedat;
   final String content;
   final String? urlimage;
@@ -19,10 +20,13 @@ class PostCard extends StatefulWidget {
   final double heightimage;
   final int commentscount;
   final VoidCallback? onClick;
+  final VoidCallback? onClickRemove;
 
   const PostCard({
     Key? key,
     required this.type,
+    required this.authorid,
+    required this.postid,
     required this.onClick,
     required this.authorname,
     required this.postcreatedat,
@@ -31,6 +35,7 @@ class PostCard extends StatefulWidget {
     required this.widthimage,
     required this.heightimage,
     required this.commentscount,
+    this.onClickRemove,
   }) : super(key: key);
 
   @override
@@ -38,6 +43,17 @@ class PostCard extends StatefulWidget {
 }
 
 class _PostCardState extends State<PostCard> {
+  bool isValidToken = false;
+  @override
+  void initState() {
+    super.initState();
+    AppUtils.isAuthTokenValid().then((value) {
+      setState(() {
+        isValidToken = value;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -63,25 +79,27 @@ class _PostCardState extends State<PostCard> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 18),
-                      child: GestureDetector(
-                        onTap: () => _editPost(),
-                        child: const Text('Edit'),
+                    if (isValidToken)
+                      Padding(
+                        padding: const EdgeInsets.only(left: 18),
+                        child: GestureDetector(
+                          onTap: () => _editPost(),
+                          child: const Text('Edit'),
+                        ),
                       ),
-                    ),
                     const SizedBox(width: 25),
-                    GestureDetector(
-                      onTap: _removePost,
-                      child: const Text('Remove'),
-                    ),
+                    if (isValidToken)
+                      GestureDetector(
+                        onTap: widget.onClickRemove,
+                        child: const Text('Remove'),
+                      ),
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     IconButton(
-                      onPressed: () => _buildDetailPost(1),
+                      onPressed: () => _buildDetailPost(widget.postid),
                       icon: const Icon(Icons.mode_comment_outlined),
                     ),
                     Text(widget.commentscount.toString()),
@@ -145,46 +163,56 @@ class _PostCardState extends State<PostCard> {
   Widget _buildImageCard() {
     if (widget.urlimage != null) {
       return GestureDetector(
-        onTap: () {
-          showModalBottomSheet(
-            context: context,
-            isScrollControlled: true,
-            useSafeArea: true,
-            builder: (context) => SizedBox(
-              height: MediaQuery.of(context).size.height,
-              child: PhotoView(
-                imageProvider: NetworkImage('${widget.urlimage}'),
+          onTap: () {
+            showModalBottomSheet(
+              context: context,
+              isScrollControlled: true,
+              useSafeArea: true,
+              builder: (context) => SizedBox(
+                height: MediaQuery.of(context).size.height,
+                child: PhotoView(
+                  imageProvider: NetworkImage('${widget.urlimage}'),
+                ),
               ),
+            );
+          },
+          child: Container(
+            constraints: const BoxConstraints(
+                minHeight: 300, minWidth: double.infinity, maxHeight: 500),
+            child: Image.network(
+              '${widget.urlimage}',
+              fit: BoxFit.cover,
+              loadingBuilder: (BuildContext context, Widget child,
+                  ImageChunkEvent? loadingProgress) {
+                if (loadingProgress == null) {
+                  return child;
+                } else {
+                  return const SizedBox(
+                    width: 40,
+                    height: 40,
+                    child: Center(child: CircularProgressIndicator()),
+                  );
+                }
+              },
             ),
-          );
-        },
-        child: Container(
-          constraints: const BoxConstraints(
-              minHeight: 300, minWidth: double.infinity, maxHeight: 500),
-          child: Image.network(
-            '${widget.urlimage}',
-            fit: BoxFit.cover,
-            loadingBuilder: (BuildContext context, Widget child,
-                ImageChunkEvent? loadingProgress) {
-              if (loadingProgress == null) {
-                return child;
-              } else {
-                return const SizedBox(
-                  width: 40,
-                  height: 40,
-                  child: Center(child: CircularProgressIndicator()),
-                );
-              }
-            },
-          ),
-        ),
-      );
+          ));
     } else {
       return Container();
     }
   }
 
-  void _editPost() {}
-
-  void _removePost() {}
+  void _editPost() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      useSafeArea: true,
+      builder: (BuildContext context) {
+        return PostAddEdit(
+          content: widget.content,
+          postid: widget.postid,
+          urlimage: widget.urlimage,
+        );
+      },
+    );
+  }
 }

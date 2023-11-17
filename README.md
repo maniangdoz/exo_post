@@ -1,16 +1,27 @@
-# exo_post
+# project_flutter_post
 
-A new Flutter project.
+Flutter Project Group 3 Exam
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Add flavor to the project. 
 
-A few resources to get you started if this is your first Flutter project:
+To start the project, neither use configuration vscode or  cmd
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Utile command
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+ *flutter run -t lib/main_dev.dart --flavor dev* : to launch the project as dev
+
+ *flutter run -t lib/main_prod.dart --flavor prod*: to launch the project as prod
+
+ *dart run build_runner build --delete-conflicting-outputs* : to generate a dart project
+
+ *emulator -list-avds* : to list the available emulator
+ 
+ *emulator -avd Pixel_6_API_31* : to open emulator
+
+ *dart run build_runner build --delete-conflicting-outputs* : to generate model and injection files
+ 
+ ## Achitecture Project
+
+ Clean architecture is use

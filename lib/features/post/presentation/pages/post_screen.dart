@@ -1,17 +1,17 @@
-import 'package:exo_post/common/styles/colors.dart';
-import 'package:exo_post/common/utils/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../common/constants.dart';
 import '../../../../common/router.dart';
+import '../../../../common/styles/colors.dart';
+import '../../../../common/utils/app_utils.dart';
 import '../../../shared/presentation/widgets/action_button.dart';
 import '../../../shared/presentation/widgets/expandable_fa.dart';
 import '../../domain/entities/post_response_entity.dart';
 import '../../domain/entities/requests/post_request.dart';
 import '../bloc/post_bloc.dart';
-import '../widgets/post_add.dart';
+import '../widgets/post_add_edit.dart';
 import '../widgets/post_button.dart';
 import '../widgets/post_card.dart';
 import '../widgets/skeleton_post.dart';
@@ -56,6 +56,20 @@ class _PostScreenState extends State<PostScreen> {
               });
               AppUtils.showAlert(
                   context, state.message ?? '', AppColors.accentColor);
+            }
+          }
+          if (state is RemovePostsFinished) {
+            if (state.status == Status.waiting) {
+              AppUtils.showLoader(context: context);
+            } else {
+              Navigator.of(context, rootNavigator: true).pop();
+              if (state.status == Status.succeded) {
+                AppUtils.showAlert(context, state.message ?? 'Success',
+                    AppUtils.accentprimaryColor(context));
+              } else if (state.status == Status.failed) {
+                AppUtils.showAlert(
+                    context, state.message ?? 'Error', AppColors.errorColor);
+              }
             }
           }
         },
@@ -103,7 +117,7 @@ class _PostScreenState extends State<PostScreen> {
       isScrollControlled: true,
       useSafeArea: true,
       builder: (BuildContext context) {
-        return const PostAdd();
+        return const PostAddEdit();
       },
     );
   }
@@ -118,19 +132,23 @@ class _PostScreenState extends State<PostScreen> {
             ...List.generate(
               _postResponseEntity!.items!.length,
               (index) => PostCard(
-                type: 'post',
-                authorname: _postResponseEntity!.items![index].author!.name!,
-                postcreatedat: _postResponseEntity!.items![index].createdAt!,
-                content: _postResponseEntity!.items![index].content!,
-                commentscount:
-                    _postResponseEntity!.items![index].commentsCount!,
-                urlimage: _postResponseEntity!.items![index].image != null
-                    ? _postResponseEntity!.items![index].image!.url
-                    : null,
-                widthimage: 50,
-                heightimage: 1290,
-                onClick: () => _infoUser(1),
-              ),
+                  key: ValueKey<String>('post_$index'),
+                  type: 'post',
+                  authorname: _postResponseEntity!.items![index].author!.name!,
+                  postcreatedat: _postResponseEntity!.items![index].createdAt!,
+                  content: _postResponseEntity!.items![index].content!,
+                  commentscount:
+                      _postResponseEntity!.items![index].commentsCount!,
+                  urlimage: _postResponseEntity!.items![index].image != null
+                      ? _postResponseEntity!.items![index].image!.url
+                      : null,
+                  widthimage: 50,
+                  heightimage: 1290,
+                  onClick: () => _infoUser(1),
+                  authorid: _postResponseEntity!.items![index].author!.id!,
+                  postid: _postResponseEntity!.items![index].id!,
+                  onClickRemove: () =>
+                      _removePost(_postResponseEntity!.items![index].id!)),
             ),
           ],
         );
@@ -144,5 +162,9 @@ class _PostScreenState extends State<PostScreen> {
 
   void _infoUser(int index) {
     context.go('/home/0/post-user/$index');
+  }
+
+  _removePost(int postid) {
+    context.read<PostBloc>().add(RemovePosts(postId: postid));
   }
 }

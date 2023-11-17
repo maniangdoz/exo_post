@@ -1,6 +1,7 @@
 //method or validator
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../styles/colors.dart';
 
@@ -178,6 +179,19 @@ class AppUtils {
       }
     } else {
       return 'Just now';
+    }
+  }
+
+  static const String authTokenKey = 'authToken';
+
+  static Future<bool> isAuthTokenValid() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? authToken = prefs.getString(authTokenKey);
+
+    if (authToken != null && authToken.isNotEmpty) {
+      return true;
+    } else {
+      return false;
     }
   }
 }
