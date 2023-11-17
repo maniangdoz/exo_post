@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:exo_post/common/utils/app_utils.dart';
 import 'package:exo_post/features/splash/domain/entities/splash_response_entity.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -26,13 +27,17 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
     try {
       emit(const SplashFinished(status: Status.waiting));
       SplashResponseEntity result = await _useCase.getUserLogin();
-      if (result.errorMessage != null) {
+
+      if (result.errorMessage == null) {
         await _prefs.setString(
-            'authorId', result.userEntity?.id.toString() ?? '');
+            AppUtils.userAuthorId, result.userEntity?.id.toString() ?? '');
+
+        await _prefs.setString(AppUtils.userAuthorCreatedAt,
+            result.userEntity?.createdAt.toString() ?? '');
         await _prefs.setString(
-            'createdAt', result.userEntity?.createdAt.toString() ?? '');
-        await _prefs.setString('name', result.userEntity?.name ?? '');
-        await _prefs.setString('email', result.userEntity?.email ?? '');
+            AppUtils.userAuthorName, result.userEntity?.name ?? '');
+        await _prefs.setString(
+            AppUtils.userAuthorEmail, result.userEntity?.email ?? '');
       }
       emit(const SplashFinished(status: Status.succeded));
     } catch (e) {

@@ -25,8 +25,7 @@ class PostScreen extends StatefulWidget {
 
 class _PostScreenState extends State<PostScreen> {
   bool isLoading = true;
-  PostResponseEntity? _postResponseEntity;
-
+  PostResponseEntity? _postResponseEntity;  
   @override
   void initState() {
     super.initState();

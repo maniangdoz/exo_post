@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:equatable/equatable.dart';
+import 'package:exo_post/common/utils/app_utils.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -27,7 +28,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       emit(const SignupFinished(status: Status.waiting));
       RegisterEntity registerEntity = await _useCase.signup(
           name: event.name, email: event.email, password: event.password);
-      await _prefs.setString('authToken', registerEntity.authToken ?? '');
+      await _prefs.setString(AppUtils.authTokenKey, registerEntity.authToken ?? '');
       emit(const SignupFinished(status: Status.succeded));
     } catch (e) {
       emit(SignupFinished(status: Status.failed, message: e.toString()));

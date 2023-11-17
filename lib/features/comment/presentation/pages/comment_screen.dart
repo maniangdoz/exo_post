@@ -136,10 +136,22 @@ class _CommentScreenState extends State<CommentScreen> {
         style: AppConstants.textStyle(),
       ),
       const SizedBox(width: 20),
-      if (isValidToken) _buttonEdit(content, id),
+      if (isValidToken && _autherCommentVerify(id)) _buttonEdit(content, id),
       const SizedBox(width: 15),
-      if (isValidToken) _buttonDelete(id),
+      if (isValidToken && _autherCommentVerify(id)) _buttonDelete(id),
     ];
+  }
+
+  bool _autherCommentVerify(int id) {
+    if (isValidToken == true) {
+      AppUtils.valueUserAuthorId().then((res) {
+        if (res > 0 && res == id) {
+          return true;
+        }
+      });
+      return false;
+    }
+    return false;
   }
 
   Widget _avatarUser(id, name) {
