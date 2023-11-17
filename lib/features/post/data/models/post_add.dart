@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import '../../domain/entities/post_add_edit_entity.dart';
-import 'author.dart';
+import '../../../shared/data/models/author.dart';
 import 'image.dart';
 
 part 'post_add.g.dart';

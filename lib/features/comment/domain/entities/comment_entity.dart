@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import '../../../post/domain/entities/author_entity.dart';
+import '../../../shared/domain/entities/author_entity.dart';
 
 class CommentEntity extends Equatable {
   final int? _id;

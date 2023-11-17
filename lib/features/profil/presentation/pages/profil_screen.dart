@@ -70,7 +70,10 @@ class _ProfilScreenState extends State<ProfilScreen> {
               ListView(
                 padding: const EdgeInsets.all(0),
                 children: [
-                  InfoUser(idUser: userId),
+                  InfoUser(
+                    idUser: userId,
+                    type: 'profil',
+                  ),
                   const SizedBox(
                     height: 20,
                   ),
@@ -86,31 +89,30 @@ class _ProfilScreenState extends State<ProfilScreen> {
                       ],
                     ),
                   ),
-                  // ...List.generate(
-                  //   _postResponseEntity?.items?.length ?? 0,
-                  //   (index) => PostCard(
-                  //       key: ValueKey<String>('post_$index'),
-                  //       type: 'profil',
-                  //       authorname: 'Send',
-                  //       postcreatedat:
-                  //           _postResponseEntity!.items![index].createdAt!,
-                  //       content:
-                  //           _postResponseEntity!.items![index].content ?? '',
-                  //       commentscount:
-                  //           _postResponseEntity!.items![index].commentsCount!,
-                  //       urlimage:
-                  //           _postResponseEntity!.items![index].image != null
-                  //               ? _postResponseEntity!.items![index].image!.url
-                  //               : null,
-                  //       widthimage: 50,
-                  //       heightimage: 1290,
-                  //       onClick: () => {},
-                  //       authorid: userId,
-                  //       postid: _postResponseEntity!.items![index].id!,
-                  //       onClickRemove: () => _removePost(
-                  //           _postResponseEntity!.items![index].id!)),
-                  // ),
-
+                  ...List.generate(
+                    _postResponseEntity?.items?.length ?? 0,
+                    (index) => PostCard(
+                        key: ValueKey<String>('post_$index'),
+                        type: 'profil',
+                        authorname: 'Send',
+                        postcreatedat:
+                            _postResponseEntity!.items![index].createdAt!,
+                        content:
+                            _postResponseEntity!.items![index].content ?? '',
+                        commentscount:
+                            _postResponseEntity!.items![index].commentsCount!,
+                        urlimage:
+                            _postResponseEntity!.items![index].image != null
+                                ? _postResponseEntity!.items![index].image!.url
+                                : null,
+                        widthimage: 50,
+                        heightimage: 1290,
+                        onClick: () => {},
+                        authorid: userId,
+                        postid: _postResponseEntity!.items![index].id!,
+                        onClickRemove: () => _removePost(
+                            _postResponseEntity!.items![index].id!)),
+                  ),
                   const SizedBox(
                     height: 100,
                   ),

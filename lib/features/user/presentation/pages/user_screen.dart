@@ -10,8 +10,8 @@ import '../../../post/presentation/widgets/post_card.dart';
 import '../../../profil/domain/entities/requests/user_post_request.dart';
 import '../../../profil/domain/entities/user_post_response_entity.dart';
 import '../../../profil/presentation/bloc/profil_bloc.dart';
+import '../../../shared/presentation/widgets/horizontal_dash.dart';
 import '../../../shared/presentation/widgets/info_user.dart';
-import '../../../shared/presentation/widgets/total_comment.dart';
 
 class UserScreen extends StatefulWidget {
   final int iduser;
@@ -30,7 +30,6 @@ class _UserScreenState extends State<UserScreen> {
   @override
   void initState() {
     super.initState();
-
     context.read<ProfilBloc>().add(GetAllUserPosts(
         repuest: UserPostRequest(userId: widget.iduser, page: 0, perPage: 20)));
   }
@@ -70,7 +69,10 @@ class _UserScreenState extends State<UserScreen> {
               ListView(
                 padding: const EdgeInsets.all(0),
                 children: [
-                  const InfoUser(idUser: 1),
+                  InfoUser(
+                    idUser: widget.iduser,
+                    type: 'user',
+                  ),
                   const SizedBox(
                     height: 20,
                   ),
@@ -79,37 +81,48 @@ class _UserScreenState extends State<UserScreen> {
                     child: Row(
                       children: [
                         Text(
-                          "${AppUtils.generateAcronym('sender name')}'s posts",
+                          "My posts",
                           style: Theme.of(context).textTheme.displaySmall,
                         ),
-                        const TotalComment(nbcomments: 1),
+                        const Expanded(
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 8.0, right: 2),
+                            child: HorizontalDash(),
+                          ),
+                        ),
                       ],
                     ),
                   ),
-                  ...List.generate(
-                    _postResponseEntity?.items?.length ?? 0,
-                    (index) => PostCard(
-                        key: ValueKey<String>('post_$index'),
-                        type: 'user',
-                        authorname: 'Send',
-                        postcreatedat:
-                            _postResponseEntity!.items![index].createdAt!,
-                        content:
-                            _postResponseEntity!.items![index].content ?? '',
-                        commentscount:
-                            _postResponseEntity!.items![index].commentsCount!,
-                        urlimage:
-                            _postResponseEntity!.items![index].image != null
-                                ? _postResponseEntity!.items![index].image!.url
-                                : null,
-                        widthimage: 50,
-                        heightimage: 1290,
-                        onClick: () => {},
-                        authorid: widget.iduser,
-                        postid: _postResponseEntity!.items![index].id!,
-                        onClickRemove: () => _removePost(
-                            _postResponseEntity!.items![index].id!)),
-                  ),
+                  if (_postResponseEntity != null &&
+                      _postResponseEntity!.items!.isNotEmpty)
+                    ...List.generate(
+                      _postResponseEntity?.items?.length ?? 0,
+                      (index) => PostCard(
+                          key: ValueKey<String>('post_$index'),
+                          type: 'user',
+                          authorname: 'Send',
+                          postcreatedat:
+                              _postResponseEntity!.items![index].createdAt!,
+                          content:
+                              _postResponseEntity!.items![index].content ?? '',
+                          commentscount:
+                              _postResponseEntity!.items![index].commentsCount!,
+                          urlimage: _postResponseEntity!.items![index].image !=
+                                  null
+                              ? _postResponseEntity!.items![index].image!.url
+                              : null,
+                          widthimage: 50,
+                          heightimage: 1290,
+                          onClick: () => {},
+                          authorid: widget.iduser,
+                          postid: _postResponseEntity!.items![index].id!,
+                          onClickRemove: () => _removePost(
+                              _postResponseEntity!.items![index].id!)),
+                    )
+                  else
+                    const Center(
+                      child: Text('No posts'),
+                    ),
                   const SizedBox(
                     height: 100,
                   ),

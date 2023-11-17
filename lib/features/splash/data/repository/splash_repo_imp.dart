@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:injectable/injectable.dart';
 
 import '../../../../core/services/api_services.dart';
-import '../../../post/data/models/error_api_response.dart';
+import '../../../shared/data/models/error_api_response.dart';
 import '../../domain/entities/splash_response_entity.dart';
 import '../../domain/repository/splash_repo.dart';
 import '../models/user.dart';

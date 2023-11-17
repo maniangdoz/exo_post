@@ -13,6 +13,7 @@ import 'features/auth/presentation/bloc/auth_bloc.dart';
 import 'features/comment/presentation/bloc/comment_bloc.dart';
 import 'features/post/presentation/bloc/post_bloc.dart';
 import 'features/register/presentation/bloc/register_bloc.dart';
+import 'features/shared/presentation/bloc/shared_bloc.dart';
 import 'features/splash/presentation/bloc/splash_bloc.dart';
 import 'features/user/presentation/bloc/user_bloc.dart';
 
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider<SplashBloc>(create: (context) => getIt<SplashBloc>()),
         BlocProvider<AuthBloc>(create: (context) => getIt<AuthBloc>()),
+        BlocProvider<SharedBloc>(create: (context) => getIt<SharedBloc>()),
         BlocProvider<RegisterBloc>(create: (context) => getIt<RegisterBloc>()),
         BlocProvider<UserBloc>(create: (context) => getIt<UserBloc>()),
         BlocProvider<PostBloc>(create: (context) => getIt<PostBloc>()),

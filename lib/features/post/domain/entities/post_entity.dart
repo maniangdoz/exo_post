@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import 'author_entity.dart';
+import '../../../shared/domain/entities/author_entity.dart';
 import 'image_entity.dart';
 
 class PostEntity extends Equatable {

@@ -8,7 +8,7 @@ import '../../domain/entities/post_add_edit_response_entity.dart';
 import '../../domain/entities/post_response_entity.dart';
 import '../../domain/entities/requests/post_request.dart';
 import '../../domain/repository/post_repo.dart';
-import '../models/error_api_response.dart';
+import '../../../shared/data/models/error_api_response.dart';
 import '../models/post_add.dart';
 import '../models/post_response.dart';
 
@@ -97,7 +97,7 @@ class PostRepoImp extends PostRepo {
       if (value.statusCode == 200) {
         return 'Success remove';
       } else {
-        return ErrorApiResponse.fromJson(jsonDecode(value.body)).toEntity();
+        return ErrorApiResponse.fromJson(jsonDecode(value.body)).toEntity().message;
       }
     }).catchError((e) {
       throw e;

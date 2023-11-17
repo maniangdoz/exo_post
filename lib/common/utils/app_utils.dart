@@ -212,4 +212,10 @@ class AppUtils {
       return 0;
     }
   }
+
+  static Future<String?> valueUserAuthorEmail() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? result = prefs.getString(userAuthorEmail);
+    return result;
+  }
 }

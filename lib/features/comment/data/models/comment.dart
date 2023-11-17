@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-import '../../../post/data/models/author.dart';
+import '../../../shared/data/models/author.dart';
 import '../../domain/entities/comment_entity.dart';
 part 'comment.g.dart';
 
