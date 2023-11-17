@@ -11,4 +11,6 @@ abstract class PostRepo {
       required String content,
       required String type,
       String? base64Image});
+  Future<dynamic> removePost({required int postId});
+
 }

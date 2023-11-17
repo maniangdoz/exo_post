@@ -12,6 +12,7 @@ import 'features/auth/presentation/bloc/auth_bloc.dart';
 import 'features/comment/presentation/bloc/comment_bloc.dart';
 import 'features/post/presentation/bloc/post_bloc.dart';
 import 'features/register/presentation/bloc/register_bloc.dart';
+import 'features/splash/presentation/bloc/splash_bloc.dart';
 
 void main() {
   runZonedGuarded(() async {
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider<SplashBloc>(create: (context) => getIt<SplashBloc>()),
         BlocProvider<AuthBloc>(create: (context) => getIt<AuthBloc>()),
         BlocProvider<RegisterBloc>(create: (context) => getIt<RegisterBloc>()),
         BlocProvider<PostBloc>(create: (context) => getIt<PostBloc>()),

@@ -53,3 +53,13 @@ class UpdatePost extends PostEvent {
   @override
   List<Object?> get props => [_postId, _content, _type, _base64Image];
 }
+
+class RemovePosts extends PostEvent {
+  final int _postId;
+
+  const RemovePosts({required int postId}) : _postId = postId;
+  int get postId => _postId;
+
+  @override
+  List<Object?> get props => [_postId];
+}

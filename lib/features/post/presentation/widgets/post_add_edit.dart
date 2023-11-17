@@ -84,6 +84,7 @@ class _PostAddEditState extends State<PostAddEdit> {
           context.pop();
           AppUtils.showAlert(context, state.message ?? 'Success',
               AppUtils.accentprimaryColor(context));
+          context.go('/home/0');
         } else if (state.status == Status.failed) {
           context.pop();
           context.pop();

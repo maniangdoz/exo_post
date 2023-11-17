@@ -20,6 +20,7 @@ class PostCard extends StatefulWidget {
   final double heightimage;
   final int commentscount;
   final VoidCallback? onClick;
+  final VoidCallback? onClickRemove;
 
   const PostCard({
     Key? key,
@@ -34,6 +35,7 @@ class PostCard extends StatefulWidget {
     required this.widthimage,
     required this.heightimage,
     required this.commentscount,
+    this.onClickRemove,
   }) : super(key: key);
 
   @override
@@ -88,7 +90,7 @@ class _PostCardState extends State<PostCard> {
                     const SizedBox(width: 25),
                     if (isValidToken)
                       GestureDetector(
-                        onTap: _removePost,
+                        onTap: widget.onClickRemove,
                         child: const Text('Remove'),
                       ),
                   ],
@@ -200,7 +202,6 @@ class _PostCardState extends State<PostCard> {
   }
 
   void _editPost() {
-    // postid
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -214,6 +215,4 @@ class _PostCardState extends State<PostCard> {
       },
     );
   }
-
-  void _removePost() {}
 }

@@ -28,4 +28,7 @@ class PostUseCases {
           content: content,
           base64Image: base64Image,
           type: type);
+
+  Future<dynamic> removePost({required int postId}) =>
+      _repo.removePost(postId: postId);
 }

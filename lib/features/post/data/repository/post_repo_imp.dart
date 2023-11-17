@@ -90,4 +90,17 @@ class PostRepoImp extends PostRepo {
       }).catchError((e) {
         throw PostAddEditResponseEntity(errorMessage: e.toString());
       });
+
+  @override
+  Future removePost({required int postId}) {
+    return _api.removePost(postId: postId).then((value) {
+      if (value.statusCode == 200) {
+        return 'Success remove';
+      } else {
+        return ErrorApiResponse.fromJson(jsonDecode(value.body)).toEntity();
+      }
+    }).catchError((e) {
+      throw e;
+    });
+  }
 }

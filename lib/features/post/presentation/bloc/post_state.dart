@@ -47,3 +47,18 @@ class UpdatePostFinished extends PostState {
   @override
   List<Object?> get props => [status, message];
 }
+
+class RemovePostsFinished extends PostState {
+  final Status? _status;
+  final String? _message;
+
+  const RemovePostsFinished({Status? status, String? message})
+      : _status = status,
+        _message = message;
+
+  Status? get status => _status;
+  String? get message => _message;
+
+  @override
+  List<Object?> get props => [_status, _message];
+}

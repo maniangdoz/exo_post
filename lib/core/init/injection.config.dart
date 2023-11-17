@@ -10,9 +10,9 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:exo_post/core/logic/app_logic.dart' as _i3;
 import 'package:exo_post/core/logic/image_logic.dart' as _i20;
-import 'package:exo_post/core/modules/app_module.dart' as _i33;
-import 'package:exo_post/core/modules/image_module.dart' as _i32;
-import 'package:exo_post/core/modules/network_module.dart' as _i31;
+import 'package:exo_post/core/modules/app_module.dart' as _i36;
+import 'package:exo_post/core/modules/image_module.dart' as _i35;
+import 'package:exo_post/core/modules/network_module.dart' as _i34;
 import 'package:exo_post/core/services/api_services.dart' as _i13;
 import 'package:exo_post/features/auth/data/repository/auth_repo_imp.dart'
     as _i15;
@@ -21,7 +21,7 @@ import 'package:exo_post/features/auth/domain/repository/auth_repo.dart'
 import 'package:exo_post/features/auth/domain/usecases/auth_usecases.dart'
     as _i16;
 import 'package:exo_post/features/auth/presentation/bloc/auth_bloc.dart'
-    as _i27;
+    as _i30;
 import 'package:exo_post/features/comment/data/repository/comment_repo_imp.dart'
     as _i18;
 import 'package:exo_post/features/comment/domain/repository/comment_repo.dart'
@@ -29,7 +29,7 @@ import 'package:exo_post/features/comment/domain/repository/comment_repo.dart'
 import 'package:exo_post/features/comment/domain/usecases/comment_usecases.dart'
     as _i19;
 import 'package:exo_post/features/comment/presentation/bloc/comment_bloc.dart'
-    as _i28;
+    as _i31;
 import 'package:exo_post/features/post/data/repository/post_repo_imp.dart'
     as _i22;
 import 'package:exo_post/features/post/domain/repository/post_repo.dart'
@@ -37,7 +37,7 @@ import 'package:exo_post/features/post/domain/repository/post_repo.dart'
 import 'package:exo_post/features/post/domain/usecases/post_usecases.dart'
     as _i23;
 import 'package:exo_post/features/post/presentation/bloc/post_bloc.dart'
-    as _i29;
+    as _i32;
 import 'package:exo_post/features/profil/data/repository/profil_repo_imp.dart'
     as _i8;
 import 'package:exo_post/features/profil/domain/repository/profil_repo.dart'
@@ -51,7 +51,13 @@ import 'package:exo_post/features/register/domain/repository/register_repo.dart'
 import 'package:exo_post/features/register/domain/usecases/register_usecases.dart'
     as _i26;
 import 'package:exo_post/features/register/presentation/bloc/register_bloc.dart'
-    as _i30;
+    as _i33;
+import 'package:exo_post/features/splash/data/repository/splash_repo_imp.dart'
+    as _i28;
+import 'package:exo_post/features/splash/domain/repository/splash_repo.dart'
+    as _i27;
+import 'package:exo_post/features/splash/domain/usecases/splash_usecases.dart'
+    as _i29;
 import 'package:exo_post/features/user/data/repository/user_repo_imp.dart'
     as _i11;
 import 'package:exo_post/features/user/domain/repository/user_repo.dart'
@@ -109,14 +115,18 @@ extension GetItInjectableX on _i1.GetIt {
         () => _i25.RegisterRepoImp(api: gh<_i13.ApiServices>()));
     gh.factory<_i26.RegisterUseCases>(
         () => _i26.RegisterUseCases(repo: gh<_i24.RegisterRepo>()));
-    gh.factory<_i27.AuthBloc>(() => _i27.AuthBloc(
+    gh.factory<_i27.SplashRepo>(
+        () => _i28.SplashRepoImp(api: gh<_i13.ApiServices>()));
+    gh.factory<_i29.SplashUseCases>(
+        () => _i29.SplashUseCases(repo: gh<_i27.SplashRepo>()));
+    gh.factory<_i30.AuthBloc>(() => _i30.AuthBloc(
           gh<_i16.AuthUseCases>(),
           gh<_i9.SharedPreferences>(),
         ));
-    gh.factory<_i28.CommentBloc>(
-        () => _i28.CommentBloc(gh<_i19.CommentUseCases>()));
-    gh.factory<_i29.PostBloc>(() => _i29.PostBloc(gh<_i23.PostUseCases>()));
-    gh.factory<_i30.RegisterBloc>(() => _i30.RegisterBloc(
+    gh.factory<_i31.CommentBloc>(
+        () => _i31.CommentBloc(gh<_i19.CommentUseCases>()));
+    gh.factory<_i32.PostBloc>(() => _i32.PostBloc(gh<_i23.PostUseCases>()));
+    gh.factory<_i33.RegisterBloc>(() => _i33.RegisterBloc(
           gh<_i26.RegisterUseCases>(),
           gh<_i9.SharedPreferences>(),
         ));
@@ -124,8 +134,8 @@ extension GetItInjectableX on _i1.GetIt {
   }
 }
 
-class _$NetworkModule extends _i31.NetworkModule {}
+class _$NetworkModule extends _i34.NetworkModule {}
 
-class _$ImageModule extends _i32.ImageModule {}
+class _$ImageModule extends _i35.ImageModule {}
 
-class _$AppModule extends _i33.AppModule {}
+class _$AppModule extends _i36.AppModule {}

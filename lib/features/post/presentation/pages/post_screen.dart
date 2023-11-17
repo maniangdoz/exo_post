@@ -58,6 +58,20 @@ class _PostScreenState extends State<PostScreen> {
                   context, state.message ?? '', AppColors.accentColor);
             }
           }
+          if (state is RemovePostsFinished) {
+            if (state.status == Status.waiting) {
+              AppUtils.showLoader(context: context);
+            } else {
+              Navigator.of(context, rootNavigator: true).pop();
+              if (state.status == Status.succeded) {
+                AppUtils.showAlert(context, state.message ?? 'Success',
+                    AppUtils.accentprimaryColor(context));
+              } else if (state.status == Status.failed) {
+                AppUtils.showAlert(
+                    context, state.message ?? 'Error', AppColors.errorColor);
+              }
+            }
+          }
         },
         child: ListView(
           padding: const EdgeInsets.all(0),
@@ -118,22 +132,23 @@ class _PostScreenState extends State<PostScreen> {
             ...List.generate(
               _postResponseEntity!.items!.length,
               (index) => PostCard(
-                key: ValueKey<String>('post_$index'),
-                type: 'post',
-                authorname: _postResponseEntity!.items![index].author!.name!,
-                postcreatedat: _postResponseEntity!.items![index].createdAt!,
-                content: _postResponseEntity!.items![index].content!,
-                commentscount:
-                    _postResponseEntity!.items![index].commentsCount!,
-                urlimage: _postResponseEntity!.items![index].image != null
-                    ? _postResponseEntity!.items![index].image!.url
-                    : null,
-                widthimage: 50,
-                heightimage: 1290,
-                onClick: () => _infoUser(1),
-                authorid: _postResponseEntity!.items![index].author!.id!,
-                postid: _postResponseEntity!.items![index].id!,
-              ),
+                  key: ValueKey<String>('post_$index'),
+                  type: 'post',
+                  authorname: _postResponseEntity!.items![index].author!.name!,
+                  postcreatedat: _postResponseEntity!.items![index].createdAt!,
+                  content: _postResponseEntity!.items![index].content!,
+                  commentscount:
+                      _postResponseEntity!.items![index].commentsCount!,
+                  urlimage: _postResponseEntity!.items![index].image != null
+                      ? _postResponseEntity!.items![index].image!.url
+                      : null,
+                  widthimage: 50,
+                  heightimage: 1290,
+                  onClick: () => _infoUser(1),
+                  authorid: _postResponseEntity!.items![index].author!.id!,
+                  postid: _postResponseEntity!.items![index].id!,
+                  onClickRemove: () =>
+                      _removePost(_postResponseEntity!.items![index].id!)),
             ),
           ],
         );
@@ -147,5 +162,9 @@ class _PostScreenState extends State<PostScreen> {
 
   void _infoUser(int index) {
     context.go('/home/0/post-user/$index');
+  }
+
+  _removePost(int postid) {
+    context.read<PostBloc>().add(RemovePosts(postId: postid));
   }
 }
