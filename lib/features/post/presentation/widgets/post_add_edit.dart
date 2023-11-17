@@ -299,8 +299,6 @@ class _PostAddEditState extends State<PostAddEdit> {
           _callApiUpdate(content, _urlImage, 'url');
         }
       } else {
-        print("createcreatecreatecreate $content");
-
         _callApiAdd(content, base64Image);
       }
     }

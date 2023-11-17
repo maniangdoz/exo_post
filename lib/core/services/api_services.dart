@@ -53,7 +53,6 @@ class ApiServices {
 
   Future<http.Response> authMe() async {
     try {
-      print("yyyyyyyyyyyyyyyyyyyyyyy");
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       final String? authToken = prefs.getString(AppUtils.authTokenKey);
       final response = await _client.get(

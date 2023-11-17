@@ -22,27 +22,22 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    // _makeApiCall();
-    context.read<SplashBloc>().add(const GetAuth());
+    _makeApiCall();
   }
 
   void _makeApiCall() {
     AppUtils.isAuthTokenValid().then((isTokenValid) {
       if (isTokenValid) {
-        print("88888888888888888888  $isTokenValid");
-
         context.read<SplashBloc>().add(const GetAuth());
       } else {
-        print("ddddddddddddddd  ");
         Timer(const Duration(seconds: 5), () {
           context.go('/home/0');
         });
-        // setState(() {
-        //   isApiCallComplete = true;
-        // });
+        setState(() {
+          isApiCallComplete = true;
+        });
       }
     });
-    print("fffffff  d");
   }
 
   @override
@@ -56,10 +51,10 @@ class _SplashScreenState extends State<SplashScreen> {
     return BlocListener<SplashBloc, SplashState>(
       listener: (context, state) {
         if (state is SplashFinished) {
-          print("rrrrrrrrrrrrrrrrrrrrrrrrrrrr ${state.status}");
-
           if (state.status != Status.waiting) {
-            context.go('/home/0');
+            Timer(const Duration(seconds: 5), () {
+              context.go('/home/0');
+            });
           }
         }
       },

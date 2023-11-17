@@ -10,9 +10,9 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:exo_post/core/logic/app_logic.dart' as _i3;
 import 'package:exo_post/core/logic/image_logic.dart' as _i20;
-import 'package:exo_post/core/modules/app_module.dart' as _i36;
-import 'package:exo_post/core/modules/image_module.dart' as _i35;
-import 'package:exo_post/core/modules/network_module.dart' as _i34;
+import 'package:exo_post/core/modules/app_module.dart' as _i37;
+import 'package:exo_post/core/modules/image_module.dart' as _i36;
+import 'package:exo_post/core/modules/network_module.dart' as _i35;
 import 'package:exo_post/core/services/api_services.dart' as _i13;
 import 'package:exo_post/features/auth/data/repository/auth_repo_imp.dart'
     as _i15;
@@ -58,6 +58,8 @@ import 'package:exo_post/features/splash/domain/repository/splash_repo.dart'
     as _i27;
 import 'package:exo_post/features/splash/domain/usecases/splash_usecases.dart'
     as _i29;
+import 'package:exo_post/features/splash/presentation/bloc/splash_bloc.dart'
+    as _i34;
 import 'package:exo_post/features/user/data/repository/user_repo_imp.dart'
     as _i11;
 import 'package:exo_post/features/user/domain/repository/user_repo.dart'
@@ -130,12 +132,16 @@ extension GetItInjectableX on _i1.GetIt {
           gh<_i26.RegisterUseCases>(),
           gh<_i9.SharedPreferences>(),
         ));
+    gh.factory<_i34.SplashBloc>(() => _i34.SplashBloc(
+          gh<_i29.SplashUseCases>(),
+          gh<_i9.SharedPreferences>(),
+        ));
     return this;
   }
 }
 
-class _$NetworkModule extends _i34.NetworkModule {}
+class _$NetworkModule extends _i35.NetworkModule {}
 
-class _$ImageModule extends _i35.ImageModule {}
+class _$ImageModule extends _i36.ImageModule {}
 
-class _$AppModule extends _i36.AppModule {}
+class _$AppModule extends _i37.AppModule {}
