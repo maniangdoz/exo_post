@@ -62,6 +62,11 @@ class ApiServices {
           'Authorization': 'Bearer $authToken'
         },
       );
+
+      if (response.statusCode == 401) {
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        await preferences.clear();
+      }
       return response;
     } catch (e) {
       throw e.toString();
@@ -277,10 +282,12 @@ class ApiServices {
     }
   }
 
-  Future<http.Response> userPosts({required int userId}) async {
+  Future<http.Response> userPosts(
+      {required int userId, required int page, required int perPage}) async {
     try {
       final response = await _client.get(
-        Uri.https(AppConstants.baseUrlDev, '/api:xbcc5VEi/user/$userId/posts'),
+        Uri.https(AppConstants.baseUrlDev, '/api:xbcc5VEi/user/$userId/posts',
+            {'page': '$page', 'per_page': '$perPage'}),
         headers: <String, String>{'Content-Type': 'application/json'},
       );
       return response;

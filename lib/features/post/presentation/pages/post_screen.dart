@@ -25,7 +25,7 @@ class PostScreen extends StatefulWidget {
 
 class _PostScreenState extends State<PostScreen> {
   bool isLoading = true;
-  PostResponseEntity? _postResponseEntity;  
+  PostResponseEntity? _postResponseEntity;
   @override
   void initState() {
     super.initState();
@@ -143,7 +143,8 @@ class _PostScreenState extends State<PostScreen> {
                       : null,
                   widthimage: 50,
                   heightimage: 1290,
-                  onClick: () => _infoUser(1),
+                  onClick: () =>
+                      _infoUser(_postResponseEntity!.items![index].author!.id!),
                   authorid: _postResponseEntity!.items![index].author!.id!,
                   postid: _postResponseEntity!.items![index].id!,
                   onClickRemove: () =>
@@ -160,6 +161,7 @@ class _PostScreenState extends State<PostScreen> {
   }
 
   void _infoUser(int index) {
+    print("indexindexindexindexindexindexindex $index");
     context.go('/home/0/post-user/$index');
   }
 

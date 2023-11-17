@@ -20,9 +20,9 @@ class SplashRepoImp extends SplashRepo {
           return SplashResponseEntity(
               userEntity: User.fromJson(jsonDecode(value.body)).toEntity());
         } else {
-          String error = ErrorApiResponse.fromJson(jsonDecode(value.body))
-              .toEntity()
-              .message;
+            String error = ErrorApiResponse.fromJson(jsonDecode(value.body))
+                .toEntity()
+                .message;
           return SplashResponseEntity(errorMessage: error);
         }
       }).catchError((e) {

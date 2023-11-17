@@ -106,6 +106,7 @@ class _HomeScreenState extends State<HomeScreen>
 
   _tap(int index) async {
     int number = await _verifyAuthorization(index);
+
     _redirectPath(number);
   }
 
@@ -113,20 +114,11 @@ class _HomeScreenState extends State<HomeScreen>
     context.go('/home/$index');
   }
 
-  _displayMessage() {
-    AppUtils.showAlert(
-      context,
-      AppConstants.messageError401,
-      AppColors.errorColor,
-    );
-  }
-
   Future<int> _verifyAuthorization(int index) async {
     bool isValidToken = await AppUtils.isAuthTokenValid();
     if (index == 0 || (index > 0 && isValidToken)) {
       return index;
     } else {
-      _displayMessage();
       return 0;
     }
   }

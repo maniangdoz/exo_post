@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:exo_post/features/profil/presentation/bloc/profil_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -13,6 +14,7 @@ import 'features/comment/presentation/bloc/comment_bloc.dart';
 import 'features/post/presentation/bloc/post_bloc.dart';
 import 'features/register/presentation/bloc/register_bloc.dart';
 import 'features/splash/presentation/bloc/splash_bloc.dart';
+import 'features/user/presentation/bloc/user_bloc.dart';
 
 void main() {
   runZonedGuarded(() async {
@@ -36,7 +38,9 @@ class MyApp extends StatelessWidget {
         BlocProvider<SplashBloc>(create: (context) => getIt<SplashBloc>()),
         BlocProvider<AuthBloc>(create: (context) => getIt<AuthBloc>()),
         BlocProvider<RegisterBloc>(create: (context) => getIt<RegisterBloc>()),
+        BlocProvider<UserBloc>(create: (context) => getIt<UserBloc>()),
         BlocProvider<PostBloc>(create: (context) => getIt<PostBloc>()),
+        BlocProvider<ProfilBloc>(create: (context) => getIt<ProfilBloc>()),
         BlocProvider<CommentBloc>(create: (context) => getIt<CommentBloc>()),
       ],
       child: MaterialApp.router(
