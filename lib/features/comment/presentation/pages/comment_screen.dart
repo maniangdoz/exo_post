@@ -64,6 +64,20 @@ class _CommentScreenState extends State<CommentScreen> {
                     context, state.message ?? '', AppColors.accentColor);
               }
             }
+            if (state is RemoveCommentsFinished) {
+              if (state.status == Status.waiting) {
+                AppUtils.showLoader(context: context);
+              } else {
+                Navigator.of(context, rootNavigator: true).pop();
+                if (state.status == Status.succeded) {
+                  AppUtils.showAlert(context, state.message ?? 'Success',
+                      AppUtils.accentprimaryColor(context));
+                } else if (state.status == Status.failed) {
+                  AppUtils.showAlert(
+                      context, state.message ?? 'Error', AppColors.errorColor);
+                }
+              }
+            }
           },
           child: Skeletonizer(
             enabled: isLoading ? true : false,
@@ -166,8 +180,8 @@ class _CommentScreenState extends State<CommentScreen> {
     _commentTextFieldController.text = text;
   }
 
-  void _removeComment() {
-    _commentTextFieldController.clear();
+  void _removeComment(int commentId) {
+    context.read<CommentBloc>().add(RemoveComments(commentId: commentId));
   }
 
   void _addComment() {}
@@ -188,7 +202,7 @@ class _CommentScreenState extends State<CommentScreen> {
 
   Widget _buttonDelete(int index) {
     return GestureDetector(
-      onTap: _removeComment,
+      onTap: () => _removeComment(index),
       child: Text(
         'Remove',
         style: AppConstants.textStyle(),

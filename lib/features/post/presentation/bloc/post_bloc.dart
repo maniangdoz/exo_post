@@ -59,7 +59,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
       var result = await _useCase.updatePost(
           type: event.type ?? '',
           content: event.content ?? '',
-          postId: event.postId ?? 0,
+          postId: event.postId,
           base64Image: event.base64Image);
       if (result.errorMessage != null) {
         emit(UpdatePostFinished(

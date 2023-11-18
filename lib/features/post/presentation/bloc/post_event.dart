@@ -45,7 +45,7 @@ class UpdatePost extends PostEvent {
         _type = type,
         _base64Image = base64Image;
 
-  int? get postId => _postId;
+  int get postId => _postId;
   String? get content => _content;
   String? get type => _type;
   String? get base64Image => _base64Image;
