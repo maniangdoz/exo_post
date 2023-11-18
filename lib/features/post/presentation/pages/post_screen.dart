@@ -8,6 +8,7 @@ import '../../../../common/styles/colors.dart';
 import '../../../../common/utils/app_utils.dart';
 import '../../../shared/presentation/widgets/action_button.dart';
 import '../../../shared/presentation/widgets/expandable_fa.dart';
+import '../../../splash/presentation/bloc/splash_bloc.dart';
 import '../../domain/entities/post_response_entity.dart';
 import '../../domain/entities/requests/post_request.dart';
 import '../bloc/post_bloc.dart';
@@ -29,9 +30,15 @@ class _PostScreenState extends State<PostScreen> {
   @override
   void initState() {
     super.initState();
-    context
-        .read<PostBloc>()
-        .add(const GetAllPosts(repuest: PostRequest(page: 0, perPage: 20)));
+
+    AppUtils.isAuthTokenValid().then((isTokenValid) {
+      if (isTokenValid) {
+        context.read<SplashBloc>().add(const GetAuth());
+      }
+      context
+          .read<PostBloc>()
+          .add(const GetAllPosts(repuest: PostRequest(page: 0, perPage: 20)));
+    });
   }
 
   @override
@@ -111,14 +118,20 @@ class _PostScreenState extends State<PostScreen> {
   }
 
   void _showModalBottomSheet(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      useSafeArea: true,
-      builder: (BuildContext context) {
-        return const PostAddEdit();
-      },
-    );
+    AppUtils.isAuthTokenValid().then((value) => {
+          if (value)
+            showModalBottomSheet(
+              context: context,
+              isScrollControlled: true,
+              useSafeArea: true,
+              builder: (BuildContext context) {
+                return const PostAddEdit();
+              },
+            )
+          else
+            AppUtils.showAlert(
+                context, AppConstants.messageError401, AppColors.errorColor)
+        });
   }
 
   Widget _showPostMain() {

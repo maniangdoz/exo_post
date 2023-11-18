@@ -3,6 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
+import '../../../../common/styles/colors.dart';
+import '../../../../common/utils/app_validator.dart';
+
 class CommentInput extends StatefulWidget {
   const CommentInput({
     super.key,
@@ -69,9 +72,13 @@ class _CommentInputState extends State<CommentInput> {
             minLines: 1,
             controller: widget._commentTextFieldController,
             keyboardType: TextInputType.multiline,
+            validator: AppValidors.commentValidtor,
             decoration: const InputDecoration(
               hintText: 'Type a comment...',
               isDense: true,
+              errorStyle: TextStyle(color: AppColors.errorColor),
+              errorBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: AppColors.errorColor)),
               contentPadding:
                   EdgeInsets.symmetric(vertical: 12, horizontal: 15),
               border: OutlineInputBorder(

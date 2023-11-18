@@ -20,12 +20,12 @@ class CommentScreen extends StatefulWidget {
 }
 
 class _CommentScreenState extends State<CommentScreen> {
+  final _formKey = GlobalKey<FormState>();
   final _commentTextFieldController = TextEditingController();
-
+  final GlobalKey<_CommentScreenState> refreshKey = GlobalKey();
   bool isLoading = true;
   CommentResponseEntity? _commentResponseEntity;
   bool isValidToken = false;
-
   @override
   void initState() {
     super.initState();
@@ -72,6 +72,27 @@ class _CommentScreenState extends State<CommentScreen> {
                 if (state.status == Status.succeded) {
                   AppUtils.showAlert(context, state.message ?? 'Success',
                       AppUtils.accentprimaryColor(context));
+                  context
+                      .read<CommentBloc>()
+                      .add(GetAllCommentByPost(postId: widget.idpost));
+                } else if (state.status == Status.failed) {
+                  AppUtils.showAlert(
+                      context, state.message ?? 'Error', AppColors.errorColor);
+                }
+              }
+            }
+            if (state is AddCommentFinished) {
+              if (state.status == Status.waiting) {
+                AppUtils.showLoader(context: context);
+              } else {
+                Navigator.of(context, rootNavigator: true).pop();
+                if (state.status == Status.succeded) {
+                  setState(() {
+                    _commentTextFieldController.text = '';
+                  });
+                  context
+                      .read<CommentBloc>()
+                      .add(GetAllCommentByPost(postId: widget.idpost));
                 } else if (state.status == Status.failed) {
                   AppUtils.showAlert(
                       context, state.message ?? 'Error', AppColors.errorColor);
@@ -117,7 +138,9 @@ class _CommentScreenState extends State<CommentScreen> {
                                         _commentResponseEntity!
                                             .comments![index].content!,
                                         _commentResponseEntity!
-                                            .comments![index].id!),
+                                            .comments![index].id!,
+                                        _commentResponseEntity!
+                                            .comments![index].author!.id),
                                   ),
                                   const SizedBox(height: 10),
                                   Divider(
@@ -143,29 +166,41 @@ class _CommentScreenState extends State<CommentScreen> {
         bottomNavigationBar: _bottomInputText());
   }
 
-  List<Widget> _actionButton(createdAt, content, id) {
+  List<Widget> _actionButton(createdAt, content, id, author) {
     return <Widget>[
       Text(
         AppUtils.formatTimeFromNow(createdAt),
         style: AppConstants.textStyle(),
       ),
       const SizedBox(width: 20),
-      if (isValidToken && _autherCommentVerify(id)) _buttonEdit(content, id),
-      const SizedBox(width: 15),
-      if (isValidToken && _autherCommentVerify(id)) _buttonDelete(id),
+      FutureBuilder<bool>(
+        future: _autherCommentVerify(author),
+        builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const CircularProgressIndicator();
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else if (snapshot.hasData &&
+              snapshot.data == true &&
+              isValidToken) {
+            return Row(
+              children: [
+                _buttonEdit(content, id),
+                const SizedBox(width: 15),
+                _buttonDelete(id),
+              ],
+            );
+          } else {
+            return const SizedBox();
+          }
+        },
+      ),
     ];
   }
 
-  bool _autherCommentVerify(int id) {
-    if (isValidToken == true) {
-      AppUtils.valueUserAuthorId().then((res) {
-        if (res > 0 && res == id) {
-          return true;
-        }
-      });
-      return false;
-    }
-    return false;
+  Future<bool> _autherCommentVerify(int id) async {
+    int res = await AppUtils.valueUserAuthorId();
+    return res > 0 && res == id;
   }
 
   Widget _avatarUser(id, name) {
@@ -177,14 +212,30 @@ class _CommentScreenState extends State<CommentScreen> {
   }
 
   void _editComment(String text) {
-    _commentTextFieldController.text = text;
+    if (_formKey.currentState!.validate()) {
+      _commentTextFieldController.text = text;
+    }
   }
 
   void _removeComment(int commentId) {
     context.read<CommentBloc>().add(RemoveComments(commentId: commentId));
   }
 
-  void _addComment() {}
+  void _addComment() {
+    if (_formKey.currentState!.validate()) {
+      String content = _commentTextFieldController.text.toString().trim();
+
+      AppUtils.isAuthTokenValid().then((value) => {
+            if (value)
+              context
+                  .read<CommentBloc>()
+                  .add(AddComment(content: content, postId: widget.idpost))
+            else
+              AppUtils.showAlert(
+                  context, AppConstants.messageError401, AppColors.errorColor)
+          });
+    }
+  }
 
   void _infoUser(int index) {
     context.go('/home/0/post-user/$index');
@@ -273,16 +324,19 @@ class _CommentScreenState extends State<CommentScreen> {
             right: 5,
             bottom: 15,
           ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Expanded(
-                child: CommentInput(
-                  commentTextFieldController: _commentTextFieldController,
+          child: Form(
+            key: _formKey,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Expanded(
+                  child: CommentInput(
+                    commentTextFieldController: _commentTextFieldController,
+                  ),
                 ),
-              ),
-              _buttonSendMessage(),
-            ],
+                _buttonSendMessage(),
+              ],
+            ),
           ),
         ),
       ),

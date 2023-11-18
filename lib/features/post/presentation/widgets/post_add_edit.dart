@@ -13,6 +13,7 @@ import '../../../../common/styles/colors.dart';
 import '../../../../common/utils/app_utils.dart';
 import '../../../../common/utils/app_validator.dart';
 import '../../../../main_dev.dart';
+import '../../domain/entities/requests/post_request.dart';
 import '../bloc/post_bloc.dart';
 
 class PostAddEdit extends StatefulWidget {
@@ -78,13 +79,13 @@ class _PostAddEditState extends State<PostAddEdit> {
         if (state.status == Status.waiting) {
           AppUtils.showLoader(context: context);
         }
-        // Navigator.of(context, rootNavigator: true).pop();
         if (state.status == Status.succeded) {
           context.pop();
           context.pop();
           AppUtils.showAlert(context, state.message ?? 'Success',
               AppUtils.accentprimaryColor(context));
-          context.go('/home/0');
+          context.read<PostBloc>().add(
+              const GetAllPosts(repuest: PostRequest(page: 0, perPage: 20)));
         } else if (state.status == Status.failed) {
           context.pop();
           context.pop();
@@ -101,6 +102,8 @@ class _PostAddEditState extends State<PostAddEdit> {
           context.pop();
           AppUtils.showAlert(context, state.message ?? 'Success',
               AppUtils.accentprimaryColor(context));
+          context.read<PostBloc>().add(
+              const GetAllPosts(repuest: PostRequest(page: 0, perPage: 20)));
         } else if (state.status == Status.failed) {
           Navigator.of(context, rootNavigator: true).pop();
           context.pop();

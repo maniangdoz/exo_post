@@ -50,8 +50,9 @@ class _PostCardState extends State<PostCard> {
   void initState() {
     super.initState();
     AppUtils.isAuthTokenValid().then((value) {
-      if (value == true) {
+      if (value) {
         AppUtils.valueUserAuthorId().then((res) {
+          print("res $res");
           if (res > 0 && res == widget.authorid) {
             setState(() {
               isValidToken = true;
