@@ -20,19 +20,21 @@ class InfoUser extends StatefulWidget {
 
 class _InfoUserState extends State<InfoUser> {
   bool isLoading = true;
-  String email = '';
+  String? email;
   AuthorEntity? _authorResponseEntity;
 
   @override
   void initState() {
     super.initState();
-    if (widget.type == 'profil') {
-      AppUtils.valueUserAuthorEmail().then((res) {
-        setState(() {
-          email = res ?? '';
+    AppUtils.valueUserAuthorId().then((value) {
+      if (widget.type == 'profil' || widget.idUser == value) {
+        AppUtils.valueUserAuthorEmail().then((res) {
+          setState(() {
+            email = res ?? '';
+          });
         });
-      });
-    }
+      }
+    });
 
     context.read<SharedBloc>().add(GetInfoUser(userId: widget.idUser));
   }
@@ -81,23 +83,23 @@ class _InfoUserState extends State<InfoUser> {
                 _authorResponseEntity?.name ?? "Anonym",
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(
-                    Icons.mail_rounded,
-                    color: AppColors.greyColor,
-                  ),
-                  const SizedBox(
-                    width: 4,
-                  ),
-                  if (widget.type == 'profil')
+              if (email != null)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(
+                      Icons.mail_rounded,
+                      color: AppColors.greyColor,
+                    ),
+                    const SizedBox(
+                      width: 4,
+                    ),
                     Text(
-                      email,
+                      email!,
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
-                ],
-              ),
+                  ],
+                ),
             ],
           ),
         ),

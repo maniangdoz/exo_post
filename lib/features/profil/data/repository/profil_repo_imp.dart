@@ -17,7 +17,6 @@ class ProfilRepoImp extends ProfilRepo {
   @override
   Future<UserPostResponseEntity> userPostList(
       {required UserPostRequest postRequest}) {
-    print("repppppppppppppppppppppp ");
     return _api
         .userPosts(
             userId: postRequest.userId!,

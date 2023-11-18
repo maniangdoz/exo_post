@@ -10,9 +10,9 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:exo_post/core/logic/app_logic.dart' as _i3;
 import 'package:exo_post/core/logic/image_logic.dart' as _i18;
-import 'package:exo_post/core/modules/app_module.dart' as _i39;
-import 'package:exo_post/core/modules/image_module.dart' as _i38;
-import 'package:exo_post/core/modules/network_module.dart' as _i37;
+import 'package:exo_post/core/modules/app_module.dart' as _i43;
+import 'package:exo_post/core/modules/image_module.dart' as _i42;
+import 'package:exo_post/core/modules/network_module.dart' as _i41;
 import 'package:exo_post/core/services/api_services.dart' as _i11;
 import 'package:exo_post/features/auth/data/repository/auth_repo_imp.dart'
     as _i13;
@@ -21,7 +21,7 @@ import 'package:exo_post/features/auth/domain/repository/auth_repo.dart'
 import 'package:exo_post/features/auth/domain/usecases/auth_usecases.dart'
     as _i14;
 import 'package:exo_post/features/auth/presentation/bloc/auth_bloc.dart'
-    as _i31;
+    as _i34;
 import 'package:exo_post/features/comment/data/repository/comment_repo_imp.dart'
     as _i16;
 import 'package:exo_post/features/comment/domain/repository/comment_repo.dart'
@@ -29,7 +29,7 @@ import 'package:exo_post/features/comment/domain/repository/comment_repo.dart'
 import 'package:exo_post/features/comment/domain/usecases/comment_usecases.dart'
     as _i17;
 import 'package:exo_post/features/comment/presentation/bloc/comment_bloc.dart'
-    as _i32;
+    as _i35;
 import 'package:exo_post/features/post/data/repository/post_repo_imp.dart'
     as _i20;
 import 'package:exo_post/features/post/domain/repository/post_repo.dart'
@@ -37,7 +37,7 @@ import 'package:exo_post/features/post/domain/repository/post_repo.dart'
 import 'package:exo_post/features/post/domain/usecases/post_usecases.dart'
     as _i21;
 import 'package:exo_post/features/post/presentation/bloc/post_bloc.dart'
-    as _i33;
+    as _i36;
 import 'package:exo_post/features/profil/data/repository/profil_repo_imp.dart'
     as _i23;
 import 'package:exo_post/features/profil/domain/repository/profil_repo.dart'
@@ -45,7 +45,7 @@ import 'package:exo_post/features/profil/domain/repository/profil_repo.dart'
 import 'package:exo_post/features/profil/domain/usecases/profil_usecases.dart'
     as _i24;
 import 'package:exo_post/features/profil/presentation/bloc/profil_bloc.dart'
-    as _i34;
+    as _i37;
 import 'package:exo_post/features/register/data/repository/register_repo_imp.dart'
     as _i26;
 import 'package:exo_post/features/register/domain/repository/register_repo.dart'
@@ -53,15 +53,23 @@ import 'package:exo_post/features/register/domain/repository/register_repo.dart'
 import 'package:exo_post/features/register/domain/usecases/register_usecases.dart'
     as _i27;
 import 'package:exo_post/features/register/presentation/bloc/register_bloc.dart'
-    as _i35;
-import 'package:exo_post/features/splash/data/repository/splash_repo_imp.dart'
+    as _i38;
+import 'package:exo_post/features/shared/data/repository/shared_repo_imp.dart'
     as _i29;
-import 'package:exo_post/features/splash/domain/repository/splash_repo.dart'
+import 'package:exo_post/features/shared/domain/repository/shared_repo.dart'
     as _i28;
-import 'package:exo_post/features/splash/domain/usecases/splash_usecases.dart'
+import 'package:exo_post/features/shared/domain/usecases/shared_usecases.dart'
     as _i30;
+import 'package:exo_post/features/shared/presentation/bloc/shared_bloc.dart'
+    as _i39;
+import 'package:exo_post/features/splash/data/repository/splash_repo_imp.dart'
+    as _i32;
+import 'package:exo_post/features/splash/domain/repository/splash_repo.dart'
+    as _i31;
+import 'package:exo_post/features/splash/domain/usecases/splash_usecases.dart'
+    as _i33;
 import 'package:exo_post/features/splash/presentation/bloc/splash_bloc.dart'
-    as _i36;
+    as _i40;
 import 'package:exo_post/features/user/data/repository/user_repo_imp.dart'
     as _i9;
 import 'package:exo_post/features/user/domain/repository/user_repo.dart' as _i8;
@@ -122,33 +130,39 @@ extension GetItInjectableX on _i1.GetIt {
         () => _i26.RegisterRepoImp(api: gh<_i11.ApiServices>()));
     gh.factory<_i27.RegisterUseCases>(
         () => _i27.RegisterUseCases(repo: gh<_i25.RegisterRepo>()));
-    gh.factory<_i28.SplashRepo>(
-        () => _i29.SplashRepoImp(api: gh<_i11.ApiServices>()));
-    gh.factory<_i30.SplashUseCases>(
-        () => _i30.SplashUseCases(repo: gh<_i28.SplashRepo>()));
-    gh.factory<_i31.AuthBloc>(() => _i31.AuthBloc(
+    gh.factory<_i28.SharedRepo>(
+        () => _i29.SharedRepoImp(api: gh<_i11.ApiServices>()));
+    gh.factory<_i30.SharedUseCases>(
+        () => _i30.SharedUseCases(repo: gh<_i28.SharedRepo>()));
+    gh.factory<_i31.SplashRepo>(
+        () => _i32.SplashRepoImp(api: gh<_i11.ApiServices>()));
+    gh.factory<_i33.SplashUseCases>(
+        () => _i33.SplashUseCases(repo: gh<_i31.SplashRepo>()));
+    gh.factory<_i34.AuthBloc>(() => _i34.AuthBloc(
           gh<_i14.AuthUseCases>(),
           gh<_i6.SharedPreferences>(),
         ));
-    gh.factory<_i32.CommentBloc>(
-        () => _i32.CommentBloc(gh<_i17.CommentUseCases>()));
-    gh.factory<_i33.PostBloc>(() => _i33.PostBloc(gh<_i21.PostUseCases>()));
-    gh.factory<_i34.ProfilBloc>(
-        () => _i34.ProfilBloc(gh<_i24.ProfilUseCases>()));
-    gh.factory<_i35.RegisterBloc>(() => _i35.RegisterBloc(
+    gh.factory<_i35.CommentBloc>(
+        () => _i35.CommentBloc(gh<_i17.CommentUseCases>()));
+    gh.factory<_i36.PostBloc>(() => _i36.PostBloc(gh<_i21.PostUseCases>()));
+    gh.factory<_i37.ProfilBloc>(
+        () => _i37.ProfilBloc(gh<_i24.ProfilUseCases>()));
+    gh.factory<_i38.RegisterBloc>(() => _i38.RegisterBloc(
           gh<_i27.RegisterUseCases>(),
           gh<_i6.SharedPreferences>(),
         ));
-    gh.factory<_i36.SplashBloc>(() => _i36.SplashBloc(
-          gh<_i30.SplashUseCases>(),
+    gh.factory<_i39.SharedBloc>(
+        () => _i39.SharedBloc(gh<_i30.SharedUseCases>()));
+    gh.factory<_i40.SplashBloc>(() => _i40.SplashBloc(
+          gh<_i33.SplashUseCases>(),
           gh<_i6.SharedPreferences>(),
         ));
     return this;
   }
 }
 
-class _$NetworkModule extends _i37.NetworkModule {}
+class _$NetworkModule extends _i41.NetworkModule {}
 
-class _$ImageModule extends _i38.ImageModule {}
+class _$ImageModule extends _i42.ImageModule {}
 
-class _$AppModule extends _i39.AppModule {}
+class _$AppModule extends _i43.AppModule {}

@@ -81,7 +81,7 @@ class _UserScreenState extends State<UserScreen> {
                     child: Row(
                       children: [
                         Text(
-                          "My posts",
+                          "Posts",
                           style: Theme.of(context).textTheme.displaySmall,
                         ),
                         const Expanded(

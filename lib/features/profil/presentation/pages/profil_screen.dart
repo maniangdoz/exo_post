@@ -7,8 +7,8 @@ import '../../../../common/styles/colors.dart';
 import '../../../../common/utils/app_utils.dart';
 import '../../../post/presentation/bloc/post_bloc.dart';
 import '../../../post/presentation/widgets/post_card.dart';
+import '../../../shared/presentation/widgets/horizontal_dash.dart';
 import '../../../shared/presentation/widgets/info_user.dart';
-import '../../../shared/presentation/widgets/total_comment.dart';
 import '../../domain/entities/requests/user_post_request.dart';
 import '../../domain/entities/user_post_response_entity.dart';
 import '../bloc/profil_bloc.dart';
@@ -44,7 +44,6 @@ class _ProfilScreenState extends State<ProfilScreen> {
       body: BlocListener<ProfilBloc, ProfilState>(
         listener: (context, state) {
           if (state is GetAllUserPostsFinished) {
-            print("rrrrrrrrrrrr   ${state.status}");
             if (state.status == Status.waiting) {
               setState(() {
                 isLoading = true;
@@ -85,7 +84,12 @@ class _ProfilScreenState extends State<ProfilScreen> {
                           "My posts",
                           style: Theme.of(context).textTheme.displaySmall,
                         ),
-                        const TotalComment(nbcomments: 100),
+                        const Expanded(
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 8.0, right: 2),
+                            child: HorizontalDash(),
+                          ),
+                        ),
                       ],
                     ),
                   ),
