@@ -152,7 +152,7 @@ class ApiServices {
 
           request.files.add(image);
         }).catchError((error) {
-          print('Error fetching image: $error');
+          // print('Error fetching image: $error');
         });
       } else {
         if (base64Image != null) {

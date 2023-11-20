@@ -30,7 +30,6 @@ class _PostScreenState extends State<PostScreen> {
   PostResponseEntity? _postResponseEntity;
   int page = 0;
   final ScrollController _scrollController = ScrollController();
-  final ScrollController _scrollControllerChild = ScrollController();
   List<PostEntity>? items = [];
 
   @override
@@ -38,24 +37,19 @@ class _PostScreenState extends State<PostScreen> {
     super.initState();
 
     _scrollController.addListener(_scrollListener);
-    _scrollControllerChild.addListener(() {
-      print("tttttttttttttttttttttttttttttt");
-    });
+
     _loadData(page);
   }
 
   void _loadData(int page) {
     AppUtils.isAuthTokenValid().then((isTokenValid) {
       context.read<PostBloc>().add(
-            GetAllPosts(repuest: PostRequest(page: page, perPage: 2)),
+            GetAllPosts(repuest: PostRequest(page: page, perPage: 5)),
           );
     });
   }
 
   void _scrollListener() {
-    print(
-        "pagepagepagepage $page ddd ${_postResponseEntity!.nextPage} ddd ${_postResponseEntity?.prevPage}");
-
     if (_scrollController.position.pixels >=
             _scrollController.position.maxScrollExtent &&
         _postResponseEntity!.nextPage != null) {
@@ -66,7 +60,6 @@ class _PostScreenState extends State<PostScreen> {
       });
       _loadData(page);
     }
-    print("pagepagepagepage $page");
   }
 
   @override
@@ -120,6 +113,7 @@ class _PostScreenState extends State<PostScreen> {
             PostButton(onClick: () => _showModalBottomSheet(context)),
             const SizedBox(height: 10),
             _showPostMain(),
+            const SizedBox(height: 100),
           ],
         ),
       ),
@@ -169,38 +163,40 @@ class _PostScreenState extends State<PostScreen> {
       return const SkeletonPost();
     } else {
       if (_postResponseEntity != null) {
-        return Column(children: [
-          const SizedBox(height: 10),
-          if (_postResponseEntity != null && items!.isNotEmpty)
-            SizedBox(
-                height: MediaQuery.of(context).size.height,
-                child: ListView.builder(
-                    controller: _scrollControllerChild,
-                    itemCount: items?.length ?? 0,
-                    itemBuilder: (context, index) {
-                      return PostCard(
-                          key: ValueKey<String>('post_$index'),
-                          type: 'post',
-                          authorname: items![index].author!.name!,
-                          postcreatedat: items![index].createdAt!,
-                          content: items![index].content!,
-                          commentscount: items![index].commentsCount!,
-                          urlimage: items![index].image != null
-                              ? items![index].image!.url
-                              : null,
-                          widthimage: 50,
-                          heightimage: 1290,
-                          onClick: () => _infoUser(items![index].author!.id!),
-                          authorid: items![index].author!.id!,
-                          postid: items![index].id!,
-                          onClickRemove: () => _removePost(items![index].id!));
-                    }))
-          else
-            const Center(
-              child: Text('No posts'),
-            ),
-          if (load) const CircularProgressIndicator(),
-        ]);
+        return Column(
+          children: [
+            const SizedBox(height: 10),
+            if (_postResponseEntity != null && items!.isNotEmpty)
+              ...List.generate(
+                items!.length,
+                (index) => PostCard(
+                    key: ValueKey<String>('post_$index'),
+                    type: 'post',
+                    authorname: items![index].author!.name!,
+                    postcreatedat: items![index].createdAt!,
+                    content: items![index].content!,
+                    commentscount: items![index].commentsCount!,
+                    urlimage: items![index].image != null
+                        ? items![index].image!.url
+                        : null,
+                    widthimage: 50,
+                    heightimage: 1290,
+                    onClick: () => _infoUser(items![index].author!.id!),
+                    authorid: items![index].author!.id!,
+                    postid: items![index].id!,
+                    onClickRemove: () => _removePost(items![index].id!)),
+              )
+            else
+              const Center(
+                child: Text('No posts'),
+              ),
+            if (load)
+              const Column(children: [
+                SizedBox(height: 20),
+                CircularProgressIndicator()
+              ]),
+          ],
+        );
       } else {
         return const Center(
           child: Text('No posts'),

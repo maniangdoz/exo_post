@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../../common/constants.dart';
 import '../../../../common/styles/colors.dart';
 import '../../../../common/utils/app_utils.dart';
 import '../../../post/presentation/bloc/post_bloc.dart';
 import '../../../post/presentation/widgets/post_card.dart';
+import '../../../post/presentation/widgets/skeleton_post.dart';
 import '../../../shared/presentation/widgets/horizontal_dash.dart';
 import '../../../shared/presentation/widgets/info_user.dart';
 import '../../domain/entities/requests/user_post_request.dart';
+import '../../domain/entities/user_post_entity.dart';
 import '../../domain/entities/user_post_response_entity.dart';
 import '../bloc/profil_bloc.dart';
 
@@ -21,21 +22,42 @@ class ProfilScreen extends StatefulWidget {
 }
 
 class _ProfilScreenState extends State<ProfilScreen> {
-  bool isLoading = true;
-
   UserPostResponseEntity? _postResponseEntity;
+  bool isLoading = true, load = true;
+  int firstLoad = 0;
+  int page = 0;
+  final ScrollController _scrollController = ScrollController();
+  List<UserPostEntity>? items = [];
   int userId = 0;
 
   @override
   void initState() {
     super.initState();
+    _scrollController.addListener(_scrollListener);
+    _loadData(page);
+  }
+
+  void _loadData(int page) {
     AppUtils.valueUserAuthorId().then((value) {
       setState(() {
         userId = value;
       });
       context.read<ProfilBloc>().add(GetAllUserPosts(
-          repuest: UserPostRequest(userId: value, page: 0, perPage: 20)));
+          repuest: UserPostRequest(userId: userId, page: page, perPage: 5)));
     });
+  }
+
+  void _scrollListener() {
+    if (_scrollController.position.pixels >=
+            _scrollController.position.maxScrollExtent &&
+        _postResponseEntity!.nextPage != null) {
+      setState(() {
+        page = _postResponseEntity!.nextPage != null
+            ? _postResponseEntity!.nextPage!
+            : _postResponseEntity!.prevPage!;
+      });
+      _loadData(page);
+    }
   }
 
   @override
@@ -46,84 +68,97 @@ class _ProfilScreenState extends State<ProfilScreen> {
           if (state is GetAllUserPostsFinished) {
             if (state.status == Status.waiting) {
               setState(() {
-                isLoading = true;
+                isLoading = firstLoad == 0 ? true : false;
+                load = true;
               });
             } else if (state.status == Status.succeded) {
               setState(() {
+                firstLoad++;
                 isLoading = false;
+                load = false;
+                items?.addAll(state.userPostResponseEntity?.items ?? []);
+                items = items?.toSet().toList();
                 _postResponseEntity = state.userPostResponseEntity;
               });
             } else if (state.status == Status.failed) {
               setState(() {
                 isLoading = false;
+                load = false;
               });
               AppUtils.showAlert(
                   context, state.message ?? '', AppColors.accentColor);
             }
           }
         },
-        child: Skeletonizer(
-          enabled: isLoading ? true : false,
-          child: Stack(
-            children: <Widget>[
-              ListView(
-                padding: const EdgeInsets.all(0),
-                children: [
-                  if (userId > 0)
-                    InfoUser(
-                      idUser: userId,
-                      type: 'profil',
-                    ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        Text(
-                          "My posts",
-                          style: Theme.of(context).textTheme.displaySmall,
-                        ),
-                        const Expanded(
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 8.0, right: 2),
-                            child: HorizontalDash(),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  if (_postResponseEntity != null)
-                    ...List.generate(
-                      _postResponseEntity!.items?.length ?? 0,
-                      (index) {
-                        final postItem = _postResponseEntity!.items![index];
-                        return PostCard(
-                          key: ValueKey<String>('post_$index'),
+        child: isLoading
+            ? const SkeletonPost()
+            : Stack(
+                children: <Widget>[
+                  ListView(
+                    padding: const EdgeInsets.all(0),
+                    controller: _scrollController,
+                    children: [
+                      if (userId > 0)
+                        InfoUser(
+                          idUser: userId,
                           type: 'profil',
-                          authorname: 'Send',
-                          postcreatedat: postItem.createdAt!,
-                          content: postItem.content ?? '',
-                          commentscount: postItem.commentsCount!,
-                          urlimage: postItem.image?.url,
-                          widthimage: 50,
-                          heightimage: 1290,
-                          onClick: () {},
-                          authorid: userId,
-                          postid: postItem.id!,
-                          onClickRemove: () => _removePost(postItem.id!),
-                        );
-                      },
-                    ),
-                  const SizedBox(
-                    height: 100,
-                  ),
+                        ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            Text(
+                              "My posts",
+                              style: Theme.of(context).textTheme.displaySmall,
+                            ),
+                            const Expanded(
+                              child: Padding(
+                                padding: EdgeInsets.only(left: 8.0, right: 2),
+                                child: HorizontalDash(),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      if (_postResponseEntity != null && items!.isNotEmpty)
+                        ...List.generate(
+                          items?.length ?? 0,
+                          (index) {
+                            return PostCard(
+                              key: ValueKey<String>('post_$index'),
+                              type: 'profil',
+                              authorname: 'Send',
+                              postcreatedat: items![index].createdAt!,
+                              content: items![index].content ?? '',
+                              commentscount: items![index].commentsCount!,
+                              urlimage: items![index].image?.url,
+                              widthimage: 50,
+                              heightimage: 1290,
+                              onClick: () {},
+                              authorid: userId,
+                              postid: items![index].id!,
+                              onClickRemove: () =>
+                                  _removePost(items![index].id!),
+                            );
+                          },
+                        )
+                      else
+                        const Center(
+                          child: Text('No posts'),
+                        ),
+                      if (load)
+                        const Column(children: [
+                          SizedBox(height: 20),
+                          CircularProgressIndicator()
+                        ]),
+                      const SizedBox(height: 100),
+                    ],
+                  )
                 ],
-              )
-            ],
-          ),
-        ),
+              ),
       ),
     );
   }
