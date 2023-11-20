@@ -6,6 +6,7 @@ import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../common/constants.dart';
+import '../../../../common/utils/app_utils.dart';
 import '../../domain/entities/auth_entity.dart';
 import '../../domain/usecases/auth_usecases.dart';
 
@@ -27,7 +28,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(const LoginFinished(status: Status.waiting));
       AuthEntity authEntity = await _useCase.login(
           email: event.email ?? '', password: event.password ?? '');
-      await _prefs.setString('authToken', authEntity.authToken ?? '');
+      await _prefs.setString(AppUtils.authTokenKey, authEntity.authToken ?? '');
+      await _prefs.setString(
+          AppUtils.userAuthorId, authEntity.user?.id.toString() ?? '');
+      await _prefs.setString(AppUtils.userAuthorCreatedAt,
+          authEntity.user?.createdAt.toString() ?? '');
+      await _prefs.setString(
+          AppUtils.userAuthorName, authEntity.user?.name ?? '');
+      await _prefs.setString(
+          AppUtils.userAuthorEmail, authEntity.user?.email ?? '');
       emit(const LoginFinished(status: Status.succeded));
     } catch (e) {
       emit(LoginFinished(status: Status.failed, message: e.toString()));

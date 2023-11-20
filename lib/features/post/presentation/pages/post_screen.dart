@@ -8,7 +8,7 @@ import '../../../../common/styles/colors.dart';
 import '../../../../common/utils/app_utils.dart';
 import '../../../shared/presentation/widgets/action_button.dart';
 import '../../../shared/presentation/widgets/expandable_fa.dart';
-import '../../../splash/presentation/bloc/splash_bloc.dart';
+import '../../domain/entities/post_entity.dart';
 import '../../domain/entities/post_response_entity.dart';
 import '../../domain/entities/requests/post_request.dart';
 import '../bloc/post_bloc.dart';
@@ -25,20 +25,48 @@ class PostScreen extends StatefulWidget {
 }
 
 class _PostScreenState extends State<PostScreen> {
-  bool isLoading = true;
+  bool isLoading = true, load = true;
+  int firstLoad = 0;
   PostResponseEntity? _postResponseEntity;
+  int page = 0;
+  final ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollControllerChild = ScrollController();
+  List<PostEntity>? items = [];
+
   @override
   void initState() {
     super.initState();
 
-    AppUtils.isAuthTokenValid().then((isTokenValid) {
-      if (isTokenValid) {
-        context.read<SplashBloc>().add(const GetAuth());
-      }
-      context
-          .read<PostBloc>()
-          .add(const GetAllPosts(repuest: PostRequest(page: 0, perPage: 20)));
+    _scrollController.addListener(_scrollListener);
+    _scrollControllerChild.addListener(() {
+      print("tttttttttttttttttttttttttttttt");
     });
+    _loadData(page);
+  }
+
+  void _loadData(int page) {
+    AppUtils.isAuthTokenValid().then((isTokenValid) {
+      context.read<PostBloc>().add(
+            GetAllPosts(repuest: PostRequest(page: page, perPage: 2)),
+          );
+    });
+  }
+
+  void _scrollListener() {
+    print(
+        "pagepagepagepage $page ddd ${_postResponseEntity!.nextPage} ddd ${_postResponseEntity?.prevPage}");
+
+    if (_scrollController.position.pixels >=
+            _scrollController.position.maxScrollExtent &&
+        _postResponseEntity!.nextPage != null) {
+      setState(() {
+        page = _postResponseEntity!.nextPage != null
+            ? _postResponseEntity!.nextPage!
+            : _postResponseEntity!.prevPage!;
+      });
+      _loadData(page);
+    }
+    print("pagepagepagepage $page");
   }
 
   @override
@@ -49,16 +77,22 @@ class _PostScreenState extends State<PostScreen> {
           if (state is GetAllPostsFinished) {
             if (state.status == Status.waiting) {
               setState(() {
-                isLoading = true;
+                isLoading = firstLoad == 0 ? true : false;
+                load = true;
               });
             } else if (state.status == Status.succeded) {
               setState(() {
+                firstLoad++;
                 isLoading = false;
+                load = false;
+                items?.addAll(state.postResponseEntity?.items ?? []);
+                items = items?.toSet().toList();
                 _postResponseEntity = state.postResponseEntity;
               });
             } else if (state.status == Status.failed) {
               setState(() {
                 isLoading = false;
+                load = false;
               });
               AppUtils.showAlert(
                   context, state.message ?? '', AppColors.accentColor);
@@ -81,15 +115,11 @@ class _PostScreenState extends State<PostScreen> {
         },
         child: ListView(
           padding: const EdgeInsets.all(0),
+          controller: _scrollController,
           children: [
             PostButton(onClick: () => _showModalBottomSheet(context)),
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
             _showPostMain(),
-            const SizedBox(
-              height: 100,
-            ),
           ],
         ),
       ),
@@ -139,41 +169,38 @@ class _PostScreenState extends State<PostScreen> {
       return const SkeletonPost();
     } else {
       if (_postResponseEntity != null) {
-        return Column(
-          children: [
-            const SizedBox(height: 10),
-            if (_postResponseEntity != null &&
-                _postResponseEntity!.items!.isNotEmpty)
-              ...List.generate(
-                _postResponseEntity!.items!.length,
-                (index) => PostCard(
-                    key: ValueKey<String>('post_$index'),
-                    type: 'post',
-                    authorname:
-                        _postResponseEntity!.items![index].author!.name!,
-                    postcreatedat:
-                        _postResponseEntity!.items![index].createdAt!,
-                    content: _postResponseEntity!.items![index].content!,
-                    commentscount:
-                        _postResponseEntity!.items![index].commentsCount!,
-                    urlimage: _postResponseEntity!.items![index].image != null
-                        ? _postResponseEntity!.items![index].image!.url
-                        : null,
-                    widthimage: 50,
-                    heightimage: 1290,
-                    onClick: () => _infoUser(
-                        _postResponseEntity!.items![index].author!.id!),
-                    authorid: _postResponseEntity!.items![index].author!.id!,
-                    postid: _postResponseEntity!.items![index].id!,
-                    onClickRemove: () =>
-                        _removePost(_postResponseEntity!.items![index].id!)),
-              )
-            else
-              const Center(
-                child: Text('No posts'),
-              ),
-          ],
-        );
+        return Column(children: [
+          const SizedBox(height: 10),
+          if (_postResponseEntity != null && items!.isNotEmpty)
+            SizedBox(
+                height: MediaQuery.of(context).size.height,
+                child: ListView.builder(
+                    controller: _scrollControllerChild,
+                    itemCount: items?.length ?? 0,
+                    itemBuilder: (context, index) {
+                      return PostCard(
+                          key: ValueKey<String>('post_$index'),
+                          type: 'post',
+                          authorname: items![index].author!.name!,
+                          postcreatedat: items![index].createdAt!,
+                          content: items![index].content!,
+                          commentscount: items![index].commentsCount!,
+                          urlimage: items![index].image != null
+                              ? items![index].image!.url
+                              : null,
+                          widthimage: 50,
+                          heightimage: 1290,
+                          onClick: () => _infoUser(items![index].author!.id!),
+                          authorid: items![index].author!.id!,
+                          postid: items![index].id!,
+                          onClickRemove: () => _removePost(items![index].id!));
+                    }))
+          else
+            const Center(
+              child: Text('No posts'),
+            ),
+          if (load) const CircularProgressIndicator(),
+        ]);
       } else {
         return const Center(
           child: Text('No posts'),

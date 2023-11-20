@@ -35,7 +35,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         listener: (context, state) {
           if (state is SignupFinished) {
             if (state.status == Status.waiting) {
-              AppUtils.showLoader(context: context, message: 'signup...');
+              AppUtils.showLoader(context: context, message: 'Signup...');
             } else if (state.status == Status.succeded) {
               context.pop();
               context.go('/home/0');
