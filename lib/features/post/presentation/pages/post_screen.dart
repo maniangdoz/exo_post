@@ -42,7 +42,6 @@ class _PostScreenState extends State<PostScreen> {
       });
     });
     _scrollController.addListener(_scrollListener);
-
     _loadData(page);
   }
 

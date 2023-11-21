@@ -123,67 +123,41 @@ class ApiServices {
     }
   }
 
-  Future<http.Response> updatePost(
-      {required int postId,
-      required String type,
-      required String content,
-      String? base64Image}) async {
+  Future<http.Response> updatePost({
+    required int postId,
+    required String type,
+    required String content,
+    String? base64Image,
+  }) async {
     try {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       final String? authToken = prefs.getString(AppUtils.authTokenKey);
-      var data = {};
-      late http.Response response;
-      if (type == 'url') {
-        if (base64Image != null) {
-          fetchImageBytes(base64Image).then((imageBytes) async {
-            data = {'content': content, 'base_64_image': imageBytes};
-            response = await _client.patch(
-              Uri.https(AppConstants.baseUrlDev, '/api:xbcc5VEi/post/$postId'),
-              body: jsonEncode(data),
-              headers: <String, String>{
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer $authToken'
-              },
-            );
-          }).catchError((error) {
-            // print('Error fetching image: $error');
-          });
-        } else {
-          data = {'content': content};
-          response = await _client.patch(
-            Uri.https(AppConstants.baseUrlDev, '/api:xbcc5VEi/post/$postId'),
-            body: jsonEncode(data),
-            headers: <String, String>{
-              'Content-Type': 'application/json',
-              'Authorization': 'Bearer $authToken'
-            },
-          );
-        }
-      } else {
-        if (base64Image != null) {
-          List<int> imageBytes = base64Decode(base64Image);
-          data = {'content': content, 'base_64_image': imageBytes};
-          response = await _client.patch(
-            Uri.https(AppConstants.baseUrlDev, '/api:xbcc5VEi/post/$postId'),
-            body: jsonEncode(data),
-            headers: <String, String>{
-              'Content-Type': 'application/json',
-              'Authorization': 'Bearer $authToken'
-            },
-          );
-        } else {
-          data = {'content': content};
 
-          response = await _client.patch(
-            Uri.https(AppConstants.baseUrlDev, '/api:xbcc5VEi/post/$postId'),
-            body: jsonEncode(data),
-            headers: <String, String>{
-              'Content-Type': 'application/json',
-              'Authorization': 'Bearer $authToken'
-            },
-          );
+      var data = {
+        'content': content,
+      };
+
+      if (base64Image != null) {
+        Uint8List imageBytes;
+        if (type == 'url') {
+          imageBytes = await fetchImageBytes(base64Image);
+        } else {
+          imageBytes = base64Decode(base64Image);
         }
+        String base64String = base64.encode(imageBytes);
+
+        data['base_64_image'] = base64String;
       }
+
+      http.Response response = await _client.patch(
+        Uri.https(AppConstants.baseUrlDev, '/api:xbcc5VEi/post/$postId'),
+        body: jsonEncode(data),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $authToken',
+        },
+      );
+
       return response;
     } catch (e) {
       throw e.toString();
