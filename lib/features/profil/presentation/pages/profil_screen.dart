@@ -23,7 +23,7 @@ class ProfilScreen extends StatefulWidget {
 
 class _ProfilScreenState extends State<ProfilScreen> {
   UserPostResponseEntity? _postResponseEntity;
-  bool isLoading = true, load = true;
+  bool isLoading = true, load = true, loadTop = false;
   int firstLoad = 0;
   int page = 0;
   final ScrollController _scrollController = ScrollController();
@@ -58,6 +58,17 @@ class _ProfilScreenState extends State<ProfilScreen> {
       });
       _loadData(page);
     }
+    if (_scrollController.position.pixels <=
+        _scrollController.position.minScrollExtent) {
+      _executeWhenScrollAtTop();
+    }
+  }
+
+  void _executeWhenScrollAtTop() {
+    setState(() {
+      loadTop = true;
+    });
+    _loadData(0);
   }
 
   @override
@@ -69,13 +80,15 @@ class _ProfilScreenState extends State<ProfilScreen> {
             if (state.status == Status.waiting) {
               setState(() {
                 isLoading = firstLoad == 0 ? true : false;
-                load = true;
+                load = loadTop ? false : true;
               });
             } else if (state.status == Status.succeded) {
               setState(() {
+                if (loadTop) items?.clear();
                 firstLoad++;
                 isLoading = false;
                 load = false;
+                loadTop = false;
                 items?.addAll(state.userPostResponseEntity?.items ?? []);
                 items = items?.toSet().toList();
                 _postResponseEntity = state.userPostResponseEntity;
@@ -123,6 +136,11 @@ class _ProfilScreenState extends State<ProfilScreen> {
                           ],
                         ),
                       ),
+                      if (loadTop)
+                        const Column(children: [
+                          SizedBox(height: 20),
+                          CircularProgressIndicator()
+                        ]),
                       if (_postResponseEntity != null && items!.isNotEmpty)
                         ...List.generate(
                           items?.length ?? 0,
@@ -145,7 +163,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
                             );
                           },
                         )
-                      else
+                      else if (!load && !loadTop)
                         const Center(
                           child: Text('No posts'),
                         ),

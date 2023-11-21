@@ -25,17 +25,22 @@ class PostScreen extends StatefulWidget {
 }
 
 class _PostScreenState extends State<PostScreen> {
-  bool isLoading = true, load = true;
+  bool isLoading = true, load = true, loadTop = false;
   int firstLoad = 0;
   PostResponseEntity? _postResponseEntity;
   int page = 0;
   final ScrollController _scrollController = ScrollController();
   List<PostEntity>? items = [];
+  bool isValidToken = false;
 
   @override
   void initState() {
     super.initState();
-
+    AppUtils.isAuthTokenValid().then((value) {
+      setState(() {
+        isValidToken = value;
+      });
+    });
     _scrollController.addListener(_scrollListener);
 
     _loadData(page);
@@ -60,6 +65,17 @@ class _PostScreenState extends State<PostScreen> {
       });
       _loadData(page);
     }
+    if (_scrollController.position.pixels <=
+        _scrollController.position.minScrollExtent) {
+      _executeWhenScrollAtTop();
+    }
+  }
+
+  void _executeWhenScrollAtTop() {
+    setState(() {
+      loadTop = true;
+    });
+    _loadData(0);
   }
 
   @override
@@ -71,13 +87,15 @@ class _PostScreenState extends State<PostScreen> {
             if (state.status == Status.waiting) {
               setState(() {
                 isLoading = firstLoad == 0 ? true : false;
-                load = true;
+                load = loadTop ? false : true;
               });
             } else if (state.status == Status.succeded) {
               setState(() {
+                if (loadTop) items?.clear();
                 firstLoad++;
                 isLoading = false;
                 load = false;
+                loadTop = false;
                 items?.addAll(state.postResponseEntity?.items ?? []);
                 items = items?.toSet().toList();
                 _postResponseEntity = state.postResponseEntity;
@@ -86,6 +104,7 @@ class _PostScreenState extends State<PostScreen> {
               setState(() {
                 isLoading = false;
                 load = false;
+                loadTop = false;
               });
               AppUtils.showAlert(
                   context, state.message ?? '', AppColors.accentColor);
@@ -99,6 +118,7 @@ class _PostScreenState extends State<PostScreen> {
               if (state.status == Status.succeded) {
                 AppUtils.showAlert(context, state.message ?? 'Success',
                     AppUtils.accentprimaryColor(context));
+                _loadData(0);
               } else if (state.status == Status.failed) {
                 AppUtils.showAlert(
                     context, state.message ?? 'Error', AppColors.errorColor);
@@ -126,7 +146,9 @@ class _PostScreenState extends State<PostScreen> {
           ),
           ActionButton(
             onPressed: () => _showAction(context, 1),
-            icon: const Icon(Icons.logout_outlined),
+            icon: isValidToken
+                ? const Icon(Icons.logout_outlined)
+                : const Icon(Icons.login_outlined),
           ),
         ],
       ),
@@ -165,6 +187,11 @@ class _PostScreenState extends State<PostScreen> {
       if (_postResponseEntity != null) {
         return Column(
           children: [
+            if (loadTop)
+              const Column(children: [
+                SizedBox(height: 20),
+                CircularProgressIndicator()
+              ]),
             const SizedBox(height: 10),
             if (_postResponseEntity != null && items!.isNotEmpty)
               ...List.generate(
@@ -186,7 +213,7 @@ class _PostScreenState extends State<PostScreen> {
                     postid: items![index].id!,
                     onClickRemove: () => _removePost(items![index].id!)),
               )
-            else
+            else if (!load && !loadTop)
               const Center(
                 child: Text('No posts'),
               ),

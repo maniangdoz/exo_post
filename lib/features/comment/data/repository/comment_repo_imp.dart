@@ -85,6 +85,7 @@ class CommentRepoImp extends CommentRepo {
       if (value.statusCode == 200) {
         return 'Success remove';
       } else {
+        print("value.bodyvalue.bodyvalue.body ${value.body}");
         return ErrorApiResponse.fromJson(jsonDecode(value.body))
             .toEntity()
             .message;

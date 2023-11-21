@@ -131,45 +131,59 @@ class ApiServices {
     try {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       final String? authToken = prefs.getString(AppUtils.authTokenKey);
-      var request = http.MultipartRequest(
-        'PATCH',
-        Uri.https(AppConstants.baseUrlDev, '/api:xbcc5VEi/post/$postId'),
-      );
-
-      request.headers.addAll({
-        'Authorization': 'Bearer $authToken',
-      });
-
-      request.fields['content'] = content;
-
-      if (type == 'url' && base64Image != null) {
-        fetchImageBytes(base64Image).then((imageBytes) {
-          var image = http.MultipartFile.fromBytes(
-            'base_64_image',
-            imageBytes,
-            filename: 'image.jpg',
+      var data = {};
+      late http.Response response;
+      if (type == 'url') {
+        if (base64Image != null) {
+          fetchImageBytes(base64Image).then((imageBytes) async {
+            data = {'content': content, 'base_64_image': imageBytes};
+            response = await _client.patch(
+              Uri.https(AppConstants.baseUrlDev, '/api:xbcc5VEi/post/$postId'),
+              body: jsonEncode(data),
+              headers: <String, String>{
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer $authToken'
+              },
+            );
+          }).catchError((error) {
+            // print('Error fetching image: $error');
+          });
+        } else {
+          data = {'content': content};
+          response = await _client.patch(
+            Uri.https(AppConstants.baseUrlDev, '/api:xbcc5VEi/post/$postId'),
+            body: jsonEncode(data),
+            headers: <String, String>{
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer $authToken'
+            },
           );
-
-          request.files.add(image);
-        }).catchError((error) {
-          // print('Error fetching image: $error');
-        });
+        }
       } else {
         if (base64Image != null) {
           List<int> imageBytes = base64Decode(base64Image);
-          var image = http.MultipartFile.fromBytes(
-            'base_64_image',
-            imageBytes,
-            filename: 'image.jpg',
+          data = {'content': content, 'base_64_image': imageBytes};
+          response = await _client.patch(
+            Uri.https(AppConstants.baseUrlDev, '/api:xbcc5VEi/post/$postId'),
+            body: jsonEncode(data),
+            headers: <String, String>{
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer $authToken'
+            },
           );
-          request.files.add(image);
+        } else {
+          data = {'content': content};
+
+          response = await _client.patch(
+            Uri.https(AppConstants.baseUrlDev, '/api:xbcc5VEi/post/$postId'),
+            body: jsonEncode(data),
+            headers: <String, String>{
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer $authToken'
+            },
+          );
         }
       }
-
-      var streamedResponse = await request.send();
-
-      var response = await http.Response.fromStream(streamedResponse);
-
       return response;
     } catch (e) {
       throw e.toString();
