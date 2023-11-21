@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:typed_data';
 
 import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';
@@ -125,7 +124,6 @@ class ApiServices {
 
   Future<http.Response> updatePost({
     required int postId,
-    required String type,
     required String content,
     String? base64Image,
   }) async {
@@ -138,18 +136,10 @@ class ApiServices {
       };
 
       if (base64Image != null) {
-        Uint8List imageBytes;
-        if (type == 'url') {
-          imageBytes = await fetchImageBytes(base64Image);
-        } else {
-          imageBytes = base64Decode(base64Image);
-        }
-        String base64String = base64.encode(imageBytes);
-
-        data['base_64_image'] = base64String;
+        data['base_64_image'] = base64Image;
       }
 
-      http.Response response = await _client.patch(
+      final response = await _client.patch(
         Uri.https(AppConstants.baseUrlDev, '/api:xbcc5VEi/post/$postId'),
         body: jsonEncode(data),
         headers: <String, String>{
@@ -161,16 +151,6 @@ class ApiServices {
       return response;
     } catch (e) {
       throw e.toString();
-    }
-  }
-
-  Future<Uint8List> fetchImageBytes(String imageUrl) async {
-    final response = await http.get(Uri.parse(imageUrl));
-
-    if (response.statusCode == 200) {
-      return response.bodyBytes;
-    } else {
-      throw Exception('Failed to fetch image');
     }
   }
 

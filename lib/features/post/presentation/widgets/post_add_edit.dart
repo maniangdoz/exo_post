@@ -290,9 +290,9 @@ class _PostAddEditState extends State<PostAddEdit> {
       }
       if (widget.postid != null) {
         if (base64Image != null) {
-          _callApiUpdate(content, base64Image, 'base64Image');
+          _callApiUpdate(content, 'data:image/jpeg;base64,$base64Image');
         } else {
-          _callApiUpdate(content, _urlImage, 'url');
+          _callApiUpdate(content, null);
         }
       } else {
         _callApiAdd(content, base64Image);
@@ -306,12 +306,11 @@ class _PostAddEditState extends State<PostAddEdit> {
         .add(AddPost(content: content, base64Image: base64Image));
   }
 
-  void _callApiUpdate(String content, String? base64Image, String type) {
+  void _callApiUpdate(String content, String? base64Image) {
     context.read<PostBloc>().add(UpdatePost(
         postId: widget.postid ?? 0,
         content: content,
-        base64Image: base64Image,
-        type: type));
+        base64Image: base64Image));
   }
 
   void _textFieldOnTap() {

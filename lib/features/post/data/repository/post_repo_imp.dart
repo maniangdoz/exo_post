@@ -68,14 +68,12 @@ class PostRepoImp extends PostRepo {
   Future<PostAddEditResponseEntity> updatePost(
           {required int postId,
           required String content,
-          required String type,
           String? base64Image}) =>
       _api
           .updatePost(
               postId: postId,
               content: content,
-              base64Image: base64Image,
-              type: type)
+              base64Image: base64Image)
           .then((value) {
         if (value.statusCode == 200) {
           return PostAddEditResponseEntity(
