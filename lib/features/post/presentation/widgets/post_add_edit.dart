@@ -282,7 +282,6 @@ class _PostAddEditState extends State<PostAddEdit> {
 
   void _addEditPost() async {
     if (_formKey.currentState!.validate()) {
-      print("rrrrrrrrrrrrrhhhhhhhhhhhhhhhhh");
       String content = _contentTextFieldController.text.toString().trim();
       String? base64Image;
       if (_pickedFile != null) {
@@ -299,7 +298,6 @@ class _PostAddEditState extends State<PostAddEdit> {
         _callApiAdd(content, base64Image);
       }
     }
-    print("5555555555555555555555555555555");
   }
 
   void _callApiAdd(String content, String? base64Image) {

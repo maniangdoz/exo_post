@@ -228,12 +228,17 @@ class ApiServices {
   Future<http.Response> updateComment(
       {required int commentId, required String content}) async {
     try {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      final String? authToken = prefs.getString(AppUtils.authTokenKey);
       final response = await _client.patch(
         Uri.https(AppConstants.baseUrlDev, '/api:xbcc5VEi/comment/$commentId'),
         body: jsonEncode({
           'content': content,
         }),
-        headers: <String, String>{'Content-Type': 'application/json'},
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $authToken',
+        },
       );
       return response;
     } catch (e) {
