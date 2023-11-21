@@ -106,7 +106,7 @@ class _PostScreenState extends State<PostScreen> {
                 loadTop = false;
               });
               AppUtils.showAlert(
-                  context, state.message ?? '', AppColors.accentColor);
+                  context, state.message ?? 'Erreur de connexion', AppColors.errorColor);
             }
           }
           if (state is RemovePostsFinished) {

@@ -36,7 +36,7 @@ class CommentRepoImp extends CommentRepo {
         throw 'Not repertoried'; //message to show if we have nothing
       }
     }).catchError((e) {
-      throw e;
+        throw AppConstants.messageBadConnexion;
     });
   }
 
@@ -58,7 +58,7 @@ class CommentRepoImp extends CommentRepo {
           return CommentAddEditResponseEntity(errorMessage: error);
         }
       }).catchError((e) {
-        throw CommentAddEditResponseEntity(errorMessage: e.toString());
+        throw AppConstants.messageBadConnexion;
       });
 
   @override
@@ -76,7 +76,7 @@ class CommentRepoImp extends CommentRepo {
           return CommentAddEditResponseEntity(errorMessage: error);
         }
       }).catchError((e) {
-        throw CommentAddEditResponseEntity(errorMessage: e.toString());
+        throw AppConstants.messageBadConnexion;
       });
 
   @override
@@ -91,7 +91,7 @@ class CommentRepoImp extends CommentRepo {
             .message;
       }
     }).catchError((e) {
-      throw e;
+        throw AppConstants.messageBadConnexion;
     });
   }
 }

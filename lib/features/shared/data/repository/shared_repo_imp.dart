@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:injectable/injectable.dart';
 
+import '../../../../common/constants.dart';
 import '../../../../core/services/api_services.dart';
 import '../../domain/entities/author_entity.dart';
 import '../../domain/repository/shared_repo.dart';
@@ -32,7 +33,7 @@ class SharedRepoImp extends SharedRepo {
         throw 'Not repertoried'; //message to show if we have nothing
       }
     }).catchError((e) {
-      throw e;
+        throw AppConstants.messageBadConnexion;
     });
   }
 }

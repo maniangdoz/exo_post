@@ -103,7 +103,9 @@ class _UserScreenState extends State<UserScreen> {
                   load = false;
                 });
                 AppUtils.showAlert(
-                    context, state.message ?? '', AppColors.accentColor);
+                    context,
+                    state.message ?? 'Erreur de connexion',
+                    AppColors.errorColor);
               }
             }
           },

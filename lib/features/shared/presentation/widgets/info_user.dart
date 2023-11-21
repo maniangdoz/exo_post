@@ -58,7 +58,7 @@ class _InfoUserState extends State<InfoUser> {
               isLoading = false;
             });
             AppUtils.showAlert(
-                context, state.message ?? '', AppColors.accentColor);
+                context, state.message ?? 'Erreur de connexion', AppColors.errorColor);
           }
         }
       },

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:injectable/injectable.dart';
 
+import '../../../../common/constants.dart';
 import '../../../../core/services/api_services.dart';
 import '../../domain/entities/requests/user_post_request.dart';
 import '../../domain/entities/user_post_response_entity.dart';
@@ -39,7 +40,7 @@ class ProfilRepoImp extends ProfilRepo {
         throw 'Not repertoried'; //message to show if we have nothing
       }
     }).catchError((e) {
-      throw e;
+        throw AppConstants.messageBadConnexion;
     });
   }
 }

@@ -99,7 +99,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
                 load = false;
               });
               AppUtils.showAlert(
-                  context, state.message ?? '', AppColors.accentColor);
+                  context, state.message ?? 'Erreur de connexion', AppColors.errorColor);
             }
           }
         },

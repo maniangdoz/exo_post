@@ -39,7 +39,7 @@ class PostRepoImp extends PostRepo {
         throw 'Not repertoried'; //message to show if we have nothing
       }
     }).catchError((e) {
-      throw e;
+        throw AppConstants.messageBadConnexion;
     });
   }
 
@@ -61,7 +61,7 @@ class PostRepoImp extends PostRepo {
           return PostAddEditResponseEntity(errorMessage: error);
         }
       }).catchError((e) {
-        throw PostAddEditResponseEntity(errorMessage: e.toString());
+        throw AppConstants.messageBadConnexion;
       });
 
   @override
@@ -88,7 +88,7 @@ class PostRepoImp extends PostRepo {
           return PostAddEditResponseEntity(errorMessage: error);
         }
       }).catchError((e) {
-        throw PostAddEditResponseEntity(errorMessage: e.toString());
+        throw AppConstants.messageBadConnexion;
       });
 
   @override
@@ -100,7 +100,7 @@ class PostRepoImp extends PostRepo {
         return ErrorApiResponse.fromJson(jsonDecode(value.body)).toEntity().message;
       }
     }).catchError((e) {
-      throw e;
+        throw AppConstants.messageBadConnexion;
     });
   }
 }
