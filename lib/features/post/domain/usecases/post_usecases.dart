@@ -21,13 +21,11 @@ class PostUseCases {
   Future<PostAddEditResponseEntity> updatePost(
           {required String content,
           required int postId,
-          required String type,
           String? base64Image}) =>
       _repo.updatePost(
           postId: postId,
           content: content,
-          base64Image: base64Image,
-          type: type);
+          base64Image: base64Image);
 
   Future<dynamic> removePost({required int postId}) =>
       _repo.removePost(postId: postId);

@@ -8,7 +8,7 @@ import '../../domain/entities/post_add_edit_response_entity.dart';
 import '../../domain/entities/post_response_entity.dart';
 import '../../domain/entities/requests/post_request.dart';
 import '../../domain/repository/post_repo.dart';
-import '../models/error_api_response.dart';
+import '../../../shared/data/models/error_api_response.dart';
 import '../models/post_add.dart';
 import '../models/post_response.dart';
 
@@ -39,7 +39,7 @@ class PostRepoImp extends PostRepo {
         throw 'Not repertoried'; //message to show if we have nothing
       }
     }).catchError((e) {
-      throw e;
+        throw AppConstants.messageBadConnexion;
     });
   }
 
@@ -61,21 +61,19 @@ class PostRepoImp extends PostRepo {
           return PostAddEditResponseEntity(errorMessage: error);
         }
       }).catchError((e) {
-        throw PostAddEditResponseEntity(errorMessage: e.toString());
+        throw AppConstants.messageBadConnexion;
       });
 
   @override
   Future<PostAddEditResponseEntity> updatePost(
           {required int postId,
           required String content,
-          required String type,
           String? base64Image}) =>
       _api
           .updatePost(
               postId: postId,
               content: content,
-              base64Image: base64Image,
-              type: type)
+              base64Image: base64Image)
           .then((value) {
         if (value.statusCode == 200) {
           return PostAddEditResponseEntity(
@@ -88,7 +86,7 @@ class PostRepoImp extends PostRepo {
           return PostAddEditResponseEntity(errorMessage: error);
         }
       }).catchError((e) {
-        throw PostAddEditResponseEntity(errorMessage: e.toString());
+        throw AppConstants.messageBadConnexion;
       });
 
   @override
@@ -97,10 +95,10 @@ class PostRepoImp extends PostRepo {
       if (value.statusCode == 200) {
         return 'Success remove';
       } else {
-        return ErrorApiResponse.fromJson(jsonDecode(value.body)).toEntity();
+        return ErrorApiResponse.fromJson(jsonDecode(value.body)).toEntity().message;
       }
     }).catchError((e) {
-      throw e;
+        throw AppConstants.messageBadConnexion;
     });
   }
 }

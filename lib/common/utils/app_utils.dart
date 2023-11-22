@@ -183,6 +183,10 @@ class AppUtils {
   }
 
   static const String authTokenKey = 'authToken';
+  static const String userAuthorId = 'authorId';
+  static const String userAuthorCreatedAt = 'createdAt';
+  static const String userAuthorName = 'name';
+  static const String userAuthorEmail = 'email';
 
   static Future<bool> isAuthTokenValid() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -193,5 +197,25 @@ class AppUtils {
     } else {
       return false;
     }
+  }
+
+  static Future<int> valueUserAuthorId() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? result = prefs.getString(userAuthorId);
+    if (result != null) {
+      try {
+        return int.parse(result);
+      } catch (e) {
+        return 0;
+      }
+    } else {
+      return 0;
+    }
+  }
+
+  static Future<String?> valueUserAuthorEmail() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? result = prefs.getString(userAuthorEmail);
+    return result;
   }
 }

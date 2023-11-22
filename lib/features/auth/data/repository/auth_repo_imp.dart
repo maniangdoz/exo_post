@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:exo_post/common/constants.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../core/services/api_services.dart';
@@ -32,6 +33,6 @@ class AuthRepoImp extends AuthRepo {
           throw 'Not repertoried'; //message to show if we have nothing
         }
       }).catchError((e) {
-        throw e;
+        throw AppConstants.messageBadConnexion;
       });
 }

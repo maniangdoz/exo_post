@@ -33,25 +33,21 @@ class UpdatePost extends PostEvent {
   final int _postId;
   final String _content;
   final String? _base64Image;
-  final String _type;
 
   const UpdatePost(
       {required int postId,
       required String content,
-      required String? base64Image,
-      required String type})
+      required String? base64Image})
       : _postId = postId,
         _content = content,
-        _type = type,
         _base64Image = base64Image;
 
-  int? get postId => _postId;
+  int get postId => _postId;
   String? get content => _content;
-  String? get type => _type;
   String? get base64Image => _base64Image;
 
   @override
-  List<Object?> get props => [_postId, _content, _type, _base64Image];
+  List<Object?> get props => [_postId, _content, _base64Image];
 }
 
 class RemovePosts extends PostEvent {

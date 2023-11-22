@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:typed_data';
 
 import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';
@@ -53,7 +52,6 @@ class ApiServices {
 
   Future<http.Response> authMe() async {
     try {
-      print("yyyyyyyyyyyyyyyyyyyyyyy");
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       final String? authToken = prefs.getString(AppUtils.authTokenKey);
       final response = await _client.get(
@@ -63,6 +61,11 @@ class ApiServices {
           'Authorization': 'Bearer $authToken'
         },
       );
+
+      if (response.statusCode == 401) {
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        await preferences.clear();
+      }
       return response;
     } catch (e) {
       throw e.toString();
@@ -119,66 +122,35 @@ class ApiServices {
     }
   }
 
-  Future<http.Response> updatePost(
-      {required int postId,
-      required String type,
-      required String content,
-      String? base64Image}) async {
+  Future<http.Response> updatePost({
+    required int postId,
+    required String content,
+    String? base64Image,
+  }) async {
     try {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       final String? authToken = prefs.getString(AppUtils.authTokenKey);
-      var request = http.MultipartRequest(
-        'PATCH',
-        Uri.https(AppConstants.baseUrlDev, '/api:xbcc5VEi/post/$postId'),
-      );
 
-      request.headers.addAll({
-        'Authorization': 'Bearer $authToken',
-      });
+      var data = {
+        'content': content,
+      };
 
-      request.fields['content'] = content;
-
-      if (type == 'url' && base64Image != null) {
-        fetchImageBytes(base64Image).then((imageBytes) {
-          var image = http.MultipartFile.fromBytes(
-            'base_64_image',
-            imageBytes,
-            filename: 'image.jpg',
-          );
-
-          request.files.add(image);
-        }).catchError((error) {
-          print('Error fetching image: $error');
-        });
-      } else {
-        if (base64Image != null) {
-          List<int> imageBytes = base64Decode(base64Image);
-          var image = http.MultipartFile.fromBytes(
-            'base_64_image',
-            imageBytes,
-            filename: 'image.jpg',
-          );
-          request.files.add(image);
-        }
+      if (base64Image != null) {
+        data['base_64_image'] = base64Image;
       }
 
-      var streamedResponse = await request.send();
-
-      var response = await http.Response.fromStream(streamedResponse);
+      final response = await _client.patch(
+        Uri.https(AppConstants.baseUrlDev, '/api:xbcc5VEi/post/$postId'),
+        body: jsonEncode(data),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $authToken',
+        },
+      );
 
       return response;
     } catch (e) {
       throw e.toString();
-    }
-  }
-
-  Future<Uint8List> fetchImageBytes(String imageUrl) async {
-    final response = await http.get(Uri.parse(imageUrl));
-
-    if (response.statusCode == 200) {
-      return response.bodyBytes;
-    } else {
-      throw Exception('Failed to fetch image');
     }
   }
 
@@ -236,12 +208,17 @@ class ApiServices {
   Future<http.Response> updateComment(
       {required int commentId, required String content}) async {
     try {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      final String? authToken = prefs.getString(AppUtils.authTokenKey);
       final response = await _client.patch(
         Uri.https(AppConstants.baseUrlDev, '/api:xbcc5VEi/comment/$commentId'),
         body: jsonEncode({
           'content': content,
         }),
-        headers: <String, String>{'Content-Type': 'application/json'},
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $authToken',
+        },
       );
       return response;
     } catch (e) {
@@ -278,10 +255,12 @@ class ApiServices {
     }
   }
 
-  Future<http.Response> userPosts({required int userId}) async {
+  Future<http.Response> userPosts(
+      {required int userId, required int page, required int perPage}) async {
     try {
       final response = await _client.get(
-        Uri.https(AppConstants.baseUrlDev, '/api:xbcc5VEi/user/$userId/posts'),
+        Uri.https(AppConstants.baseUrlDev, '/api:xbcc5VEi/user/$userId/posts',
+            {'page': '$page', 'per_page': '$perPage'}),
         headers: <String, String>{'Content-Type': 'application/json'},
       );
       return response;

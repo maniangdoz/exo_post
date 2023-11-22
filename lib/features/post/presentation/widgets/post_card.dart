@@ -44,13 +44,21 @@ class PostCard extends StatefulWidget {
 
 class _PostCardState extends State<PostCard> {
   bool isValidToken = false;
+  int idAuthor = 0;
+
   @override
   void initState() {
     super.initState();
     AppUtils.isAuthTokenValid().then((value) {
-      setState(() {
-        isValidToken = value;
-      });
+      if (value) {
+        AppUtils.valueUserAuthorId().then((res) {
+          if (res > 0 && res == widget.authorid) {
+            setState(() {
+              isValidToken = true;
+            });
+          }
+        });
+      }
     });
   }
 
