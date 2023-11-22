@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:exo_post/features/splash/domain/entities/splash_response_entity.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../../../common/constants.dart';
 import '../../domain/usecases/splash_usecases.dart';
@@ -11,6 +12,7 @@ import '../../domain/usecases/splash_usecases.dart';
 part 'splash_event.dart';
 part 'splash_state.dart';
 
+@injectable
 class SplashBloc extends Bloc<SplashEvent, SplashState> {
   final SplashUseCases _useCase;
   final SharedPreferences _prefs;
