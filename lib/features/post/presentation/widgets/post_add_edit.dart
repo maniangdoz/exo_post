@@ -86,7 +86,7 @@ class _PostAddEditState extends State<PostAddEdit> {
             AppUtils.showAlert(context, state.message ?? 'Success',
                 AppUtils.accentprimaryColor(context));
             context.read<PostBloc>().add(
-                  const GetAllPosts(repuest: PostRequest(page: 0, perPage: 5)),
+                  const GetAllPosts(repuest: PostRequest(page: 1, perPage: 5)),
                 );
           } else if (state.status == Status.failed) {
             AppUtils.showAlert(

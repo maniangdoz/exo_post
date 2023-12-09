@@ -30,7 +30,7 @@ class _PostScreenState extends State<PostScreen> {
   bool isLoading = true, load = true, loadTop = false;
   int firstLoad = 0;
   PostResponseEntity? _postResponseEntity;
-  int page = 0;
+  int page = 1;
   final ScrollController _scrollController = ScrollController();
   List<PostEntity>? items = [];
   bool isValidToken = false;
@@ -82,14 +82,16 @@ class _PostScreenState extends State<PostScreen> {
             } else if (state.status == Status.succeded) {
               log('get posts success');
               setState(() {
-                items?.clear();
+                _postResponseEntity = state.postResponseEntity;
+                if (_postResponseEntity!.curPage! <= 1) {
+                  items?.clear();
+                }
                 firstLoad++;
                 isLoading = false;
                 load = false;
                 loadTop = false;
                 items?.addAll(state.postResponseEntity?.items ?? []);
                 items = items?.toSet().toList();
-                _postResponseEntity = state.postResponseEntity;
               });
             } else if (state.status == Status.failed) {
               setState(() {
