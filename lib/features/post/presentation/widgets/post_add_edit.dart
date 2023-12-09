@@ -36,6 +36,7 @@ class _PostAddEditState extends State<PostAddEdit> {
   final _formKey = GlobalKey<FormState>();
   bool readOnly = true;
   String? _urlImage;
+  
   @override
   void initState() {
     super.initState();

@@ -64,17 +64,6 @@ class _PostScreenState extends State<PostScreen> {
       });
       _loadData(page);
     }
-    if (_scrollController.position.pixels <=
-        _scrollController.position.minScrollExtent) {
-      _executeWhenScrollAtTop();
-    }
-  }
-
-  void _executeWhenScrollAtTop() {
-    setState(() {
-      loadTop = true;
-    });
-    _loadData(0);
   }
 
   @override
@@ -105,8 +94,8 @@ class _PostScreenState extends State<PostScreen> {
                 load = false;
                 loadTop = false;
               });
-              AppUtils.showAlert(
-                  context, state.message ?? 'Erreur de connexion', AppColors.errorColor);
+              AppUtils.showAlert(context,
+                  state.message ?? 'Erreur de connexion', AppColors.errorColor);
             }
           }
           if (state is RemovePostsFinished) {
