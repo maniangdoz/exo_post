@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:exo_post/main_dev.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -12,6 +13,7 @@ import '../features/profil/presentation/pages/profil_screen.dart';
 import '../features/register/presentation/pages/register_screen.dart';
 import '../features/splash/presentation/pages/splash_screen.dart';
 import '../features/user/presentation/pages/user_screen.dart';
+import 'utils/app_utils.dart';
 
 class ScreenPaths {
   ScreenPaths._();
@@ -78,4 +80,11 @@ final appRouter = GoRouter(
   ],
 );
 
-FutureOr<String?> _redirect(BuildContext context, GoRouterState state) {}
+FutureOr<String?> _redirect(BuildContext context, GoRouterState state) async {
+  String? authToken = sharedPrefs.getString(AppUtils.authTokenKey);
+  if (authToken == null && authToken!.isEmpty) {
+    return '/register';
+  }
+
+  return null;
+}

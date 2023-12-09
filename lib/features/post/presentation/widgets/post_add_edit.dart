@@ -13,6 +13,7 @@ import '../../../../common/styles/colors.dart';
 import '../../../../common/utils/app_utils.dart';
 import '../../../../common/utils/app_validator.dart';
 import '../../../../main_dev.dart';
+import '../../domain/entities/requests/post_request.dart';
 import '../bloc/post_bloc.dart';
 
 class PostAddEdit extends StatefulWidget {
@@ -36,7 +37,7 @@ class _PostAddEditState extends State<PostAddEdit> {
   final _formKey = GlobalKey<FormState>();
   bool readOnly = true;
   String? _urlImage;
-  
+
   @override
   void initState() {
     super.initState();
@@ -84,6 +85,9 @@ class _PostAddEditState extends State<PostAddEdit> {
           if (state.status == Status.succeded) {
             AppUtils.showAlert(context, state.message ?? 'Success',
                 AppUtils.accentprimaryColor(context));
+            context.read<PostBloc>().add(
+                  const GetAllPosts(repuest: PostRequest(page: 0, perPage: 5)),
+                );
           } else if (state.status == Status.failed) {
             AppUtils.showAlert(
                 context, state.message ?? 'Error', AppColors.errorColor);

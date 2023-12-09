@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:exo_post/features/profil/presentation/bloc/profil_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'common/router.dart';
 import 'common/styles/theme.dart';
@@ -27,6 +28,7 @@ void main() {
 
 AppLogic get appLogic => getIt.get<AppLogic>();
 ImageLogic get imageLogic => getIt.get<ImageLogic>();
+SharedPreferences get sharedPrefs => getIt.get<SharedPreferences>();
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

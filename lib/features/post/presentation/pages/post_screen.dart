@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -78,8 +80,9 @@ class _PostScreenState extends State<PostScreen> {
                 load = loadTop ? false : true;
               });
             } else if (state.status == Status.succeded) {
+              log('get posts success');
               setState(() {
-                if (loadTop) items?.clear();
+                items?.clear();
                 firstLoad++;
                 isLoading = false;
                 load = false;
@@ -191,9 +194,7 @@ class _PostScreenState extends State<PostScreen> {
                     postcreatedat: items![index].createdAt!,
                     content: items![index].content!,
                     commentscount: items![index].commentsCount!,
-                    urlimage: items![index].image != null
-                        ? items![index].image!.url
-                        : null,
+                    urlimage: items![index].image?.url,
                     widthimage: 50,
                     heightimage: 1290,
                     onClick: () => _infoUser(items![index].author!.id!),
