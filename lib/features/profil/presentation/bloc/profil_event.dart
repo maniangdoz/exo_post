@@ -4,10 +4,10 @@ sealed class ProfilEvent extends Equatable {
   const ProfilEvent();
 }
 
-class GetAllUserPosts extends ProfilEvent {
+class GetAllProfilPosts extends ProfilEvent {
   final UserPostRequest _repuest;
 
-  const GetAllUserPosts({required UserPostRequest repuest})
+  const GetAllProfilPosts({required UserPostRequest repuest})
       : _repuest = repuest;
   UserPostRequest get request => _repuest;
 

@@ -42,7 +42,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
       setState(() {
         userId = value;
       });
-      context.read<ProfilBloc>().add(GetAllUserPosts(
+      context.read<ProfilBloc>().add(GetAllProfilPosts(
           repuest: UserPostRequest(userId: userId, page: page, perPage: 5)));
     });
   }

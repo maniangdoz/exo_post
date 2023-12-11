@@ -4,15 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../common/constants.dart';
 import '../../../../common/styles/colors.dart';
 import '../../../../common/utils/app_utils.dart';
-import '../../../post/presentation/bloc/post_bloc.dart';
 import '../../../post/presentation/widgets/post_card.dart';
 import '../../../post/presentation/widgets/skeleton_post.dart';
-import '../../../profil/domain/entities/requests/user_post_request.dart';
-import '../../../profil/domain/entities/user_post_entity.dart';
-import '../../../profil/domain/entities/user_post_response_entity.dart';
-import '../../../profil/presentation/bloc/profil_bloc.dart';
 import '../../../shared/presentation/widgets/horizontal_dash.dart';
 import '../../../shared/presentation/widgets/info_user.dart';
+import '../../domain/entities/post_entity.dart';
+import '../../domain/entities/user_post_response_entity.dart';
+import '../bloc/user_bloc.dart';
 
 class UserScreen extends StatefulWidget {
   final int iduser;
@@ -29,7 +27,7 @@ class _UserScreenState extends State<UserScreen> {
   int firstLoad = 0;
   int page = 0;
   final ScrollController _scrollController = ScrollController();
-  List<UserPostEntity>? items = [];
+  List<PostEntity>? items = [];
 
   final List<String> entries = <String>['A', 'B', 'C'];
   final List<int> colorCodes = <int>[600, 500, 100];
@@ -42,9 +40,9 @@ class _UserScreenState extends State<UserScreen> {
   }
 
   void _loadData(int page) {
-    context.read<ProfilBloc>().add(GetAllUserPosts(
-        repuest:
-            UserPostRequest(userId: widget.iduser, page: page, perPage: 5)));
+    AppUtils.valueUserAuthorId().then((value) => context
+        .read<UserBloc>()
+        .add(GetAllUserPosts(userId: value, page: page, perPage: 5)));
   }
 
   void _scrollListener() {
@@ -78,9 +76,9 @@ class _UserScreenState extends State<UserScreen> {
         title: const Text('User'),
         centerTitle: true,
       ),
-      body: BlocListener<ProfilBloc, ProfilState>(
+      body: BlocListener<UserBloc, UserState>(
           listener: (context, state) {
-            if (state is GetAllUserPostsFinished) {
+            if (state is GetAllPostState) {
               if (state.status == Status.waiting) {
                 setState(() {
                   isLoading = firstLoad == 0 ? true : false;
@@ -156,9 +154,7 @@ class _UserScreenState extends State<UserScreen> {
                                 postcreatedat: items![index].createdAt!,
                                 content: items![index].content ?? '',
                                 commentscount: items![index].commentsCount!,
-                                urlimage: items![index].image != null
-                                    ? items![index].image!.url
-                                    : null,
+                                urlimage: items![index].image?.url,
                                 widthimage: 50,
                                 heightimage: 1290,
                                 onClick: () => {},
@@ -187,6 +183,6 @@ class _UserScreenState extends State<UserScreen> {
   }
 
   _removePost(int postid) {
-    context.read<PostBloc>().add(RemovePosts(postId: postid));
+    // context.read<UserBloc>().add(RemovePosts(postId: postid));
   }
 }

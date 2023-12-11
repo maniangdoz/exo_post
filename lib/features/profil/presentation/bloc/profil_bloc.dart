@@ -18,11 +18,11 @@ class ProfilBloc extends Bloc<ProfilEvent, ProfilState> {
 
   ProfilBloc(this._useCase) : super(ProfilInitial()) {
     on<ProfilEvent>((event, emit) {});
-    on<GetAllUserPosts>(_getAllUserPosts);
+    on<GetAllProfilPosts>(_getAllUserPosts);
   }
 
   FutureOr<void> _getAllUserPosts(
-      GetAllUserPosts event, Emitter<ProfilState> emit) async {
+      GetAllProfilPosts event, Emitter<ProfilState> emit) async {
     try {
       emit(const GetAllUserPostsFinished(status: Status.waiting));
       var response = await _useCase.getAllUserPosts(request: event.request);

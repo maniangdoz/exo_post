@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:exo_post/features/user/domain/entities/post_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import '../../../post/data/models/image.dart';
@@ -34,6 +35,14 @@ class Post extends Equatable {
         _content = content,
         _image = image,
         _commentsCount = commentsCount;
+
+  PostEntity toEntity() => PostEntity(
+        id: id,
+        createdAt: createdAt,
+        content: content,
+        image: image,
+        commentsCount: commentsCount,
+      );
 
   factory Post.fromJson(Map<String, dynamic> json) => _$PostFromJson(json);
   Map<String, dynamic> toJson() => _$PostToJson(this);

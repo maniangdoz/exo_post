@@ -1,12 +1,8 @@
 import 'package:equatable/equatable.dart';
-import 'package:exo_post/features/user/domain/entities/user_post_response_entity.dart';
-import 'package:json_annotation/json_annotation.dart';
-import 'post.dart';
 
-part 'user_post_response.g.dart';
+import 'post_entity.dart';
 
-@JsonSerializable()
-class UserPostResponse extends Equatable {
+class UserPostResponseEntity extends Equatable {
   final int? _itemsReceived;
   final int? _curPage;
   final int? _nextPage;
@@ -14,9 +10,9 @@ class UserPostResponse extends Equatable {
   final int? _offset;
   final int? _itemsTotal;
   final int? _pageTotal;
-  final List<Post>? _items;
+  final List<PostEntity>? _items;
 
-  const UserPostResponse(
+  const UserPostResponseEntity(
       {required int? itemsReceived,
       required int? curPage,
       required int? nextPage,
@@ -24,7 +20,7 @@ class UserPostResponse extends Equatable {
       required int? offset,
       required int? itemsTotal,
       required int? pageTotal,
-      required List<Post>? items})
+      required List<PostEntity>? items})
       : _itemsReceived = itemsReceived,
         _curPage = curPage,
         _nextPage = nextPage,
@@ -34,19 +30,6 @@ class UserPostResponse extends Equatable {
         _pageTotal = pageTotal,
         _items = items;
 
-  UserPostResponseEntity toEntity() {
-    return UserPostResponseEntity(
-      itemsReceived: itemsReceived,
-      curPage: curPage,
-      nextPage: nextPage,
-      prevPage: prevPage,
-      offset: offset,
-      itemsTotal: itemsTotal,
-      pageTotal: pageTotal,
-      items: items?.map((e) => e.toEntity()).toList(),
-    );
-  }
-
   int? get itemsReceived => _itemsReceived;
   int? get curPage => _curPage;
   int? get nextPage => _nextPage;
@@ -54,11 +37,7 @@ class UserPostResponse extends Equatable {
   int? get offset => _offset;
   int? get itemsTotal => _itemsTotal;
   int? get pageTotal => _pageTotal;
-  List<Post>? get items => _items;
-
-  factory UserPostResponse.fromJson(Map<String, dynamic> json) =>
-      _$UserPostResponseFromJson(json);
-  Map<String, dynamic> toJson() => _$UserPostResponseToJson(this);
+  List<PostEntity>? get items => _items;
 
   @override
   List<Object?> get props => [
